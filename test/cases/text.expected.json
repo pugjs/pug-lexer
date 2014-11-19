@@ -1,0 +1,30 @@
+{"type":"tag","line":1,"val":"option","selfClosing":false}
+{"type":"attrs","line":1,"attrs":[{"name":"value","val":"''","escaped":true}]}
+{"type":"text","line":1,"val":"-- (selected) --"}
+{"type":"newline","line":3}
+{"type":"tag","line":3,"val":"p","selfClosing":false}
+{"type":"indent","line":4,"val":2}
+{"type":"text","line":4,"val":"foo"}
+{"type":"newline","line":5}
+{"type":"text","line":5,"val":"bar"}
+{"type":"newline","line":6}
+{"type":"text","line":6,"val":"baz"}
+{"type":"outdent","line":8}
+{"type":"tag","line":8,"val":"p","selfClosing":false}
+{"type":"dot","line":8}
+{"type":"pipeless-text","line":8,"val":["foo","","","bar","baz",""]}
+{"type":"newline","line":9}
+{"type":"tag","line":9,"val":"pre","selfClosing":false}
+{"type":"indent","line":10,"val":2}
+{"type":"text","line":10,"val":"foo"}
+{"type":"newline","line":11}
+{"type":"text","line":11,"val":"  bar"}
+{"type":"newline","line":12}
+{"type":"text","line":12,"val":"    baz"}
+{"type":"newline","line":13}
+{"type":"text","line":13,"val":"."}
+{"type":"outdent","line":15}
+{"type":"tag","line":15,"val":"pre","selfClosing":false}
+{"type":"dot","line":15}
+{"type":"pipeless-text","line":15,"val":["foo","  bar","    baz","."]}
+{"type":"eos","line":15}

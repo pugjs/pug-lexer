@@ -1,0 +1,13 @@
+{"type":"tag","line":1,"val":"html","selfClosing":false}
+{"type":"indent","line":2,"val":2}
+{"type":"tag","line":2,"val":"head","selfClosing":false}
+{"type":"indent","line":3,"val":4}
+{"type":"tag","line":3,"val":"style","selfClosing":false}
+{"type":"attrs","line":3,"attrs":[{"name":"type","val":"\"text/css\"","escaped":true}]}
+{"type":"indent","line":4,"val":6}
+{"type":"filter","line":4,"val":"less"}
+{"type":"pipeless-text","line":4,"val":["@pad: 15px;","body {","  padding: @pad;","}"]}
+{"type":"outdent","line":4}
+{"type":"outdent","line":4}
+{"type":"outdent","line":4}
+{"type":"eos","line":4}

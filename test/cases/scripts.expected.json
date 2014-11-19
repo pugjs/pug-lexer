@@ -1,0 +1,14 @@
+{"type":"tag","line":1,"val":"script","selfClosing":false}
+{"type":"dot","line":1}
+{"type":"pipeless-text","line":1,"val":["if (foo) {","  bar();","}"]}
+{"type":"newline","line":2}
+{"type":"tag","line":2,"val":"script","selfClosing":false}
+{"type":"code","line":2,"val":"'foo()'","escape":false,"buffer":true}
+{"type":"newline","line":3}
+{"type":"tag","line":3,"val":"script","selfClosing":false}
+{"type":"text","line":3,"val":"foo()"}
+{"type":"newline","line":4}
+{"type":"tag","line":4,"val":"script","selfClosing":false}
+{"type":"newline","line":5}
+{"type":"tag","line":5,"val":"div","selfClosing":false}
+{"type":"eos","line":5}

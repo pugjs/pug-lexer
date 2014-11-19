@@ -1,0 +1,4 @@
+{"type":"tag","line":1,"val":"script","selfClosing":false}
+{"type":"dot","line":1}
+{"type":"pipeless-text","line":1,"val":["if (foo) {","  ","  bar();","","}"]}
+{"type":"eos","line":1}

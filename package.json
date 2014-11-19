@@ -1,0 +1,22 @@
+{
+  "name": "jade-lexer",
+  "version": "0.0.0",
+  "description": "The jade lexer (takes a string and converts it to an array of tokens)",
+  "keywords": [],
+  "dependencies": {
+    "character-parser": "^1.2.1"
+  },
+  "devDependencies": {
+    "istanbul": "^0.3.2"
+  },
+  "scripts": {
+    "test": "node test && npm run coverage",
+    "coverage": "istanbul cover test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jadejs/jade-lexer.git"
+  },
+  "author": "ForbesLindesay",
+  "license": "MIT"
+}

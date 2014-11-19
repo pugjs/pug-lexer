@@ -1,0 +1,19 @@
+{"type":"tag","line":1,"val":"p","selfClosing":false}
+{"type":"text","line":1,"val":"bing #[strong foo] bong"}
+{"type":"newline","line":3}
+{"type":"tag","line":3,"val":"p","selfClosing":false}
+{"type":"dot","line":3}
+{"type":"pipeless-text","line":3,"val":["bing","#[strong foo]","bong",""]}
+{"type":"newline","line":4}
+{"type":"tag","line":4,"val":"p","selfClosing":false}
+{"type":"indent","line":5,"val":2}
+{"type":"text","line":5,"val":"bing"}
+{"type":"newline","line":6}
+{"type":"text","line":6,"val":"#[strong foo]"}
+{"type":"newline","line":7}
+{"type":"text","line":7,"val":"bong"}
+{"type":"outdent","line":9}
+{"type":"tag","line":9,"val":"p","selfClosing":false}
+{"type":"dot","line":9}
+{"type":"pipeless-text","line":9,"val":["\\#[strong escaped]","\\#[#[strong escaped]"]}
+{"type":"eos","line":9}

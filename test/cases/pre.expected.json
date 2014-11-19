@@ -1,0 +1,11 @@
+{"type":"tag","line":1,"val":"pre","selfClosing":false}
+{"type":"dot","line":1}
+{"type":"pipeless-text","line":1,"val":["foo","bar","baz",""]}
+{"type":"newline","line":2}
+{"type":"tag","line":2,"val":"pre","selfClosing":false}
+{"type":"indent","line":3,"val":2}
+{"type":"tag","line":3,"val":"code","selfClosing":false}
+{"type":"dot","line":3}
+{"type":"pipeless-text","line":3,"val":["foo","bar","baz"]}
+{"type":"outdent","line":3}
+{"type":"eos","line":3}

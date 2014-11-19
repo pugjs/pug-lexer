@@ -1,0 +1,46 @@
+{"type":"tag","line":1,"val":"html","selfClosing":false}
+{"type":"indent","line":2,"val":2}
+{"type":"tag","line":2,"val":"head","selfClosing":false}
+{"type":"indent","line":3,"val":4}
+{"type":"tag","line":3,"val":"style","selfClosing":false}
+{"type":"dot","line":3}
+{"type":"pipeless-text","line":3,"val":["body {","  padding: 50px;","}"]}
+{"type":"outdent","line":4}
+{"type":"tag","line":4,"val":"body","selfClosing":false}
+{"type":"indent","line":5,"val":4}
+{"type":"tag","line":5,"val":"div","selfClosing":false}
+{"type":"attrs","line":5,"attrs":[{"name":"style","val":"'color:red;background:green'","escaped":true}]}
+{"type":"newline","line":6}
+{"type":"tag","line":6,"val":"div","selfClosing":false}
+{"type":"attrs","line":6,"attrs":[{"name":"style","val":"{color: 'red', background: 'green'}","escaped":true}]}
+{"type":"newline","line":7}
+{"type":"tag","line":7,"val":"div","selfClosing":false}
+{"type":"&attributes","line":7,"val":"{style: 'color:red;background:green'}"}
+{"type":"newline","line":8}
+{"type":"tag","line":8,"val":"div","selfClosing":false}
+{"type":"&attributes","line":8,"val":"{style: {color: 'red', background: 'green'}}"}
+{"type":"newline","line":9}
+{"type":"mixin","line":9,"val":"div","args":null}
+{"type":"indent","line":10,"val":6}
+{"type":"tag","line":10,"val":"div","selfClosing":false}
+{"type":"&attributes","line":10,"val":"attributes"}
+{"type":"outdent","line":11}
+{"type":"call","line":11,"val":"div"}
+{"type":"attrs","line":11,"attrs":[{"name":"style","val":"'color:red;background:green'","escaped":true}]}
+{"type":"newline","line":12}
+{"type":"call","line":12,"val":"div"}
+{"type":"attrs","line":12,"attrs":[{"name":"style","val":"{color: 'red', background: 'green'}","escaped":true}]}
+{"type":"newline","line":13}
+{"type":"code","line":13,"val":"var bg = 'green';","escape":false,"buffer":false}
+{"type":"newline","line":14}
+{"type":"tag","line":14,"val":"div","selfClosing":false}
+{"type":"attrs","line":14,"attrs":[{"name":"style","val":"{color: 'red', background: bg}","escaped":true}]}
+{"type":"newline","line":15}
+{"type":"tag","line":15,"val":"div","selfClosing":false}
+{"type":"&attributes","line":15,"val":"{style: {color: 'red', background: bg}}"}
+{"type":"newline","line":16}
+{"type":"call","line":16,"val":"div"}
+{"type":"attrs","line":16,"attrs":[{"name":"style","val":"{color: 'red', background: bg}","escaped":true}]}
+{"type":"outdent","line":17}
+{"type":"outdent","line":17}
+{"type":"eos","line":17}

@@ -1,0 +1,33 @@
+{"type":"newline","line":2}
+{"type":"comment","line":2,"val":" foo","buffer":true}
+{"type":"newline","line":3}
+{"type":"tag","line":3,"val":"ul","selfClosing":false}
+{"type":"indent","line":4,"val":2}
+{"type":"comment","line":4,"val":" bar","buffer":true}
+{"type":"newline","line":5}
+{"type":"tag","line":5,"val":"li","selfClosing":false}
+{"type":"text","line":5,"val":"one"}
+{"type":"newline","line":6}
+{"type":"comment","line":6,"val":" baz","buffer":true}
+{"type":"newline","line":7}
+{"type":"tag","line":7,"val":"li","selfClosing":false}
+{"type":"text","line":7,"val":"two"}
+{"type":"outdent","line":9}
+{"type":"comment","line":9,"val":"","buffer":true}
+{"type":"pipeless-text","line":9,"val":["ul","  li foo",""]}
+{"type":"newline","line":10}
+{"type":"comment","line":10,"val":" block","buffer":true}
+{"type":"pipeless-text","line":10,"val":["// inline follow","li three",""]}
+{"type":"newline","line":11}
+{"type":"comment","line":11,"val":" block","buffer":true}
+{"type":"pipeless-text","line":11,"val":["// inline followed by tags","ul","  li four",""]}
+{"type":"newline","line":12}
+{"type":"comment","line":12,"val":"if IE lt 9","buffer":true}
+{"type":"pipeless-text","line":12,"val":["// inline","script(src='/lame.js')","// end-inline",""]}
+{"type":"newline","line":13}
+{"type":"tag","line":13,"val":"p","selfClosing":false}
+{"type":"text","line":13,"val":"five"}
+{"type":"newline","line":15}
+{"type":"class","line":15,"val":"foo"}
+{"type":"text","line":15,"val":"// not a comment"}
+{"type":"eos","line":15}

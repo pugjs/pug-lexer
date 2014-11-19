@@ -1,0 +1,9 @@
+{"type":"comment","line":1,"val":"","buffer":false}
+{"type":"pipeless-text","line":1,"val":["s/s.",""]}
+{"type":"newline","line":2}
+{"type":"comment","line":2,"val":" test/cases/comments.source.jade","buffer":false}
+{"type":"text","line":3,"val":""}
+{"type":"newline","line":4}
+{"type":"comment","line":4,"val":"","buffer":false}
+{"type":"pipeless-text","line":4,"val":["test/cases/comments.source.jade","when","()"]}
+{"type":"eos","line":4}
