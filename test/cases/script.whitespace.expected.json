@@ -1,4 +1,8 @@
 {"type":"tag","line":1,"val":"script","selfClosing":false}
 {"type":"dot","line":1}
-{"type":"pipeless-text","line":1,"val":["if (foo) {","  ","  bar();","","}"]}
+{"type":"text","line":1,"val":"if (foo) {"}
+{"type":"text","line":1,"val":"\n  "}
+{"type":"text","line":1,"val":"\n  bar();"}
+{"type":"text","line":1,"val":"\n"}
+{"type":"text","line":1,"val":"\n}"}
 {"type":"eos","line":1}

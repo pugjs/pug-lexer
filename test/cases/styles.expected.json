@@ -4,7 +4,9 @@
 {"type":"indent","line":3,"val":4}
 {"type":"tag","line":3,"val":"style","selfClosing":false}
 {"type":"dot","line":3}
-{"type":"pipeless-text","line":3,"val":["body {","  padding: 50px;","}"]}
+{"type":"text","line":3,"val":"body {"}
+{"type":"text","line":3,"val":"\n  padding: 50px;"}
+{"type":"text","line":3,"val":"\n}"}
 {"type":"outdent","line":4}
 {"type":"tag","line":4,"val":"body","selfClosing":false}
 {"type":"indent","line":5,"val":4}

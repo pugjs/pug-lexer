@@ -40,7 +40,11 @@
 {"type":"indent","line":19,"val":4}
 {"type":"call","line":19,"val":"article","args":"'Something'"}
 {"type":"dot","line":19}
-{"type":"pipeless-text","line":19,"val":["I'm a much longer","text-only article,","but you can still","inline html tags","in me if you want."]}
+{"type":"text","line":19,"val":"I'm a much longer"}
+{"type":"text","line":19,"val":"\ntext-only article,"}
+{"type":"text","line":19,"val":"\nbut you can still"}
+{"type":"text","line":19,"val":"\ninline html tags"}
+{"type":"text","line":19,"val":"\nin me if you want."}
 {"type":"outdent","line":19}
 {"type":"outdent","line":19}
 {"type":"eos","line":19}

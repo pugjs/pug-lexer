@@ -18,11 +18,12 @@ function lex(str, filename) {
  * @api private
  */
 
-function Lexer(str, filename) {
+function Lexer(str, filename, interpolated) {
   //Strip any UTF-8 BOM off of the start of `str`, if it exists.
   str = str.replace(/^\uFEFF/, '');
   this.input = str.replace(/\r\n|\r/g, '\n');
   this.filename = filename;
+  this.interpolated = interpolated || false;
   this.lastIndents = 0;
   this.lineno = 1;
   this.indentStack = [];
@@ -52,6 +53,8 @@ function assertNestingCorrect(exp) {
  */
 
 Lexer.prototype = {
+  
+  constructor: Lexer,
 
   /**
    * Construct a token with the given `type` and `val`.
@@ -261,13 +264,63 @@ Lexer.prototype = {
   /**
    * Text.
    */
+  endInterpolation: function () {
+    if (this.interpolated && this.input[0] === ']') {
+      this.input = this.input.substr(1);
+      this.ended = true;
+      return true;
+    }
+  },
+  addText: function (value, prefix) {
+    if (value + prefix === '') return;
+    prefix = prefix || '';
+    var indexOfEnd = this.interpolated ? value.indexOf(']') : -1;
+    var indexOfStart = value.indexOf('#[');
+    var indexOfEscaped = value.indexOf('\\#[');
+
+    if (indexOfEnd === -1) indexOfEnd = Infinity;
+    if (indexOfStart === -1) indexOfStart = Infinity;
+    if (indexOfEscaped === -1) indexOfEscaped = Infinity;
+
+    if (indexOfEscaped !== Infinity && indexOfEscaped < indexOfEnd && indexOfEscaped < indexOfStart) {
+      prefix = prefix + value.substr(0, value.indexOf('\\#[')) + '#[';
+      return this.addText(value.substr(value.indexOf('\\#[') + 3), prefix);
+    }
+    if (indexOfStart !== Infinity && indexOfStart < indexOfEnd && indexOfStart < indexOfEscaped) {
+      if (prefix + value.substr(0, indexOfStart)) {
+        this.tokens.push(this.tok('text', prefix + value.substr(0, indexOfStart)));
+      }
+      this.tokens.push(this.tok('start-interpolation'));
+      var child = new this.constructor(value.substr(indexOfStart + 2), this.filename, true);
+      var interpolated = child.getTokens();
+      for (var i = 0; i < interpolated.length; i++) {
+        this.tokens.push(interpolated[i]);
+        if (interpolated[i].type === 'eos') {
+          throw new Error('End of line was reached with no closing bracket for interpolation.');
+        }
+      }
+      this.tokens.push(this.tok('end-interpolation'));
+      this.addText(child.input);
+      return;
+    }
+    if (indexOfEnd !== Infinity && indexOfEnd < indexOfStart && indexOfEnd < indexOfEscaped) {
+      if (prefix + value.substr(0, value.indexOf(']'))) {
+        this.tokens.push(this.tok('text', prefix + value.substr(0, value.indexOf(']'))));
+      }
+      this.ended = true;
+      this.input = value.substr(value.indexOf(']') + 1) + this.input;
+      return;
+    }
+
+    this.tokens.push(this.tok('text', prefix + value));
+  },
 
   text: function() {
     var tok = this.scan(/^(?:\| ?| )([^\n]+)/, 'text') ||
       this.scan(/^\|?( )/, 'text') ||
       this.scan(/^(<[^\n]*)/, 'text');
     if (tok) {
-      this.tokens.push(tok);
+      this.addText(tok.val);
       return true;
     }
   },
@@ -277,7 +330,7 @@ Lexer.prototype = {
     if (tok = this.scan(/^([^\.\n][^\n]+)/, 'text')) {
       console.warn('Warning: missing space before text for line ' + this.lineno +
           ' of jade file "' + this.filename + '"');
-      this.tokens.push(tok);
+      this.addText(tok.val);
       return true;
     }
   },
@@ -885,7 +938,9 @@ Lexer.prototype = {
         }
       } while(this.input.length && isMatch);
       while (this.input.length === 0 && tokens[tokens.length - 1] === '') tokens.pop();
-      this.tokens.push(this.tok('pipeless-text', tokens));
+      tokens.forEach(function (token, i) {
+        this.addText((i === 0 ? '' : '\n') + token);
+      }.bind(this));
       return true;
     }
   },
@@ -915,6 +970,7 @@ Lexer.prototype = {
   advance: function() {
     return this.blank()
       || this.eos()
+      || this.endInterpolation()
       || this.pipelessText()
       || this.yield()
       || this.doctype()

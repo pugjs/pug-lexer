@@ -12,7 +12,12 @@
 {"type":"outdent","line":8}
 {"type":"tag","line":8,"val":"p","selfClosing":false}
 {"type":"dot","line":8}
-{"type":"pipeless-text","line":8,"val":["foo","","","bar","baz",""]}
+{"type":"text","line":8,"val":"foo"}
+{"type":"text","line":8,"val":"\n"}
+{"type":"text","line":8,"val":"\n"}
+{"type":"text","line":8,"val":"\nbar"}
+{"type":"text","line":8,"val":"\nbaz"}
+{"type":"text","line":8,"val":"\n"}
 {"type":"newline","line":9}
 {"type":"tag","line":9,"val":"pre","selfClosing":false}
 {"type":"indent","line":10,"val":2}
@@ -26,5 +31,8 @@
 {"type":"outdent","line":15}
 {"type":"tag","line":15,"val":"pre","selfClosing":false}
 {"type":"dot","line":15}
-{"type":"pipeless-text","line":15,"val":["foo","  bar","    baz","."]}
+{"type":"text","line":15,"val":"foo"}
+{"type":"text","line":15,"val":"\n  bar"}
+{"type":"text","line":15,"val":"\n    baz"}
+{"type":"text","line":15,"val":"\n."}
 {"type":"eos","line":15}

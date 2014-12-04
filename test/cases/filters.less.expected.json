@@ -6,7 +6,10 @@
 {"type":"attrs","line":3,"attrs":[{"name":"type","val":"\"text/css\"","escaped":true}]}
 {"type":"indent","line":4,"val":6}
 {"type":"filter","line":4,"val":"less"}
-{"type":"pipeless-text","line":4,"val":["@pad: 15px;","body {","  padding: @pad;","}"]}
+{"type":"text","line":4,"val":"@pad: 15px;"}
+{"type":"text","line":4,"val":"\nbody {"}
+{"type":"text","line":4,"val":"\n  padding: @pad;"}
+{"type":"text","line":4,"val":"\n}"}
 {"type":"outdent","line":4}
 {"type":"outdent","line":4}
 {"type":"outdent","line":4}

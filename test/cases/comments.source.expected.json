@@ -1,9 +1,12 @@
 {"type":"comment","line":1,"val":"","buffer":false}
-{"type":"pipeless-text","line":1,"val":["s/s.",""]}
+{"type":"text","line":1,"val":"s/s."}
+{"type":"text","line":1,"val":"\n"}
 {"type":"newline","line":2}
 {"type":"comment","line":2,"val":" test/cases/comments.source.jade","buffer":false}
 {"type":"text","line":3,"val":""}
 {"type":"newline","line":4}
 {"type":"comment","line":4,"val":"","buffer":false}
-{"type":"pipeless-text","line":4,"val":["test/cases/comments.source.jade","when","()"]}
+{"type":"text","line":4,"val":"test/cases/comments.source.jade"}
+{"type":"text","line":4,"val":"\nwhen"}
+{"type":"text","line":4,"val":"\n()"}
 {"type":"eos","line":4}

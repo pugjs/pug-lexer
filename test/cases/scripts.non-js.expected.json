@@ -15,5 +15,7 @@
 {"type":"id","line":6,"val":"user-template"}
 {"type":"attrs","line":6,"attrs":[{"name":"type","val":"'text/template'","escaped":true}]}
 {"type":"dot","line":6}
-{"type":"pipeless-text","line":6,"val":["if (foo) {","  bar();","}"]}
+{"type":"text","line":6,"val":"if (foo) {"}
+{"type":"text","line":6,"val":"\n  bar();"}
+{"type":"text","line":6,"val":"\n}"}
 {"type":"eos","line":6}

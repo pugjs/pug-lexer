@@ -3,6 +3,6 @@
 {"type":"tag","line":2,"val":"script","selfClosing":false}
 {"type":"attrs","line":2,"attrs":[{"name":"type","val":"'text/javascript'","escaped":true}]}
 {"type":"dot","line":2}
-{"type":"pipeless-text","line":2,"val":["alert('hello world');"]}
+{"type":"text","line":2,"val":"alert('hello world');"}
 {"type":"outdent","line":2}
 {"type":"eos","line":2}
