@@ -13,6 +13,11 @@ fs.readdirSync(dir).forEach(function (testCase) {
     var result = lex(fs.readFileSync(dir + testCase, 'utf8'), __dirname + '/cases/' + testCase);
     fs.writeFileSync(dir + testCase.replace(/\.jade$/, '.actual.json'),
                      result.map(JSON.stringify).join('\n'));
-    assert.deepEqual(expected, result);
+    try {
+      assert.deepEqual(expected, result);
+    } catch (ex) {
+    fs.writeFileSync(dir + testCase.replace(/\.jade$/, '.expected.json'),
+                     result.map(JSON.stringify).join('\n'));
+    }
   }
 });
