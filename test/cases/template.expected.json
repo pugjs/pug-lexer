@@ -13,7 +13,11 @@
 {"type":"tag","line":6,"val":"script","selfClosing":false}
 {"type":"attrs","line":6,"attrs":[{"name":"type","val":"'text/x-template'","escaped":true}]}
 {"type":"dot","line":6}
+{"type":"start-pipeless-text","line":6}
 {"type":"text","line":6,"val":"article"}
-{"type":"text","line":6,"val":"\n  h2 {{title}}"}
-{"type":"text","line":6,"val":"\n  p {{description}}"}
+{"type":"newline","line":6}
+{"type":"text","line":6,"val":"  h2 {{title}}"}
+{"type":"newline","line":6}
+{"type":"text","line":6,"val":"  p {{description}}"}
+{"type":"end-pipeless-text","line":6}
 {"type":"eos","line":6}

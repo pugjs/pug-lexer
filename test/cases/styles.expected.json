@@ -4,9 +4,13 @@
 {"type":"indent","line":3,"val":4}
 {"type":"tag","line":3,"val":"style","selfClosing":false}
 {"type":"dot","line":3}
+{"type":"start-pipeless-text","line":3}
 {"type":"text","line":3,"val":"body {"}
-{"type":"text","line":3,"val":"\n  padding: 50px;"}
-{"type":"text","line":3,"val":"\n}"}
+{"type":"newline","line":3}
+{"type":"text","line":3,"val":"  padding: 50px;"}
+{"type":"newline","line":3}
+{"type":"text","line":3,"val":"}"}
+{"type":"end-pipeless-text","line":3}
 {"type":"outdent","line":4}
 {"type":"tag","line":4,"val":"body","selfClosing":false}
 {"type":"indent","line":5,"val":4}

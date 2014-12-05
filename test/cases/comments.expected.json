@@ -14,26 +14,44 @@
 {"type":"text","line":7,"val":"two"}
 {"type":"outdent","line":9}
 {"type":"comment","line":9,"val":"","buffer":true}
+{"type":"start-pipeless-text","line":9}
 {"type":"text","line":9,"val":"ul"}
-{"type":"text","line":9,"val":"\n  li foo"}
-{"type":"text","line":9,"val":"\n"}
+{"type":"newline","line":9}
+{"type":"text","line":9,"val":"  li foo"}
+{"type":"newline","line":9}
+{"type":"text","line":9,"val":""}
+{"type":"end-pipeless-text","line":9}
 {"type":"newline","line":10}
 {"type":"comment","line":10,"val":" block","buffer":true}
+{"type":"start-pipeless-text","line":10}
 {"type":"text","line":10,"val":"// inline follow"}
-{"type":"text","line":10,"val":"\nli three"}
-{"type":"text","line":10,"val":"\n"}
+{"type":"newline","line":10}
+{"type":"text","line":10,"val":"li three"}
+{"type":"newline","line":10}
+{"type":"text","line":10,"val":""}
+{"type":"end-pipeless-text","line":10}
 {"type":"newline","line":11}
 {"type":"comment","line":11,"val":" block","buffer":true}
+{"type":"start-pipeless-text","line":11}
 {"type":"text","line":11,"val":"// inline followed by tags"}
-{"type":"text","line":11,"val":"\nul"}
-{"type":"text","line":11,"val":"\n  li four"}
-{"type":"text","line":11,"val":"\n"}
+{"type":"newline","line":11}
+{"type":"text","line":11,"val":"ul"}
+{"type":"newline","line":11}
+{"type":"text","line":11,"val":"  li four"}
+{"type":"newline","line":11}
+{"type":"text","line":11,"val":""}
+{"type":"end-pipeless-text","line":11}
 {"type":"newline","line":12}
 {"type":"comment","line":12,"val":"if IE lt 9","buffer":true}
+{"type":"start-pipeless-text","line":12}
 {"type":"text","line":12,"val":"// inline"}
-{"type":"text","line":12,"val":"\nscript(src='/lame.js')"}
-{"type":"text","line":12,"val":"\n// end-inline"}
-{"type":"text","line":12,"val":"\n"}
+{"type":"newline","line":12}
+{"type":"text","line":12,"val":"script(src='/lame.js')"}
+{"type":"newline","line":12}
+{"type":"text","line":12,"val":"// end-inline"}
+{"type":"newline","line":12}
+{"type":"text","line":12,"val":""}
+{"type":"end-pipeless-text","line":12}
 {"type":"newline","line":13}
 {"type":"tag","line":13,"val":"p","selfClosing":false}
 {"type":"text","line":13,"val":"five"}

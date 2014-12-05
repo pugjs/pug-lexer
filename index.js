@@ -290,7 +290,7 @@ Lexer.prototype = {
       if (prefix + value.substr(0, indexOfStart)) {
         this.tokens.push(this.tok('text', prefix + value.substr(0, indexOfStart)));
       }
-      this.tokens.push(this.tok('start-interpolation'));
+      this.tokens.push(this.tok('start-jade-interpolation'));
       var child = new this.constructor(value.substr(indexOfStart + 2), this.filename, true);
       var interpolated = child.getTokens();
       for (var i = 0; i < interpolated.length; i++) {
@@ -299,7 +299,7 @@ Lexer.prototype = {
           throw new Error('End of line was reached with no closing bracket for interpolation.');
         }
       }
-      this.tokens.push(this.tok('end-interpolation'));
+      this.tokens.push(this.tok('end-jade-interpolation'));
       this.addText(child.input);
       return;
     }
@@ -921,6 +921,7 @@ Lexer.prototype = {
 
     var indents = captures && captures[1].length;
     if (indents && (this.indentStack.length === 0 || indents > this.indentStack[0])) {
+      this.tokens.push(this.tok('start-pipeless-text'));
       var indent = captures[1];
       var line;
       var tokens = [];
@@ -939,8 +940,10 @@ Lexer.prototype = {
       } while(this.input.length && isMatch);
       while (this.input.length === 0 && tokens[tokens.length - 1] === '') tokens.pop();
       tokens.forEach(function (token, i) {
-        this.addText((i === 0 ? '' : '\n') + token);
+        if (i !== 0) this.tokens.push(this.tok('newline'));
+        this.addText(token);
       }.bind(this));
+      this.tokens.push(this.tok('end-pipeless-text'));
       return true;
     }
   },

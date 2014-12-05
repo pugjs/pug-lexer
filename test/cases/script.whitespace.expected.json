@@ -1,8 +1,14 @@
 {"type":"tag","line":1,"val":"script","selfClosing":false}
 {"type":"dot","line":1}
+{"type":"start-pipeless-text","line":1}
 {"type":"text","line":1,"val":"if (foo) {"}
-{"type":"text","line":1,"val":"\n  "}
-{"type":"text","line":1,"val":"\n  bar();"}
-{"type":"text","line":1,"val":"\n"}
-{"type":"text","line":1,"val":"\n}"}
+{"type":"newline","line":1}
+{"type":"text","line":1,"val":"  "}
+{"type":"newline","line":1}
+{"type":"text","line":1,"val":"  bar();"}
+{"type":"newline","line":1}
+{"type":"text","line":1,"val":""}
+{"type":"newline","line":1}
+{"type":"text","line":1,"val":"}"}
+{"type":"end-pipeless-text","line":1}
 {"type":"eos","line":1}

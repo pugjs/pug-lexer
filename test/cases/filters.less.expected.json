@@ -6,10 +6,15 @@
 {"type":"attrs","line":3,"attrs":[{"name":"type","val":"\"text/css\"","escaped":true}]}
 {"type":"indent","line":4,"val":6}
 {"type":"filter","line":4,"val":"less"}
+{"type":"start-pipeless-text","line":4}
 {"type":"text","line":4,"val":"@pad: 15px;"}
-{"type":"text","line":4,"val":"\nbody {"}
-{"type":"text","line":4,"val":"\n  padding: @pad;"}
-{"type":"text","line":4,"val":"\n}"}
+{"type":"newline","line":4}
+{"type":"text","line":4,"val":"body {"}
+{"type":"newline","line":4}
+{"type":"text","line":4,"val":"  padding: @pad;"}
+{"type":"newline","line":4}
+{"type":"text","line":4,"val":"}"}
+{"type":"end-pipeless-text","line":4}
 {"type":"outdent","line":4}
 {"type":"outdent","line":4}
 {"type":"outdent","line":4}

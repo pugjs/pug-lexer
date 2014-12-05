@@ -9,7 +9,9 @@
 {"type":"attrs","line":6,"attrs":[{"name":"age","val":"user.age","escaped":true}]}
 {"type":"indent","line":7,"val":6}
 {"type":"filter","line":7,"val":"cdata"}
+{"type":"start-pipeless-text","line":7}
 {"type":"text","line":7,"val":"#{user.name}"}
+{"type":"end-pipeless-text","line":7}
 {"type":"outdent","line":7}
 {"type":"outdent","line":7}
 {"type":"outdent","line":7}

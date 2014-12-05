@@ -3,8 +3,11 @@
 {"type":"tag","line":2,"val":"body","selfClosing":false}
 {"type":"indent","line":3,"val":4}
 {"type":"filter","line":3,"val":"markdown"}
+{"type":"start-pipeless-text","line":3}
 {"type":"text","line":3,"val":"This is _some_ awesome **markdown**"}
-{"type":"text","line":3,"val":"\nwhoop."}
+{"type":"newline","line":3}
+{"type":"text","line":3,"val":"whoop."}
+{"type":"end-pipeless-text","line":3}
 {"type":"outdent","line":3}
 {"type":"outdent","line":3}
 {"type":"eos","line":3}
