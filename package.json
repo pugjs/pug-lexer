@@ -1,6 +1,6 @@
 {
   "name": "jade-lexer",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "The jade lexer (takes a string and converts it to an array of tokens)",
   "keywords": [],
   "dependencies": {
