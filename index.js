@@ -317,10 +317,17 @@ Lexer.prototype = {
 
   text: function() {
     var tok = this.scan(/^(?:\| ?| )([^\n]+)/, 'text') ||
-      this.scan(/^\|?( )/, 'text') ||
-      this.scan(/^(<[^\n]*)/, 'text');
+      this.scan(/^\|?( )/, 'text');
     if (tok) {
       this.addText(tok.val);
+      return true;
+    }
+  },
+
+  textHtml: function () {
+    var tok = this.scan(/^(<[^\n]*)/, 'text-html');
+    if (tok) {
+      this.tokens.push(tok);
       return true;
     }
   },
@@ -1002,6 +1009,7 @@ Lexer.prototype = {
       || this.attributesBlock()
       || this.indent()
       || this.text()
+      || this.textHtml()
       || this.comment()
       || this.colon()
       || this.dot()
