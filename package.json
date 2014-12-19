@@ -10,6 +10,7 @@
     "istanbul": "^0.3.2"
   },
   "scripts": {
+    "update-test-cases": "node test/update-test-cases",
     "test": "node test && npm run coverage",
     "coverage": "istanbul cover test"
   },

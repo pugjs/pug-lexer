@@ -287,9 +287,7 @@ Lexer.prototype = {
       return this.addText(value.substr(value.indexOf('\\#[') + 3), prefix);
     }
     if (indexOfStart !== Infinity && indexOfStart < indexOfEnd && indexOfStart < indexOfEscaped) {
-      if (prefix + value.substr(0, indexOfStart)) {
-        this.tokens.push(this.tok('text', prefix + value.substr(0, indexOfStart)));
-      }
+      this.tokens.push(this.tok('text', prefix + value.substr(0, indexOfStart)));
       this.tokens.push(this.tok('start-jade-interpolation'));
       var child = new this.constructor(value.substr(indexOfStart + 2), this.filename, true);
       var interpolated = child.getTokens();
