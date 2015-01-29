@@ -53,7 +53,7 @@ function assertNestingCorrect(exp) {
  */
 
 Lexer.prototype = {
-  
+
   constructor: Lexer,
 
   /**
