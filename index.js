@@ -913,13 +913,13 @@ Lexer.prototype = {
       if (captures && captures[1].length) this.indentRe = re;
     }
 
+
     var indents = captures && captures[1].length;
     if (indents && (this.indentStack.length === 0 || indents > this.indentStack[0])) {
       this.tokens.push(this.tok('start-pipeless-text'));
       var indent = captures[1];
       var tokens = [];
       var isMatch;
-      var line = 0;
       do {
         // text has `\n` as a prefix
         var i = this.input.substr(1).indexOf('\n');
@@ -929,14 +929,15 @@ Lexer.prototype = {
         if (isMatch) {
           // consume test along with `\n` prefix if match
           this.consume(str.length + 1);
-          this.lineno++;
-          if (line !== 0) {
-            this.tokens.push(this.tok('newline'));
-          }
-          this.addText(str.substr(indent.length));
-          line++;
+          tokens.push(str.substr(indent.length));
         }
       } while(this.input.length && isMatch);
+      while (this.input.length === 0 && tokens[tokens.length - 1] === '') tokens.pop();
+      tokens.forEach(function (token, i) {
+        this.lineno++;
+        if (i !== 0) this.tokens.push(this.tok('newline'));
+        this.addText(token);
+      }.bind(this));
       this.tokens.push(this.tok('end-pipeless-text'));
       return true;
     }

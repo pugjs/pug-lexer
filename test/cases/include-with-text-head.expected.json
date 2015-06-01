@@ -5,8 +5,6 @@
 {"type":"dot","line":2}
 {"type":"start-pipeless-text","line":2}
 {"type":"text","line":3,"val":"alert('hello world');"}
-{"type":"newline","line":4}
-{"type":"text","line":4,"val":""}
-{"type":"end-pipeless-text","line":4}
-{"type":"outdent","line":4}
-{"type":"eos","line":4}
+{"type":"end-pipeless-text","line":3}
+{"type":"outdent","line":3}
+{"type":"eos","line":3}

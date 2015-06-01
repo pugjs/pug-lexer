@@ -14,10 +14,8 @@
 {"type":"text","line":7,"val":"  padding: @pad;"}
 {"type":"newline","line":8}
 {"type":"text","line":8,"val":"}"}
-{"type":"newline","line":9}
-{"type":"text","line":9,"val":""}
-{"type":"end-pipeless-text","line":9}
-{"type":"outdent","line":9}
-{"type":"outdent","line":9}
-{"type":"outdent","line":9}
-{"type":"eos","line":9}
+{"type":"end-pipeless-text","line":8}
+{"type":"outdent","line":8}
+{"type":"outdent","line":8}
+{"type":"outdent","line":8}
+{"type":"eos","line":8}

@@ -15,7 +15,5 @@
 {"type":"text","line":8,"val":"when"}
 {"type":"newline","line":9}
 {"type":"text","line":9,"val":"()"}
-{"type":"newline","line":10}
-{"type":"text","line":10,"val":""}
-{"type":"end-pipeless-text","line":10}
-{"type":"eos","line":10}
+{"type":"end-pipeless-text","line":9}
+{"type":"eos","line":9}
