@@ -34,20 +34,6 @@ function Lexer(str, filename, interpolated) {
   this.ended = false;
 };
 
-
-function assertExpression(exp) {
-  //this verifies that a JavaScript expression is valid
-  Function('', 'return (' + exp + ')');
-}
-function assertNestingCorrect(exp) {
-  //this verifies that code is properly nested, but allows
-  //invalid JavaScript such as the contents of `attributes`
-  var res = characterParser(exp)
-  if (res.isNesting()) {
-    throw new Error('Nesting must match on expression `' + exp + '`')
-  }
-}
-
 /**
  * Lexer prototype.
  */
@@ -55,6 +41,37 @@ function assertNestingCorrect(exp) {
 Lexer.prototype = {
 
   constructor: Lexer,
+
+  error: function (message, code) {
+    var err = new Error(message + ' on line ' + this.lineno + ' of ' + (this.filename || 'jade'));
+    err.code = 'JADE:' + code;
+    err.msg = message;
+    err.line = this.lineno;
+    err.filename = this.filename;
+    throw err;
+  },
+  
+  assert: function (value, message) {
+    if (!value) this.error(message, 'ASSERT_FAILED');
+  },
+
+  assertExpression: function (exp) {
+    //this verifies that a JavaScript expression is valid
+    try {
+      Function('', 'return (' + exp + ')');
+    } catch (ex) {
+      this.error('Syntax Error', 'SYNTAX_ERROR');
+    }
+  },
+
+  assertNestingCorrect: function (exp) {
+    //this verifies that code is properly nested, but allows
+    //invalid JavaScript such as the contents of `attributes`
+    var res = characterParser(exp)
+    if (res.isNesting()) {
+      this.error('Nesting must match on expression `' + exp + '`', 'INCORRECT_NESTING')
+    }
+  },
 
   /**
    * Construct a token with the given `type` and `val`.
@@ -112,8 +129,13 @@ Lexer.prototype = {
     assert(start === '(' || start === '{' || start === '[',
            'The start character should be "(", "{" or "["');
     var end = ({'(': ')', '{': '}', '[': ']'})[start];
-    var range = characterParser.parseMax(this.input, {start: skip + 1});
-    assert(this.input[range.end] === end,
+    var range;
+    try {
+      range = characterParser.parseMax(this.input, {start: skip + 1});
+    } catch (ex) {
+      this.error(ex.message, 'BRACKET_MISMATCH');
+    }
+    this.assert(this.input[range.end] === end,
            'start character "' + start + '" should match end character "' + this.input[range.end] + '"');
     return range;
   },
@@ -210,11 +232,11 @@ Lexer.prototype = {
 
   doctype: function() {
     if (this.scan(/^!!! *([^\n]+)?/, 'doctype')) {
-      throw new Error('`!!!` is deprecated, you must now use `doctype`');
+      this.error('`!!!` is deprecated, you must now use `doctype`', 'OLD_DOCTYPE');
     }
     var node = this.scan(/^(?:doctype) *([^\n]+)?/, 'doctype');
     if (node && node.val && node.val.trim() === '5') {
-      throw new Error('`doctype 5` is deprecated, you must now use `doctype html`');
+      this.error('`doctype 5` is deprecated, you must now use `doctype html`', 'OLD_DOCTYPE');
     }
     if (node) {
       this.tokens.push(node);
@@ -279,7 +301,7 @@ Lexer.prototype = {
       for (var i = 0; i < interpolated.length; i++) {
         this.tokens.push(interpolated[i]);
         if (interpolated[i].type === 'eos') {
-          throw new Error('End of line was reached with no closing bracket for interpolation.');
+          this.error('End of line was reached with no closing bracket for interpolation.', 'NO_END_BRACKET');
         }
       }
       this.tokens.push(this.tok('end-jade-interpolation'));
@@ -450,11 +472,11 @@ Lexer.prototype = {
       var filter = captures[1];
       var attrs = captures[2] === '(' ? this.attrs() : null;
       if (!(captures[2] === ' ' || this.input[0] === ' ')) {
-        throw new Error('expected space after include:filter but got ' + JSON.stringify(this.input[0]));
+        this.error('expected space after include:filter but got ' + JSON.stringify(this.input[0]), 'NO_FILTER_SPACE');
       }
       captures = /^ *([^\n]+)/.exec(this.input);
       if (!captures || captures[1].trim() === '') {
-        throw new Error('missing path for include:filter');
+        this.error('missing path for include:filter', 'NO_INCLUDE_PATH');
       }
       this.consume(captures[0].length);
       var path = captures[1];
@@ -519,7 +541,7 @@ Lexer.prototype = {
         // interpolated call
         var match = this.bracketExpression(2 + captures[1].length);
         this.consume(match.end + 1);
-        assertExpression(match.src);
+        this.assertExpression(match.src);
         tok = this.tok('call', '#{'+match.src+'}');
       }
 
@@ -531,7 +553,7 @@ Lexer.prototype = {
           tok.args = range.src;
         }
         if (tok.args) {
-          assertExpression('[' + tok.args + ']');
+          this.assertExpression('[' + tok.args + ']');
         }
       }
       this.tokens.push(tok);
@@ -569,24 +591,24 @@ Lexer.prototype = {
 
       switch (type) {
         case 'if':
-          assertExpression(js)
+          this.assertExpression(js)
           js = 'if (' + js + ')';
           isIf = true;
           break;
         case 'unless':
-          assertExpression(js)
+          this.assertExpression(js)
           js = 'if (!(' + js + '))';
           isIf = true;
           break;
         case 'else if':
-          assertExpression(js)
+          this.assertExpression(js)
           js = 'else if (' + js + ')';
           isIf = true;
           isElse = true;
           break;
         case 'else':
           if (js && js.trim()) {
-            throw new Error('`else` cannot have a condition, perhaps you meant `else if`');
+            this.error('`else` cannot have a condition, perhaps you meant `else if`', 'ELSE_CONDITION');
           }
           js = 'else';
           isElse = true;
@@ -609,7 +631,7 @@ Lexer.prototype = {
     var captures;
     if (captures = /^while +([^\n]+)/.exec(this.input)) {
       this.consume(captures[0].length);
-      assertExpression(captures[1])
+      this.assertExpression(captures[1])
       var tok = this.tok('code', 'while (' + captures[1] + ')');
       tok.requiresBlock = true;
       this.tokens.push(tok);
@@ -627,7 +649,7 @@ Lexer.prototype = {
       this.consume(captures[0].length);
       var tok = this.tok('each', captures[1]);
       tok.key = captures[2] || '$index';
-      assertExpression(captures[3])
+      this.assertExpression(captures[3])
       tok.code = captures[3];
       this.tokens.push(tok);
       return true;
@@ -647,7 +669,7 @@ Lexer.prototype = {
       var tok = this.tok('code', captures[1]);
       tok.escape = flags.charAt(0) === '=';
       tok.buffer = flags.charAt(0) === '=' || flags.charAt(1) === '=';
-      if (tok.buffer) assertExpression(captures[1]);
+      if (tok.buffer) this.assertExpression(captures[1]);
       this.tokens.push(tok);
       return true;
     }
@@ -676,20 +698,17 @@ Lexer.prototype = {
         , str = this.input.substr(1, index-1)
         , tok = this.tok('attrs');
 
-      assertNestingCorrect(str);
+      this.assertNestingCorrect(str);
 
       var quote = '';
+      var self = this;
       var interpolate = function (attr) {
         return attr.replace(/(\\)?#\{(.+)/g, function(_, escape, expr){
           if (escape) return _;
-          try {
-            var range = characterParser.parseMax(expr);
-            if (expr[range.end] !== '}') return _.substr(0, 2) + interpolate(_.substr(2));
-            assertExpression(range.src)
-            return quote + " + (" + range.src + ") + " + quote + interpolate(expr.substr(range.end + 1));
-          } catch (ex) {
-            return _.substr(0, 2) + interpolate(_.substr(2));
-          }
+          var range = characterParser.parseMax(expr);
+          if (expr[range.end] !== '}') return _.substr(0, 2) + interpolate(_.substr(2));
+          self.assertExpression(range.src)
+          return quote + " + (" + range.src + ") + " + quote + interpolate(expr.substr(range.end + 1));
         });
       }
 
@@ -717,7 +736,7 @@ Lexer.prototype = {
           return str[i] === ','
         } else if (loc === 'value' && !state.isNesting()) {
           try {
-            assertExpression(val);
+            self.assertExpression(val);
             if (str[i] === ' ' || str[i] === '\n') {
               for (var x = i; x < str.length; x++) {
                 if (str[x] != ' ' && str[x] != '\n') {
@@ -738,7 +757,7 @@ Lexer.prototype = {
       for (var i = 0; i <= str.length; i++) {
         if (isEndOfAttribute(i)) {
           val = val.trim();
-          if (val) assertExpression(val)
+          if (val) this.assertExpression(val)
           key = key.trim();
           key = key.replace(/^['"]|['"]$/g, '');
           tok.attrs.push({
@@ -755,7 +774,7 @@ Lexer.prototype = {
               if (str[i] === quote) {
                 loc = 'key';
                 if (i + 1 < str.length && [' ', ',', '!', '=', '\n'].indexOf(str[i + 1]) === -1)
-                  throw new Error('Unexpected character ' + str[i + 1] + ' expected ` `, `\\n`, `,`, `!` or `=`');
+                  this.error('Unexpected character ' + str[i + 1] + ' expected ` `, `\\n`, `,`, `!` or `=`', 'INVALID_KEY_CHARACTER');
               } else {
                 key += str[i];
               }
@@ -767,7 +786,7 @@ Lexer.prototype = {
               } else if (str[i] === '!' || str[i] === '=') {
                 escapedAttr = str[i] !== '!';
                 if (str[i] === '!') i++;
-                if (str[i] !== '=') throw new Error('Unexpected character ' + str[i] + ' expected `=`');
+                if (str[i] !== '=') this.error('Unexpected character ' + str[i] + ' expected `=`', 'INVALID_KEY_CHARACTER');
                 loc = 'value';
                 state = characterParser.defaultState();
               } else {
@@ -856,7 +875,7 @@ Lexer.prototype = {
       this.consume(indents + 1);
 
       if (' ' == this.input[0] || '\t' == this.input[0]) {
-        throw new Error('Invalid indentation, you can use tabs or spaces but not both');
+        this.error('Invalid indentation, you can use tabs or spaces but not both', 'INVALID_INDENTATION');
       }
 
       // blank line
@@ -956,7 +975,7 @@ Lexer.prototype = {
   },
 
   fail: function () {
-    throw new Error('unexpected text ' + this.input.substr(0, 5));
+    this.error('unexpected text ' + this.input.substr(0, 5), 'UNEXPECTED_TEXT');
   },
 
   /**
