@@ -14,10 +14,12 @@
 {"type":"attrs","line":6,"attrs":[{"name":"type","val":"'text/x-template'","escaped":true}]}
 {"type":"dot","line":6}
 {"type":"start-pipeless-text","line":6}
-{"type":"text","line":6,"val":"article"}
-{"type":"newline","line":6}
-{"type":"text","line":6,"val":"  h2 {{title}}"}
-{"type":"newline","line":6}
-{"type":"text","line":6,"val":"  p {{description}}"}
-{"type":"end-pipeless-text","line":6}
-{"type":"eos","line":6}
+{"type":"text","line":7,"val":"article"}
+{"type":"newline","line":8}
+{"type":"text","line":8,"val":"  h2 {{title}}"}
+{"type":"newline","line":9}
+{"type":"text","line":9,"val":"  p {{description}}"}
+{"type":"newline","line":10}
+{"type":"text","line":10,"val":""}
+{"type":"end-pipeless-text","line":10}
+{"type":"eos","line":10}

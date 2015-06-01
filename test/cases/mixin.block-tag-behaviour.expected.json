@@ -41,16 +41,16 @@
 {"type":"call","line":19,"val":"article","args":"'Something'"}
 {"type":"dot","line":19}
 {"type":"start-pipeless-text","line":19}
-{"type":"text","line":19,"val":"I'm a much longer"}
-{"type":"newline","line":19}
-{"type":"text","line":19,"val":"text-only article,"}
-{"type":"newline","line":19}
-{"type":"text","line":19,"val":"but you can still"}
-{"type":"newline","line":19}
-{"type":"text","line":19,"val":"inline html tags"}
-{"type":"newline","line":19}
-{"type":"text","line":19,"val":"in me if you want."}
-{"type":"end-pipeless-text","line":19}
-{"type":"outdent","line":19}
-{"type":"outdent","line":19}
-{"type":"eos","line":19}
+{"type":"text","line":20,"val":"I'm a much longer"}
+{"type":"newline","line":21}
+{"type":"text","line":21,"val":"text-only article,"}
+{"type":"newline","line":22}
+{"type":"text","line":22,"val":"but you can still"}
+{"type":"newline","line":23}
+{"type":"text","line":23,"val":"inline html tags"}
+{"type":"newline","line":24}
+{"type":"text","line":24,"val":"in me if you want."}
+{"type":"end-pipeless-text","line":24}
+{"type":"outdent","line":24}
+{"type":"outdent","line":24}
+{"type":"eos","line":24}

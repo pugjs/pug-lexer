@@ -7,12 +7,12 @@
 {"type":"indent","line":4,"val":6}
 {"type":"filter","line":4,"val":"stylus"}
 {"type":"start-pipeless-text","line":4}
-{"type":"text","line":4,"val":"body"}
-{"type":"newline","line":4}
-{"type":"text","line":4,"val":"  padding: 50px"}
-{"type":"end-pipeless-text","line":4}
-{"type":"outdent","line":5}
-{"type":"outdent","line":5}
-{"type":"tag","line":5,"val":"body","selfClosing":false}
-{"type":"outdent","line":6}
-{"type":"eos","line":6}
+{"type":"text","line":5,"val":"body"}
+{"type":"newline","line":6}
+{"type":"text","line":6,"val":"  padding: 50px"}
+{"type":"end-pipeless-text","line":6}
+{"type":"outdent","line":7}
+{"type":"outdent","line":7}
+{"type":"tag","line":7,"val":"body","selfClosing":false}
+{"type":"outdent","line":8}
+{"type":"eos","line":8}
