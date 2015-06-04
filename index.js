@@ -18,14 +18,15 @@ function lex(str, filename) {
  * @api private
  */
 
-function Lexer(str, filename, interpolated) {
+function Lexer(str, filename, options) {
+  options = options || {};
   //Strip any UTF-8 BOM off of the start of `str`, if it exists.
   str = str.replace(/^\uFEFF/, '');
   this.input = str.replace(/\r\n|\r/g, '\n');
   this.filename = filename;
-  this.interpolated = interpolated || false;
+  this.interpolated = options.interpolated || false;
   this.lastIndents = 0;
-  this.lineno = 1;
+  this.lineno = options.startingLine || 1;
   this.indentStack = [];
   this.indentRe = null;
   this.pipeless = false;
@@ -296,8 +297,10 @@ Lexer.prototype = {
     if (indexOfStart !== Infinity && indexOfStart < indexOfEnd && indexOfStart < indexOfEscaped) {
       this.tokens.push(this.tok('text', prefix + value.substr(0, indexOfStart)));
       this.tokens.push(this.tok('start-jade-interpolation'));
-      var child = new this.constructor(value.substr(indexOfStart + 2), this.filename, true);
-      child.lineno = this.lineno;
+      var child = new this.constructor(value.substr(indexOfStart + 2), this.filename, {
+        interpolated: true,
+        startingLine: this.lineno
+      });
       var interpolated = child.getTokens();
       for (var i = 0; i < interpolated.length; i++) {
         this.tokens.push(interpolated[i]);
