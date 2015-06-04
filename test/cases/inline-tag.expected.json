@@ -13,8 +13,8 @@
 {"type":"newline","line":5}
 {"type":"text","line":5,"val":""}
 {"type":"start-jade-interpolation","line":5}
-{"type":"tag","line":1,"val":"strong","selfClosing":false}
-{"type":"text","line":1,"val":"foo"}
+{"type":"tag","line":5,"val":"strong","selfClosing":false}
+{"type":"text","line":5,"val":"foo"}
 {"type":"end-jade-interpolation","line":5}
 {"type":"text","line":5,"val":""}
 {"type":"newline","line":6}
@@ -29,8 +29,8 @@
 {"type":"newline","line":10}
 {"type":"text","line":10,"val":""}
 {"type":"start-jade-interpolation","line":10}
-{"type":"tag","line":1,"val":"strong","selfClosing":false}
-{"type":"text","line":1,"val":"foo"}
+{"type":"tag","line":10,"val":"strong","selfClosing":false}
+{"type":"text","line":10,"val":"foo"}
 {"type":"end-jade-interpolation","line":10}
 {"type":"text","line":10,"val":""}
 {"type":"newline","line":11}
@@ -43,8 +43,8 @@
 {"type":"newline","line":15}
 {"type":"text","line":15,"val":"#["}
 {"type":"start-jade-interpolation","line":15}
-{"type":"tag","line":1,"val":"strong","selfClosing":false}
-{"type":"text","line":1,"val":"escaped"}
+{"type":"tag","line":15,"val":"strong","selfClosing":false}
+{"type":"text","line":15,"val":"escaped"}
 {"type":"end-jade-interpolation","line":15}
 {"type":"text","line":15,"val":""}
 {"type":"end-pipeless-text","line":15}
