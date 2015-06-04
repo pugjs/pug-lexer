@@ -297,6 +297,7 @@ Lexer.prototype = {
       this.tokens.push(this.tok('text', prefix + value.substr(0, indexOfStart)));
       this.tokens.push(this.tok('start-jade-interpolation'));
       var child = new this.constructor(value.substr(indexOfStart + 2), this.filename, true);
+      child.lineno = this.lineno;
       var interpolated = child.getTokens();
       for (var i = 0; i < interpolated.length; i++) {
         this.tokens.push(interpolated[i]);
