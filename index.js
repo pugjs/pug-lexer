@@ -23,6 +23,7 @@ function Lexer(str, filename, options) {
   //Strip any UTF-8 BOM off of the start of `str`, if it exists.
   str = str.replace(/^\uFEFF/, '');
   this.input = str.replace(/\r\n|\r/g, '\n');
+  this.eachCount = 0;
   this.filename = filename;
   this.interpolated = options.interpolated || false;
   this.lastIndents = 0;
@@ -51,7 +52,7 @@ Lexer.prototype = {
     err.filename = this.filename;
     throw err;
   },
-  
+
   assert: function (value, message) {
     if (!value) this.error(message, 'ASSERT_FAILED');
   },
@@ -652,7 +653,8 @@ Lexer.prototype = {
     if (captures = /^(?:- *)?(?:each|for) +([a-zA-Z_$][\w$]*)(?: *, *([a-zA-Z_$][\w$]*))? * in *([^\n]+)/.exec(this.input)) {
       this.consume(captures[0].length);
       var tok = this.tok('each', captures[1]);
-      tok.key = captures[2] || '$index';
+      tok.key = captures[2] || '$$i' + this.eachCount;
+      this.eachCount++;
       this.assertExpression(captures[3])
       tok.code = captures[3];
       this.tokens.push(tok);
@@ -678,7 +680,7 @@ Lexer.prototype = {
       return true;
     }
   },
-  
+
   /**
    * Block code.
    */
