@@ -2,7 +2,7 @@
 {"type":"newline","line":3}
 {"type":"tag","line":3,"val":"fb:users","selfClosing":false}
 {"type":"indent","line":4,"val":2}
-{"type":"each","line":4,"val":"user","key":"$index","code":"users"}
+{"type":"each","line":4,"val":"user","code":"users"}
 {"type":"indent","line":5,"val":4}
 {"type":"tag","line":5,"val":"fb:user","selfClosing":false}
 {"type":"attrs","line":5,"attrs":[{"name":"age","val":"user.age","escaped":true}]}

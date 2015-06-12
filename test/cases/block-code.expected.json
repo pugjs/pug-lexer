@@ -9,7 +9,7 @@
 {"type":"newline","line":5}
 {"type":"blockcode","line":5}
 {"type":"newline","line":6}
-{"type":"each","line":6,"val":"item","key":"$index","code":"list"}
+{"type":"each","line":6,"val":"item","code":"list"}
 {"type":"indent","line":7,"val":2}
 {"type":"blockcode","line":7}
 {"type":"start-pipeless-text","line":7}

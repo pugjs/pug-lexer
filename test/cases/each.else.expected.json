@@ -3,7 +3,7 @@
 {"type":"newline","line":4}
 {"type":"tag","line":4,"val":"ul","selfClosing":false}
 {"type":"indent","line":5,"val":2}
-{"type":"each","line":5,"val":"user","key":"$index","code":"users"}
+{"type":"each","line":5,"val":"user","code":"users"}
 {"type":"indent","line":6,"val":4}
 {"type":"tag","line":6,"val":"li","selfClosing":false}
 {"type":"code","line":6,"val":"user.name","escape":true,"buffer":true}
@@ -20,7 +20,7 @@
 {"type":"indent","line":14,"val":2}
 {"type":"tag","line":14,"val":"ul","selfClosing":false}
 {"type":"indent","line":15,"val":4}
-{"type":"each","line":15,"val":"user","key":"$index","code":"users"}
+{"type":"each","line":15,"val":"user","code":"users"}
 {"type":"indent","line":16,"val":6}
 {"type":"tag","line":16,"val":"li","selfClosing":false}
 {"type":"code","line":16,"val":"user.name","escape":true,"buffer":true}
