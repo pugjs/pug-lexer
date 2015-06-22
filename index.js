@@ -383,10 +383,11 @@ Lexer.prototype = {
   prepend: function() {
     var captures;
     if (captures = /^prepend +([^\n]+)/.exec(this.input)) {
-      this.consume(captures[0].length);
       var mode = 'prepend'
-        , name = captures[1]
+        , name = captures[1].trim()
         , tok = this.tok('block', name);
+      if (!name) return;
+      this.consume(captures[0].length);
       tok.mode = mode;
       this.tokens.push(tok);
       return true;
@@ -400,10 +401,11 @@ Lexer.prototype = {
   append: function() {
     var captures;
     if (captures = /^append +([^\n]+)/.exec(this.input)) {
-      this.consume(captures[0].length);
       var mode = 'append'
-        , name = captures[1]
+        , name = captures[1].trim()
         , tok = this.tok('block', name);
+      if (!name) return;
+      this.consume(captures[0].length);
       tok.mode = mode;
       this.tokens.push(tok);
       return true;
@@ -417,10 +419,11 @@ Lexer.prototype = {
   block: function() {
     var captures;
     if (captures = /^block\b *(?:(prepend|append) +)?([^\n]+)/.exec(this.input)) {
-      this.consume(captures[0].length);
       var mode = captures[1] || 'replace'
-        , name = captures[2]
+        , name = captures[2].trim()
         , tok = this.tok('block', name);
+      if (!name) return;
+      this.consume(captures[0].length);
 
       tok.mode = mode;
       this.tokens.push(tok);
