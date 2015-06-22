@@ -722,7 +722,7 @@ Lexer.prototype = {
    */
   blockCode: function() {
     var tok
-    if (tok = this.scanEndOfLine(/^-[ \t]*/, 'blockcode')) {
+    if (tok = this.scanEndOfLine(/^-/, 'blockcode')) {
       this.tokens.push(tok);
       this.pipeless = true;
       return true;
