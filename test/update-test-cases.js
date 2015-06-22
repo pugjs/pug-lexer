@@ -7,8 +7,14 @@ var lex = require('../');
 var dir = __dirname + '/cases/';
 fs.readdirSync(dir).forEach(function (testCase) {
   if (/\.jade$/.test(testCase)) {
-    var expected = fs.readFileSync(dir + testCase.replace(/\.jade$/, '.expected.json'), 'utf8')
+    var expected;
+    try {
+      expected = fs.readFileSync(dir + testCase.replace(/\.jade$/, '.expected.json'), 'utf8')
                      .split(/\n/).map(JSON.parse);
+    } catch (ex) {
+      if (ex.code !== 'ENOENT') throw ex;
+      expected = null;
+    }
     var result = lex(fs.readFileSync(dir + testCase, 'utf8'), __dirname + '/cases/' + testCase);
     try {
       assert.deepEqual(expected, result);
