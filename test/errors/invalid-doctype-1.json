@@ -1,0 +1,5 @@
+{
+  "msg": "`!!!` is deprecated, you must now use `doctype`",
+  "code": "JADE:OLD_DOCTYPE",
+  "line": 1
+}

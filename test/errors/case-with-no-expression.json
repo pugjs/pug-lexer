@@ -1,0 +1,5 @@
+{
+  "msg": "missing expression for case",
+  "code": "JADE:NO_CASE_EXPRESSION",
+  "line": 1
+}

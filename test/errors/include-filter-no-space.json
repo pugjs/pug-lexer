@@ -1,0 +1,5 @@
+{
+  "msg": "expected space after include:filter but got \"f\"",
+  "code": "JADE:NO_FILTER_SPACE",
+  "line": 1
+}

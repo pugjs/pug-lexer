@@ -1,0 +1,5 @@
+{
+  "msg": "missing expression for while",
+  "code": "JADE:NO_WHILE_EXPRESSION",
+  "line": 1
+}

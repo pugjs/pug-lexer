@@ -1,0 +1,5 @@
+{
+  "msg": "Class names must begin with \"-\", \"_\" or a letter.",
+  "code": "JADE:INVALID_CLASS_NAME",
+  "line": 1
+}

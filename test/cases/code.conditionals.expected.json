@@ -70,4 +70,17 @@
 {"type":"code","line":35,"val":"else","isElse":true,"isIf":false,"requiresBlock":true}
 {"type":"newline","line":36}
 {"type":"class","line":36,"val":"bing"}
-{"type":"eos","line":36}
+{"type":"newline","line":38}
+{"type":"code","line":38,"val":"if ( false)","isElse":false,"isIf":true,"requiresBlock":true}
+{"type":"indent","line":39,"val":2}
+{"type":"class","line":39,"val":"bing"}
+{"type":"outdent","line":40}
+{"type":"code","line":40,"val":"else if ( false)","isElse":true,"isIf":true,"requiresBlock":true}
+{"type":"indent","line":41,"val":2}
+{"type":"class","line":41,"val":"bar"}
+{"type":"outdent","line":42}
+{"type":"code","line":42,"val":"else","isElse":true,"isIf":false,"requiresBlock":true}
+{"type":"indent","line":43,"val":2}
+{"type":"class","line":43,"val":"foo"}
+{"type":"outdent","line":43}
+{"type":"eos","line":43}
