@@ -2,6 +2,7 @@
 
 var assert = require('assert');
 var characterParser = require('character-parser');
+var error = require('jade-error');
 
 module.exports = lex;
 module.exports.Lexer = Lexer;
@@ -23,6 +24,7 @@ function Lexer(str, filename, options) {
   //Strip any UTF-8 BOM off of the start of `str`, if it exists.
   str = str.replace(/^\uFEFF/, '');
   this.input = str.replace(/\r\n|\r/g, '\n');
+  this.originalInput = this.input;
   this.filename = filename;
   this.interpolated = options.interpolated || false;
   this.lastIndents = 0;
@@ -43,17 +45,13 @@ Lexer.prototype = {
 
   constructor: Lexer,
 
-  error: function (message, code) {
-    var err = new Error(message + ' on line ' + this.lineno + ' of ' + (this.filename || 'jade'));
-    err.code = 'JADE:' + code;
-    err.msg = message;
-    err.line = this.lineno;
-    err.filename = this.filename;
+  error: function (code, message) {
+    var err = error(code, message, {line: this.lineno, filename: this.filename, src: this.originalInput});
     throw err;
   },
 
   assert: function (value, message) {
-    if (!value) this.error(message, 'ASSERT_FAILED');
+    if (!value) this.error('ASSERT_FAILED', message);
   },
 
   assertExpression: function (exp) {
@@ -61,7 +59,7 @@ Lexer.prototype = {
     try {
       Function('', 'return (' + exp + ')');
     } catch (ex) {
-      this.error('Syntax Error', 'SYNTAX_ERROR');
+      this.error('SYNTAX_ERROR', 'Syntax Error');
     }
   },
 
@@ -70,7 +68,7 @@ Lexer.prototype = {
     //invalid JavaScript such as the contents of `attributes`
     var res = characterParser(exp)
     if (res.isNesting()) {
-      this.error('Nesting must match on expression `' + exp + '`', 'INCORRECT_NESTING')
+      this.error('INCORRECT_NESTING', 'Nesting must match on expression `' + exp + '`')
     }
   },
 
@@ -148,7 +146,7 @@ Lexer.prototype = {
     try {
       range = characterParser.parseMax(this.input, {start: skip + 1});
     } catch (ex) {
-      this.error(ex.message, 'BRACKET_MISMATCH');
+      this.error('BRACKET_MISMATCH', ex.message);
     }
     this.assert(this.input[range.end] === end,
            'start character "' + start + '" should match end character "' + this.input[range.end] + '"');
@@ -247,11 +245,11 @@ Lexer.prototype = {
 
   doctype: function() {
     if (this.scan(/^!!! *([^\n]+)?/, 'doctype')) {
-      this.error('`!!!` is deprecated, you must now use `doctype`', 'OLD_DOCTYPE');
+      this.error('OLD_DOCTYPE', '`!!!` is deprecated, you must now use `doctype`');
     }
     var node = this.scanEndOfLine(/^(?:doctype) *([^\n]+)?/, 'doctype');
     if (node && node.val && node.val.trim() === '5') {
-      this.error('`doctype 5` is deprecated, you must now use `doctype html`', 'OLD_DOCTYPE');
+      this.error('OLD_DOCTYPE', '`doctype 5` is deprecated, you must now use `doctype html`');
     }
     if (node) {
       this.tokens.push(node);
@@ -270,7 +268,7 @@ Lexer.prototype = {
       return true;
     }
     if (/^#/.test(this.input)) {
-      this.error('"' + /.[^ \t\(\#\.\:]*/.exec(this.input.substr(1))[0] + '" is not a valid ID.', 'INVALID_ID');
+      this.error('INVALID_ID', '"' + /.[^ \t\(\#\.\:]*/.exec(this.input.substr(1))[0] + '" is not a valid ID.');
     }
   },
 
@@ -285,13 +283,13 @@ Lexer.prototype = {
       return true;
     }
     if (/^\.\-/i.test(this.input)) {
-      this.error('If a class name begins with a "-", it must be followed by a letter or underscore.', 'INVALID_CLASS_NAME');
+      this.error('INVALID_CLASS_NAME', 'If a class name begins with a "-", it must be followed by a letter or underscore.');
     }
     if (/^\.[0-9]/i.test(this.input)) {
-      this.error('Class names must begin with "-", "_" or a letter.', 'INVALID_CLASS_NAME');
+      this.error('INVALID_CLASS_NAME', 'Class names must begin with "-", "_" or a letter.');
     }
     if (/^\./.test(this.input)) {
-      this.error('"' + /.[^ \t\(\#\.\:]*/.exec(this.input.substr(1))[0] + '" is not a valid class name.  Class names must begin with "-", "_" or a letter and can only contain "_", "-", a-z and 0-9.', 'INVALID_CLASS_NAME');
+      this.error('INVALID_CLASS_NAME', '"' + /.[^ \t\(\#\.\:]*/.exec(this.input.substr(1))[0] + '" is not a valid class name.  Class names must begin with "-", "_" or a letter and can only contain "_", "-", a-z and 0-9.');
     }
   },
 
@@ -331,7 +329,7 @@ Lexer.prototype = {
       for (var i = 0; i < interpolated.length; i++) {
         this.tokens.push(interpolated[i]);
         if (interpolated[i].type === 'eos') {
-          this.error('End of line was reached with no closing bracket for interpolation.', 'NO_END_BRACKET');
+          this.error('NO_END_BRACKET', 'End of line was reached with no closing bracket for interpolation.');
         }
       }
       this.tokens.push(this.tok('end-jade-interpolation'));
@@ -482,7 +480,7 @@ Lexer.prototype = {
       return true;
     }
     if (this.scan(/^include\b/)) {
-      this.error('missing path for include', 'NO_INCLUDE_PATH');
+      this.error('NO_INCLUDE_PATH', 'missing path for include');
     }
   },
 
@@ -497,11 +495,11 @@ Lexer.prototype = {
       var filter = captures[1];
       var attrs = captures[2] === '(' ? this.attrs() : null;
       if (!(captures[2] === ' ' || this.input[0] === ' ')) {
-        this.error('expected space after include:filter but got ' + JSON.stringify(this.input[0]), 'NO_FILTER_SPACE');
+        this.error('NO_FILTER_SPACE', 'expected space after include:filter but got ' + JSON.stringify(this.input[0]));
       }
       captures = /^ *([^\n]+)/.exec(this.input);
       if (!captures || captures[1].trim() === '') {
-        this.error('missing path for include:filter', 'NO_INCLUDE_PATH');
+        this.error('NO_INCLUDE_PATH', 'missing path for include:filter');
       }
       this.consume(captures[0].length);
       var path = captures[1];
@@ -511,7 +509,7 @@ Lexer.prototype = {
       this.tokens.push(tok);
       return true;
     } else if (/^include:([\w\-]+)/.test(this.input)) {
-      this.error('missing path for include:filter', 'NO_INCLUDE_PATH');
+      this.error('NO_INCLUDE_PATH', 'missing path for include:filter');
     }
   },
 
@@ -526,7 +524,7 @@ Lexer.prototype = {
       return true;
     }
     if (this.scan(/^case\b/)) {
-      this.error('missing expression for case', 'NO_CASE_EXPRESSION');
+      this.error('NO_CASE_EXPRESSION', 'missing expression for case');
     }
   },
 
@@ -541,7 +539,7 @@ Lexer.prototype = {
       return true;
     }
     if (this.scan(/^when\b/)) {
-      this.error('missing expression for when', 'NO_WHEN_EXPRESSION');
+      this.error('NO_WHEN_EXPRESSION', 'missing expression for when');
     }
   },
 
@@ -556,7 +554,7 @@ Lexer.prototype = {
       return true;
     }
     if (this.scan(/^default\b/)) {
-      this.error('default should not have an expression', 'DEFAULT_WITH_EXPRESSION');
+      this.error('DEFAULT_WITH_EXPRESSION', 'default should not have an expression');
     }
   },
 
@@ -644,7 +642,7 @@ Lexer.prototype = {
           break;
         case 'else':
           if (js && js.trim()) {
-            this.error('`else` cannot have a condition, perhaps you meant `else if`', 'ELSE_CONDITION');
+            this.error('ELSE_CONDITION', '`else` cannot have a condition, perhaps you meant `else if`');
           }
           js = 'else';
           isElse = true;
@@ -674,7 +672,7 @@ Lexer.prototype = {
       return true;
     }
     if (this.scan(/^while\b/)) {
-      this.error('missing expression for while', 'NO_WHILE_EXPRESSION');
+      this.error('NO_WHILE_EXPRESSION', 'missing expression for while');
     }
   },
 
@@ -694,7 +692,7 @@ Lexer.prototype = {
       return true;
     }
     if (this.scan(/^(?:each|for)\b/)) {
-      this.error('malformed each', 'MALFORMED_EACH');
+      this.error('MALFORMED_EACH', 'malformed each');
     }
   },
 
@@ -815,7 +813,7 @@ Lexer.prototype = {
               if (str[i] === quote) {
                 loc = 'key';
                 if (i + 1 < str.length && [' ', ',', '!', '=', '\n'].indexOf(str[i + 1]) === -1)
-                  this.error('Unexpected character ' + str[i + 1] + ' expected ` `, `\\n`, `,`, `!` or `=`', 'INVALID_KEY_CHARACTER');
+                  this.error('INVALID_KEY_CHARACTER', 'Unexpected character ' + str[i + 1] + ' expected ` `, `\\n`, `,`, `!` or `=`');
               } else {
                 key += str[i];
               }
@@ -827,7 +825,7 @@ Lexer.prototype = {
               } else if (str[i] === '!' || str[i] === '=') {
                 escapedAttr = str[i] !== '!';
                 if (str[i] === '!') i++;
-                if (str[i] !== '=') this.error('Unexpected character ' + str[i] + ' expected `=`', 'INVALID_KEY_CHARACTER');
+                if (str[i] !== '=') this.error('INVALID_KEY_CHARACTER', 'Unexpected character ' + str[i] + ' expected `=`');
                 loc = 'value';
                 state = characterParser.defaultState();
               } else {
@@ -916,7 +914,7 @@ Lexer.prototype = {
       this.consume(indents + 1);
 
       if (' ' == this.input[0] || '\t' == this.input[0]) {
-        this.error('Invalid indentation, you can use tabs or spaces but not both', 'INVALID_INDENTATION');
+        this.error('INVALID_INDENTATION', 'Invalid indentation, you can use tabs or spaces but not both');
       }
 
       // blank line
@@ -1016,7 +1014,7 @@ Lexer.prototype = {
   },
 
   fail: function () {
-    this.error('unexpected text ' + this.input.substr(0, 5), 'UNEXPECTED_TEXT');
+    this.error('UNEXPECTED_TEXT', 'unexpected text ' + this.input.substr(0, 5));
   },
 
   /**
