@@ -9,5 +9,18 @@
 {"type":"newline","line":5}
 {"type":"text","line":5,"val":"})()"}
 {"type":"end-pipeless-text","line":5}
-{"type":"outdent","line":5}
-{"type":"eos","line":5}
+{"type":"outdent","line":6}
+{"type":"tag","line":6,"val":"script","selfClosing":false}
+{"type":"indent","line":7,"val":2}
+{"type":"filter","line":7,"val":"cdata"}
+{"type":"filter","line":7,"val":"uglify-js"}
+{"type":"filter","line":7,"val":"coffee-script"}
+{"type":"start-pipeless-text","line":7}
+{"type":"text","line":8,"val":"(->"}
+{"type":"newline","line":9}
+{"type":"text","line":9,"val":"  console.log 'test'"}
+{"type":"newline","line":10}
+{"type":"text","line":10,"val":")()"}
+{"type":"end-pipeless-text","line":10}
+{"type":"outdent","line":10}
+{"type":"eos","line":10}
