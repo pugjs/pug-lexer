@@ -12,7 +12,7 @@
 {"type":"tag","line":9,"val":"script","selfClosing":false}
 {"type":"attrs","line":9,"attrs":[{"name":"type","val":"\"text/javascript\"","escaped":true}]}
 {"type":"indent","line":10,"val":4}
-{"type":"include","line":10,"val":"auxiliary/includable.js","filter":"js","attrs":null}
+{"type":"include","line":10,"val":"auxiliary/includable.js","filter":"verbatim","attrs":null}
 {"type":"outdent","line":11}
 {"type":"outdent","line":11}
 {"type":"eos","line":11}

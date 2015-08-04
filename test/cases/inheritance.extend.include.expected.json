@@ -1,5 +1,5 @@
 {"type":"newline","line":2}
-{"type":"extends","line":2,"val":"auxiliary/layout.include"}
+{"type":"extends","line":2,"val":"auxiliary/layout.include.jade"}
 {"type":"newline","line":4}
 {"type":"block","line":4,"val":"head","mode":"replace"}
 {"type":"indent","line":5,"val":2}
@@ -21,5 +21,5 @@
 {"type":"newline","line":13}
 {"type":"tag","line":13,"val":"p","selfClosing":false}
 {"type":"text","line":13,"val":"Now we can extend included blocks!"}
-{"type":"outdent","line":13}
-{"type":"eos","line":13}
+{"type":"outdent","line":14}
+{"type":"eos","line":14}

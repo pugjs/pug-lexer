@@ -1,0 +1,7 @@
+{"type":"extends","line":1,"val":"./auxiliary/1794-extends.jade"}
+{"type":"newline","line":3}
+{"type":"block","line":3,"val":"content","mode":"replace"}
+{"type":"indent","line":4,"val":2}
+{"type":"include","line":4,"val":"./auxiliary/1794-include.jade"}
+{"type":"outdent","line":4}
+{"type":"eos","line":4}

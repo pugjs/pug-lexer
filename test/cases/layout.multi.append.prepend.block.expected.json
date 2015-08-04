@@ -24,7 +24,7 @@
 {"type":"block","line":12,"val":"content","mode":"prepend"}
 {"type":"indent","line":13,"val":1}
 {"type":"tag","line":13,"val":"p","selfClosing":false}
-{"type":"class","line":13,"val":"first"}
+{"type":"class","line":13,"val":"last"}
 {"type":"class","line":13,"val":"prepend"}
 {"type":"text","line":13,"val":"Last prepend must appear at top"}
 {"type":"outdent","line":15}

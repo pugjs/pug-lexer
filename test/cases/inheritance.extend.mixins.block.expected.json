@@ -1,4 +1,4 @@
-{"type":"extends","line":1,"val":"auxiliary/inheritance.extend.mixin.block"}
+{"type":"extends","line":1,"val":"auxiliary/inheritance.extend.mixin.block.jade"}
 {"type":"newline","line":3}
 {"type":"block","line":3,"val":"content","mode":"replace"}
 {"type":"indent","line":4,"val":2}
