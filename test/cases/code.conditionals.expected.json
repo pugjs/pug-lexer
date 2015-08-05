@@ -55,7 +55,6 @@
 {"type":"text","line":27,"val":"yay"}
 {"type":"outdent","line":29}
 {"type":"outdent","line":29}
-{"type":"comment","line":29,"val":" allow empty blocks","buffer":false}
 {"type":"newline","line":30}
 {"type":"code","line":30,"val":"if ( false)","isElse":false,"isIf":true,"requiresBlock":true}
 {"type":"newline","line":31}

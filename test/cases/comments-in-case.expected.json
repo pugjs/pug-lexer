@@ -8,7 +8,6 @@
 {"type":"newline","line":5}
 {"type":"case","line":5,"val":"s"}
 {"type":"indent","line":6,"val":5}
-{"type":"comment","line":6,"val":" Comment","buffer":false}
 {"type":"newline","line":7}
 {"type":"when","line":7,"val":"'this'"}
 {"type":"indent","line":8,"val":7}

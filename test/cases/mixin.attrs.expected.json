@@ -96,7 +96,6 @@
 {"type":"attrs","line":36,"attrs":[{"name":"attr3","val":"'baz'","escaped":true},{"name":"data-foo","val":"val","escaped":true},{"name":"data-bar","val":"val","escaped":false},{"name":"class","val":"classes","escaped":true}]}
 {"type":"class","line":36,"val":"thunk"}
 {"type":"newline","line":38}
-{"type":"comment","line":38,"val":" Regression test for #1424","buffer":false}
 {"type":"newline","line":39}
 {"type":"mixin","line":39,"val":"work_filmstrip_item","args":"work"}
 {"type":"indent","line":40,"val":2}
