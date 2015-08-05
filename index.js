@@ -32,6 +32,8 @@ function Lexer(str, filename, options) {
   this.indentStack = [];
   this.indentRe = null;
   this.pipeless = false;
+  // Allow pipeless text but don't push them to tokens
+  this.pipelessIgnore = false;
 
   this.tokens = [];
   this.ended = false;
@@ -191,6 +193,10 @@ Lexer.prototype = {
       this.consume(captures[0].length);
       var tok = this.tok('comment', captures[2]);
       tok.buffer = '-' != captures[1];
+      if (!tok.buffer) {
+        this.pipelessIgnore = true;
+        return true;
+      }
       this.pipeless = true;
       this.tokens.push(tok);
       return true;
@@ -920,6 +926,7 @@ Lexer.prototype = {
       // blank line
       if ('\n' == this.input[0]) {
         this.pipeless = false;
+        this.pipelessIgnore = false;
         return this.tok('newline');
       }
 
@@ -939,17 +946,18 @@ Lexer.prototype = {
       }
 
       this.pipeless = false;
+      this.pipelessIgnore = false;
       return true;
     }
   },
 
   /**
    * Pipe-less text consumed only when
-   * pipeless is true;
+   * pipeless or pipelessIgnore is true;
    */
 
   pipelessText: function() {
-    if (!this.pipeless) return;
+    if (!this.pipeless && !this.pipelessIgnore) return;
     var captures, re;
 
     // established regexp
@@ -974,7 +982,7 @@ Lexer.prototype = {
 
     var indents = captures && captures[1].length;
     if (indents && (this.indentStack.length === 0 || indents > this.indentStack[0])) {
-      this.tokens.push(this.tok('start-pipeless-text'));
+      this.pipelessIgnore || this.tokens.push(this.tok('start-pipeless-text'));
       var indent = captures[1];
       var tokens = [];
       var isMatch;
@@ -991,6 +999,7 @@ Lexer.prototype = {
         }
       } while(this.input.length && isMatch);
       while (this.input.length === 0 && tokens[tokens.length - 1] === '') tokens.pop();
+      if (this.pipelessIgnore) return true;
       tokens.forEach(function (token, i) {
         this.lineno++;
         if (i !== 0) this.tokens.push(this.tok('newline'));
