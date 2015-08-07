@@ -1,0 +1,13 @@
+{"type":"mixin","line":1,"val":"linkit","args":"url"}
+{"type":"indent","line":2,"val":2}
+{"type":"tag","line":2,"val":"a","selfClosing":false}
+{"type":"attrs","line":2,"attrs":[{"name":"href","val":"url","escaped":true}]}
+{"type":"code","line":2,"val":"url","escape":true,"buffer":true}
+{"type":"outdent","line":4}
+{"type":"tag","line":4,"val":"p","selfClosing":false}
+{"type":"text","line":4,"val":"This also works "}
+{"type":"start-jade-interpolation","line":4}
+{"type":"call","line":4,"val":"linkit","args":"'http://www.bing.com'"}
+{"type":"end-jade-interpolation","line":4}
+{"type":"text","line":4,"val":" so hurrah for Jade"}
+{"type":"eos","line":4}
