@@ -18,7 +18,7 @@
 {"type":"indent","line":10,"val":2}
 {"type":"tag","line":10,"val":"li","selfClosing":false}
 {"type":"indent","line":11,"val":4}
-{"type":"code","line":11,"val":"if ( attributes.href)","isElse":false,"isIf":true,"requiresBlock":true}
+{"type":"if","line":11,"val":"attributes.href"}
 {"type":"indent","line":12,"val":6}
 {"type":"tag","line":12,"val":"a","selfClosing":false}
 {"type":"&attributes","line":12,"val":"attributes"}
@@ -30,7 +30,7 @@
 {"type":"mixin-block","line":14}
 {"type":"outdent","line":15}
 {"type":"outdent","line":15}
-{"type":"code","line":15,"val":"else","isElse":true,"isIf":false,"requiresBlock":true}
+{"type":"else","line":15,"val":""}
 {"type":"indent","line":16,"val":6}
 {"type":"tag","line":16,"val":"span","selfClosing":false}
 {"type":"&attributes","line":16,"val":"attributes"}
