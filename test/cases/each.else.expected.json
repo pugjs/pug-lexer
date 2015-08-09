@@ -8,7 +8,7 @@
 {"type":"tag","line":6,"val":"li","selfClosing":false}
 {"type":"code","line":6,"val":"user.name","escape":true,"buffer":true}
 {"type":"outdent","line":7}
-{"type":"code","line":7,"val":"else","isElse":true,"isIf":false,"requiresBlock":true}
+{"type":"else","line":7,"val":""}
 {"type":"indent","line":8,"val":4}
 {"type":"tag","line":8,"val":"li","selfClosing":false}
 {"type":"text","line":8,"val":"no users!"}
@@ -16,7 +16,7 @@
 {"type":"outdent","line":11}
 {"type":"code","line":11,"val":"var users = [{ name: 'tobi', friends: ['loki'] }, { name: 'loki' }]","escape":false,"buffer":false}
 {"type":"newline","line":13}
-{"type":"code","line":13,"val":"if ( users)","isElse":false,"isIf":true,"requiresBlock":true}
+{"type":"if","line":13,"val":"users"}
 {"type":"indent","line":14,"val":2}
 {"type":"tag","line":14,"val":"ul","selfClosing":false}
 {"type":"indent","line":15,"val":4}
@@ -25,7 +25,7 @@
 {"type":"tag","line":16,"val":"li","selfClosing":false}
 {"type":"code","line":16,"val":"user.name","escape":true,"buffer":true}
 {"type":"outdent","line":17}
-{"type":"code","line":17,"val":"else","isElse":true,"isIf":false,"requiresBlock":true}
+{"type":"else","line":17,"val":""}
 {"type":"indent","line":18,"val":6}
 {"type":"tag","line":18,"val":"li","selfClosing":false}
 {"type":"text","line":18,"val":"no users!"}
@@ -41,7 +41,7 @@
 {"type":"tag","line":24,"val":"li","selfClosing":false}
 {"type":"text","line":24,"val":"#{key}: #{val}"}
 {"type":"outdent","line":25}
-{"type":"code","line":25,"val":"else","isElse":true,"isIf":false,"requiresBlock":true}
+{"type":"else","line":25,"val":""}
 {"type":"indent","line":26,"val":4}
 {"type":"tag","line":26,"val":"li","selfClosing":false}
 {"type":"text","line":26,"val":"user has no details!"}
@@ -56,7 +56,7 @@
 {"type":"tag","line":32,"val":"li","selfClosing":false}
 {"type":"text","line":32,"val":"#{key}: #{val}"}
 {"type":"outdent","line":33}
-{"type":"code","line":33,"val":"else","isElse":true,"isIf":false,"requiresBlock":true}
+{"type":"else","line":33,"val":""}
 {"type":"indent","line":34,"val":4}
 {"type":"tag","line":34,"val":"li","selfClosing":false}
 {"type":"text","line":34,"val":"user has no details!"}
@@ -86,7 +86,7 @@
 {"type":"tag","line":47,"val":"li","selfClosing":false}
 {"type":"text","line":47,"val":"#{key}: #{val}"}
 {"type":"outdent","line":48}
-{"type":"code","line":48,"val":"else","isElse":true,"isIf":false,"requiresBlock":true}
+{"type":"else","line":48,"val":""}
 {"type":"indent","line":49,"val":4}
 {"type":"tag","line":49,"val":"li","selfClosing":false}
 {"type":"text","line":49,"val":"user has no details!"}

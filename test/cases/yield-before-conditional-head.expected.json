@@ -5,7 +5,7 @@
 {"type":"newline","line":3}
 {"type":"yield","line":3}
 {"type":"newline","line":4}
-{"type":"code","line":4,"val":"if ( false)","isElse":false,"isIf":true,"requiresBlock":true}
+{"type":"if","line":4,"val":"false"}
 {"type":"indent","line":5,"val":4}
 {"type":"tag","line":5,"val":"script","selfClosing":false}
 {"type":"attrs","line":5,"attrs":[{"name":"src","val":"'/jquery.ui.js'","escaped":true}]}

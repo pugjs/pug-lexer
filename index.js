@@ -618,41 +618,30 @@ Lexer.prototype = {
     var captures;
     if (captures = /^(if|unless|else if|else)\b([^\n]*)/.exec(this.input)) {
       this.consume(captures[0].length);
-      var type = captures[1]
-      var js = captures[2];
-      var isIf = false;
-      var isElse = false;
+      var type = captures[1].replace(/ /g, '-');
+      var js = captures[2] && captures[2].trim();
 
       switch (type) {
         case 'if':
-          this.assertExpression(js)
-          js = 'if (' + js + ')';
-          isIf = true;
+        case 'else-if':
+          this.assertExpression(js);
           break;
         case 'unless':
-          this.assertExpression(js)
-          js = 'if (!(' + js + '))';
-          isIf = true;
-          break;
-        case 'else if':
-          this.assertExpression(js)
-          js = 'else if (' + js + ')';
-          isIf = true;
-          isElse = true;
+          this.assertExpression(js);
+          js = '!(' + js + ')';
+          type = 'if';
           break;
         case 'else':
-          if (js && js.trim()) {
-            this.error('ELSE_CONDITION', '`else` cannot have a condition, perhaps you meant `else if`');
+          if (js) {
+            this.error(
+              'ELSE_CONDITION',
+              '`else` cannot have a condition, perhaps you meant `else if`'
+            );
           }
-          js = 'else';
-          isElse = true;
           break;
       }
-      var tok = this.tok('code', js);
-      tok.isElse = isElse;
-      tok.isIf = isIf;
-      tok.requiresBlock = true;
-      this.tokens.push(tok);
+      // type can be "if", "else-if" and "else"
+      this.tokens.push(this.tok(type, js));
       return true;
     }
   },
@@ -666,9 +655,7 @@ Lexer.prototype = {
     if (captures = /^while +([^\n]+)/.exec(this.input)) {
       this.consume(captures[0].length);
       this.assertExpression(captures[1])
-      var tok = this.tok('code', 'while (' + captures[1] + ')');
-      tok.requiresBlock = true;
-      this.tokens.push(tok);
+      this.tokens.push(this.tok('while', captures[1]));
       return true;
     }
     if (this.scan(/^while\b/)) {
