@@ -5,7 +5,6 @@
 {"type":"text","line":3,"val":"        \"cuatro\", \"cinco\", \"seis\"];"}
 {"type":"end-pipeless-text","line":3}
 {"type":"newline","line":4}
-{"type":"comment","line":4,"val":" Without a block, the element is accepted and no code is generated","buffer":false}
 {"type":"newline","line":5}
 {"type":"blockcode","line":5}
 {"type":"newline","line":6}

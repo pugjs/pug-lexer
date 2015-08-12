@@ -1,11 +1,8 @@
-{"type":"comment","line":1,"val":" see https://github.com/jadejs/jade/issues/1589","buffer":false}
-{"type":"text","line":2,"val":""}
 {"type":"newline","line":3}
 {"type":"code","line":3,"val":"var ajax = true","escape":false,"buffer":false}
 {"type":"newline","line":5}
 {"type":"code","line":5,"val":"if( ajax )","escape":false,"buffer":false}
 {"type":"indent","line":6,"val":4}
-{"type":"comment","line":6,"val":" return only contents if ajax requests","buffer":false}
 {"type":"newline","line":7}
 {"type":"block","line":7,"val":"contents","mode":"replace"}
 {"type":"indent","line":8,"val":8}
@@ -15,7 +12,6 @@
 {"type":"outdent","line":10}
 {"type":"code","line":10,"val":"else","escape":false,"buffer":false}
 {"type":"indent","line":11,"val":4}
-{"type":"comment","line":11,"val":" return all html","buffer":false}
 {"type":"newline","line":12}
 {"type":"doctype","line":12,"val":"html"}
 {"type":"newline","line":13}
