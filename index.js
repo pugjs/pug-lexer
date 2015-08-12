@@ -751,9 +751,9 @@ Lexer.prototype = {
         if (key.trim() === '') return false;
         if (i === str.length) return true;
         if (loc === 'key') {
-          if (str[i] === ' ' || str[i] === '\n') {
+          if (str[i] === ' ' || str[i] === '\n' || str[i] === '\t') {
             for (var x = i; x < str.length; x++) {
-              if (str[x] != ' ' && str[x] != '\n') {
+              if (str[x] != ' ' && str[x] != '\n' && str[x] != '\t') {
                 if (str[x] === '=' || str[x] === '!' || str[x] === ',') return false;
                 else return true;
               }
@@ -763,9 +763,9 @@ Lexer.prototype = {
         } else if (loc === 'value' && !state.isNesting()) {
           try {
             self.assertExpression(val);
-            if (str[i] === ' ' || str[i] === '\n') {
+            if (str[i] === ' ' || str[i] === '\n' || str[i] === '\t') {
               for (var x = i; x < str.length; x++) {
-                if (str[x] != ' ' && str[x] != '\n') {
+                if (str[x] != ' ' && str[x] != '\n' && str[x] != '\t') {
                   if (characterParser.isPunctuator(str[x]) && str[x] != '"' && str[x] != "'") return false;
                   else return true;
                 }
@@ -799,8 +799,8 @@ Lexer.prototype = {
             case 'key-char':
               if (str[i] === quote) {
                 loc = 'key';
-                if (i + 1 < str.length && [' ', ',', '!', '=', '\n'].indexOf(str[i + 1]) === -1)
-                  this.error('INVALID_KEY_CHARACTER', 'Unexpected character ' + str[i + 1] + ' expected ` `, `\\n`, `,`, `!` or `=`');
+                if (i + 1 < str.length && [' ', ',', '!', '=', '\n', '\t'].indexOf(str[i + 1]) === -1)
+                  this.error('INVALID_KEY_CHARACTER', 'Unexpected character ' + str[i + 1] + ' expected ` `, `\\n`, `\t`, `,`, `!` or `=`');
               } else {
                 key += str[i];
               }
