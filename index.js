@@ -688,13 +688,24 @@ Lexer.prototype = {
   code: function() {
     var captures;
     if (captures = /^(!?=|-)[ \t]*([^\n]+)/.exec(this.input)) {
-      this.consume(captures[0].length);
       var flags = captures[1];
-      captures[1] = captures[2];
-      var tok = this.tok('code', captures[1]);
+      var code = captures[2];
+      var shortened = 0;
+      if (this.interpolated) {
+        var parsed;
+        try {
+          parsed = characterParser.parseMaxBracket(code, ']');
+        } catch (err) {
+          this.error('NO_END_BRACKET', 'End of line was reached with no closing bracket for interpolation.');
+        }
+        shortened = code.length - parsed.end;
+        code = parsed.src;
+      }
+      this.consume(captures[0].length - shortened);
+      var tok = this.tok('code', code);
       tok.escape = flags.charAt(0) === '=';
       tok.buffer = flags.charAt(0) === '=' || flags.charAt(1) === '=';
-      if (tok.buffer) this.assertExpression(captures[1]);
+      if (tok.buffer) this.assertExpression(code);
       this.tokens.push(tok);
       return true;
     }

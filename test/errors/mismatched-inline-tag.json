@@ -1,0 +1,5 @@
+{
+  "msg": "End of line was reached with no closing bracket for interpolation.",
+  "code": "JADE:NO_END_BRACKET",
+  "line": 2
+}
