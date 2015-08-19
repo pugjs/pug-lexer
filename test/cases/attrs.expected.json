@@ -83,10 +83,16 @@
 {"type":"newline","line":31}
 {"type":"tag","line":31,"val":"foo","selfClosing":false}
 {"type":"attrs","line":31,"attrs":[{"name":"abc","val":true,"escaped":true},{"name":"def","val":true,"escaped":false}]}
-{"type":"newline","line":34}
-{"type":"code","line":34,"val":"var attrs = {foo: 'bar', bar: '<baz>'}","escape":false,"buffer":false}
-{"type":"newline","line":36}
-{"type":"tag","line":36,"val":"div","selfClosing":false}
-{"type":"&attributes","line":36,"val":"attrs"}
-{"type":"newline","line":37}
-{"type":"eos","line":37}
+{"type":"newline","line":33}
+{"type":"tag","line":33,"val":"foo","selfClosing":false}
+{"type":"attrs","line":33,"attrs":[{"name":"abc","val":true,"escaped":true},{"name":"def","val":true,"escaped":false}]}
+{"type":"newline","line":35}
+{"type":"tag","line":35,"val":"foo","selfClosing":false}
+{"type":"attrs","line":35,"attrs":[{"name":"abc","val":true,"escaped":true},{"name":"def","val":true,"escaped":false}]}
+{"type":"newline","line":38}
+{"type":"code","line":38,"val":"var attrs = {foo: 'bar', bar: '<baz>'}","escape":false,"buffer":false}
+{"type":"newline","line":40}
+{"type":"tag","line":40,"val":"div","selfClosing":false}
+{"type":"&attributes","line":40,"val":"attrs"}
+{"type":"newline","line":41}
+{"type":"eos","line":41}
