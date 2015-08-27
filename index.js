@@ -159,6 +159,9 @@ Lexer.prototype = {
 
   eos: function() {
     if (this.input.length) return;
+    if (this.interpolated) {
+      this.error('NO_END_BRACKET', 'End of line was reached with no closing bracket for interpolation.');
+    }
     for (var i = 0; i < this.indentStack.length; i++) {
       this.tokens.push(this.tok('outdent'));
     }
@@ -326,12 +329,7 @@ Lexer.prototype = {
         startingLine: this.lineno
       });
       var interpolated = child.getTokens();
-      for (var i = 0; i < interpolated.length; i++) {
-        this.tokens.push(interpolated[i]);
-        if (interpolated[i].type === 'eos') {
-          this.error('NO_END_BRACKET', 'End of line was reached with no closing bracket for interpolation.');
-        }
-      }
+      this.tokens.push.apply(this.tokens, interpolated);
       this.tokens.push(this.tok('end-jade-interpolation'));
       this.addText(child.input);
       return;
