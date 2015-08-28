@@ -32,25 +32,56 @@
 {"type":"text","line":18,"val":""}
 {"type":"end-pipeless-text","line":18}
 {"type":"newline","line":19}
-{"type":"tag","line":19,"val":"pre","selfClosing":false}
-{"type":"indent","line":20,"val":2}
-{"type":"text","line":20,"val":"foo"}
+{"type":"dot","line":19}
+{"type":"text","line":20,"val":""}
 {"type":"newline","line":21}
-{"type":"text","line":21,"val":"  bar"}
-{"type":"newline","line":22}
-{"type":"text","line":22,"val":"    baz"}
+{"type":"dot","line":21}
+{"type":"start-pipeless-text","line":21}
+{"type":"text","line":22,"val":"foo"}
 {"type":"newline","line":23}
-{"type":"text","line":23,"val":"."}
-{"type":"outdent","line":25}
-{"type":"tag","line":25,"val":"pre","selfClosing":false}
-{"type":"dot","line":25}
-{"type":"start-pipeless-text","line":25}
-{"type":"text","line":26,"val":"foo"}
+{"type":"text","line":23,"val":""}
+{"type":"newline","line":24}
+{"type":"text","line":24,"val":""}
+{"type":"newline","line":25}
+{"type":"text","line":25,"val":"bar"}
+{"type":"newline","line":26}
+{"type":"text","line":26,"val":"baz"}
 {"type":"newline","line":27}
-{"type":"text","line":27,"val":"  bar"}
+{"type":"text","line":27,"val":""}
+{"type":"end-pipeless-text","line":27}
 {"type":"newline","line":28}
-{"type":"text","line":28,"val":"    baz"}
-{"type":"newline","line":29}
-{"type":"text","line":29,"val":"."}
-{"type":"end-pipeless-text","line":29}
-{"type":"eos","line":29}
+{"type":"tag","line":28,"val":"pre","selfClosing":false}
+{"type":"indent","line":29,"val":2}
+{"type":"text","line":29,"val":"foo"}
+{"type":"newline","line":30}
+{"type":"text","line":30,"val":"  bar"}
+{"type":"newline","line":31}
+{"type":"text","line":31,"val":"    baz"}
+{"type":"newline","line":32}
+{"type":"text","line":32,"val":"."}
+{"type":"outdent","line":34}
+{"type":"tag","line":34,"val":"pre","selfClosing":false}
+{"type":"dot","line":34}
+{"type":"start-pipeless-text","line":34}
+{"type":"text","line":35,"val":"foo"}
+{"type":"newline","line":36}
+{"type":"text","line":36,"val":"  bar"}
+{"type":"newline","line":37}
+{"type":"text","line":37,"val":"    baz"}
+{"type":"newline","line":38}
+{"type":"text","line":38,"val":"."}
+{"type":"newline","line":39}
+{"type":"text","line":39,"val":""}
+{"type":"end-pipeless-text","line":39}
+{"type":"newline","line":40}
+{"type":"dot","line":40}
+{"type":"start-pipeless-text","line":40}
+{"type":"text","line":41,"val":"foo"}
+{"type":"newline","line":42}
+{"type":"text","line":42,"val":"  bar"}
+{"type":"newline","line":43}
+{"type":"text","line":43,"val":"    baz"}
+{"type":"newline","line":44}
+{"type":"text","line":44,"val":"."}
+{"type":"end-pipeless-text","line":44}
+{"type":"eos","line":44}
