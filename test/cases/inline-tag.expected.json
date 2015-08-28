@@ -37,7 +37,7 @@
 {"type":"end-pipeless-text","line":9}
 {"type":"newline","line":10}
 {"type":"tag","line":10,"val":"p","selfClosing":false}
-{"type":"indent","line":11,"val":2}
+{"type":"indent","line":11,"val":1}
 {"type":"text","line":11,"val":"bing"}
 {"type":"newline","line":12}
 {"type":"text","line":12,"val":""}

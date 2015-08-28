@@ -11,7 +11,7 @@
 {"type":"end-pipeless-text","line":5}
 {"type":"newline","line":6}
 {"type":"tag","line":6,"val":"pre","selfClosing":false}
-{"type":"indent","line":7,"val":2}
+{"type":"indent","line":7,"val":1}
 {"type":"tag","line":7,"val":"code","selfClosing":false}
 {"type":"dot","line":7}
 {"type":"start-pipeless-text","line":7}

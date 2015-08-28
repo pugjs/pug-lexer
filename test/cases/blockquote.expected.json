@@ -1,7 +1,7 @@
 {"type":"tag","line":1,"val":"figure","selfClosing":false}
-{"type":"indent","line":2,"val":2}
+{"type":"indent","line":2,"val":1}
 {"type":"tag","line":2,"val":"blockquote","selfClosing":false}
-{"type":"indent","line":3,"val":4}
+{"type":"indent","line":3,"val":2}
 {"type":"text","line":3,"val":"Try to define yourself by what you do, and you&#8217;ll burnout every time. You are. That is enough. I rest in that."}
 {"type":"outdent","line":4}
 {"type":"tag","line":4,"val":"figcaption","selfClosing":false}

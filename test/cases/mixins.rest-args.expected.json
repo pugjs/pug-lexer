@@ -1,9 +1,9 @@
 {"type":"mixin","line":1,"val":"list","args":"tag, ...items"}
-{"type":"indent","line":2,"val":2}
+{"type":"indent","line":2,"val":1}
 {"type":"interpolation","line":2,"val":"tag"}
-{"type":"indent","line":3,"val":4}
+{"type":"indent","line":3,"val":2}
 {"type":"each","line":3,"val":"item","code":"items"}
-{"type":"indent","line":4,"val":6}
+{"type":"indent","line":4,"val":3}
 {"type":"tag","line":4,"val":"li","selfClosing":false}
 {"type":"code","line":4,"val":"item","escape":true,"buffer":true}
 {"type":"outdent","line":6}

@@ -2,18 +2,18 @@
 {"type":"extends","line":2,"val":"auxiliary/layout"}
 {"type":"newline","line":4}
 {"type":"mixin","line":4,"val":"article","args":"title"}
-{"type":"indent","line":5,"val":2}
+{"type":"indent","line":5,"val":1}
 {"type":"if","line":5,"val":"title"}
-{"type":"indent","line":6,"val":4}
+{"type":"indent","line":6,"val":2}
 {"type":"tag","line":6,"val":"h1","selfClosing":false}
 {"type":"code","line":6,"val":"title","escape":true,"buffer":true}
 {"type":"outdent","line":7}
 {"type":"mixin-block","line":7}
 {"type":"outdent","line":9}
 {"type":"block","line":9,"val":"content","mode":"replace"}
-{"type":"indent","line":10,"val":2}
+{"type":"indent","line":10,"val":1}
 {"type":"call","line":10,"val":"article","args":"\"The meaning of life\""}
-{"type":"indent","line":11,"val":4}
+{"type":"indent","line":11,"val":2}
 {"type":"tag","line":11,"val":"p","selfClosing":false}
 {"type":"text","line":11,"val":"Foo bar baz!"}
 {"type":"outdent","line":11}

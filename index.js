@@ -29,8 +29,9 @@ function Lexer(str, filename, options) {
   this.interpolated = options.interpolated || false;
   this.lastIndents = 0;
   this.lineno = options.startingLine || 1;
-  this.indentStack = [];
-  this.indentRe = null;
+  this.indentLevel = 0;
+  this.indentRe = options.indentRe || null;
+  this.indentWidth = 0;
   this.pipeless = false;
 
   this.tokens = [];
@@ -162,7 +163,7 @@ Lexer.prototype = {
     if (this.interpolated) {
       this.error('NO_END_BRACKET', 'End of line was reached with no closing bracket for interpolation.');
     }
-    for (var i = 0; i < this.indentStack.length; i++) {
+    for (var i = 0; i < this.indentLevel; i++) {
       this.tokens.push(this.tok('outdent'));
     }
     this.tokens.push(this.tok('eos'));
@@ -899,18 +900,26 @@ Lexer.prototype = {
       }
 
       // established
-      if (captures && captures[1].length) this.indentRe = re;
+      if (captures && captures[1].length) {
+        this.indentRe = re;
+        this.indentWidth = captures[1].length;
+      }
     }
 
     if (captures) {
       var tok
-        , indents = captures[1].length;
+        , indents = captures[1].length / this.indentWidth;
 
       ++this.lineno;
-      this.consume(indents + 1);
+      this.consume(captures[1].length + 1);
 
       if (' ' == this.input[0] || '\t' == this.input[0]) {
         this.error('INVALID_INDENTATION', 'Invalid indentation, you can use tabs or spaces but not both');
+      }
+      if (captures[1].length % this.indentWidth) {
+        this.error('INCONSISTENT_INDENTATION', 'Inconsistent indentation. ' +
+          'Expected multiples of ' + this.indentWidth + ' spaces/tabs, ' +
+          'got ' + captures[1].length + ' spaces/tabs.');
       }
 
       // blank line
@@ -920,14 +929,14 @@ Lexer.prototype = {
       }
 
       // outdent
-      if (this.indentStack.length && indents < this.indentStack[0]) {
-        while (this.indentStack.length && this.indentStack[0] > indents) {
+      if (this.indentLevel && indents < this.indentLevel) {
+        while (this.indentLevel && indents < this.indentLevel) {
           this.tokens.push(this.tok('outdent'));
-          this.indentStack.shift();
+          this.indentLevel--;
         }
       // indent
-      } else if (indents && indents != this.indentStack[0]) {
-        this.indentStack.unshift(indents);
+      } else if (indents && indents != this.indentLevel) {
+        this.indentLevel++;
         this.tokens.push(this.tok('indent', indents));
       // newline
       } else {
@@ -964,12 +973,15 @@ Lexer.prototype = {
       }
 
       // established
-      if (captures && captures[1].length) this.indentRe = re;
+      if (captures && captures[1].length) {
+        this.indentRe = re;
+        this.indentWidth = captures[1].length;
+      }
     }
 
 
-    var indents = captures && captures[1].length;
-    if (indents && (this.indentStack.length === 0 || indents > this.indentStack[0])) {
+    var indents = captures && captures[1].length / this.indentWidth;
+    if (indents && (!this.indentLevel || indents > this.indentLevel)) {
       this.tokens.push(this.tok('start-pipeless-text'));
       var indent = captures[1];
       var tokens = [];

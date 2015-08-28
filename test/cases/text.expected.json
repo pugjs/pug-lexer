@@ -9,7 +9,7 @@
 {"type":"text","line":6,"val":""}
 {"type":"newline","line":7}
 {"type":"tag","line":7,"val":"p","selfClosing":false}
-{"type":"indent","line":8,"val":2}
+{"type":"indent","line":8,"val":1}
 {"type":"text","line":8,"val":"foo"}
 {"type":"newline","line":9}
 {"type":"text","line":9,"val":"bar"}
@@ -51,7 +51,7 @@
 {"type":"end-pipeless-text","line":27}
 {"type":"newline","line":28}
 {"type":"tag","line":28,"val":"pre","selfClosing":false}
-{"type":"indent","line":29,"val":2}
+{"type":"indent","line":29,"val":1}
 {"type":"text","line":29,"val":"foo"}
 {"type":"newline","line":30}
 {"type":"text","line":30,"val":"  bar"}

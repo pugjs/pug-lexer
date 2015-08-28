@@ -2,7 +2,7 @@
 {"type":"comment","line":2,"val":" foo","buffer":true}
 {"type":"newline","line":3}
 {"type":"tag","line":3,"val":"ul","selfClosing":false}
-{"type":"indent","line":4,"val":2}
+{"type":"indent","line":4,"val":1}
 {"type":"comment","line":4,"val":" bar","buffer":true}
 {"type":"newline","line":5}
 {"type":"tag","line":5,"val":"li","selfClosing":false}
