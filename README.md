@@ -16,7 +16,7 @@ The jade lexer.  This module is responsible for taking a string and converting i
 var lex = require('jade-lexer');
 ```
 
-### `lexer(str, filename)`
+### `lex(str, filename)`
 
 Convert Jade string to an array of tokens. `filename`, if provided, is used in error handling.
 
