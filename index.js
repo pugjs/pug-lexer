@@ -950,8 +950,14 @@ Lexer.prototype = {
         }
       // indent
       } else if (indents && indents != this.indentLevel) {
-        this.indentLevel++;
-        this.tokens.push(this.tok('indent', indents));
+        if (indents === this.indentLevel + 1) {
+          this.indentLevel++;
+          this.tokens.push(this.tok('indent', indents));
+        } else {
+          this.error('INCONSISTENT_INDENTATION', 'Inconsistent indentation. ' +
+            'Expected ' + (this.indentLevel + 1) * this.indentWidth + ' spaces/tabs, ' +
+            'got ' + captures[1].length + ' spaces/tabs.');
+        }
       // newline
       } else {
         this.tokens.push(this.tok('newline'));

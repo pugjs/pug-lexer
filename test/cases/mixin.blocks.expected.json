@@ -76,9 +76,9 @@
 {"type":"text","line":37,"val":"three"}
 {"type":"outdent","line":40}
 {"type":"mixin","line":40,"val":"baz","args":null}
-{"type":"indent","line":41,"val":2}
+{"type":"indent","line":41,"val":1}
 {"type":"id","line":41,"val":"baz"}
-{"type":"indent","line":42,"val":4}
+{"type":"indent","line":42,"val":2}
 {"type":"mixin-block","line":42}
 {"type":"outdent","line":44}
 {"type":"outdent","line":44}
