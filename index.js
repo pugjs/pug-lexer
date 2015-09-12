@@ -29,7 +29,7 @@ function Lexer(str, filename, options) {
   this.interpolated = options.interpolated || false;
   this.lastIndents = 0;
   this.lineno = options.startingLine || 1;
-  this.indentStack = [];
+  this.indentStack = [0];
   this.indentRe = null;
   this.pipeless = false;
 
@@ -162,7 +162,7 @@ Lexer.prototype = {
     if (this.interpolated) {
       this.error('NO_END_BRACKET', 'End of line was reached with no closing bracket for interpolation.');
     }
-    for (var i = 0; i < this.indentStack.length; i++) {
+    for (var i = 0; this.indentStack[i]; i++) {
       this.tokens.push(this.tok('outdent'));
     }
     this.tokens.push(this.tok('eos'));
@@ -920,8 +920,8 @@ Lexer.prototype = {
       }
 
       // outdent
-      if (this.indentStack.length && indents < this.indentStack[0]) {
-        while (this.indentStack.length && this.indentStack[0] > indents) {
+      if (indents < this.indentStack[0]) {
+        while (this.indentStack[0] > indents) {
           this.tokens.push(this.tok('outdent'));
           this.indentStack.shift();
         }
@@ -969,7 +969,7 @@ Lexer.prototype = {
 
 
     var indents = captures && captures[1].length;
-    if (indents && (this.indentStack.length === 0 || indents > this.indentStack[0])) {
+    if (indents > this.indentStack[0]) {
       this.tokens.push(this.tok('start-pipeless-text'));
       var indent = captures[1];
       var tokens = [];
