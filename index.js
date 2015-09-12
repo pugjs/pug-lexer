@@ -922,6 +922,9 @@ Lexer.prototype = {
       // outdent
       if (indents < this.indentStack[0]) {
         while (this.indentStack[0] > indents) {
+          if (this.indentStack[1] < indents) {
+            this.error('INCONSISTENT_INDENTATION', 'Inconsistent indentation. Expecting either ' + this.indentStack[1] + ' or ' + this.indentStack[0] + ' spaces/tabs.');
+          }
           this.tokens.push(this.tok('outdent'));
           this.indentStack.shift();
         }
