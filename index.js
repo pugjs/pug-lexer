@@ -7,7 +7,10 @@ var error = require('jade-error');
 module.exports = lex;
 module.exports.Lexer = Lexer;
 function lex(str, filename) {
-  var lexer = new Lexer(str, filename);
+  return internalLex(str, filename);
+}
+function internalLex(str, filename, options) {
+  var lexer = new Lexer(str, filename, options);
   return JSON.parse(JSON.stringify(lexer.getTokens()));
 }
 
@@ -28,9 +31,16 @@ function Lexer(str, filename, options) {
   this.filename = filename;
   this.interpolated = options.interpolated || false;
   this.lineno = options.startingLine || 1;
-  this.indentStack = [];
-  this.indentRe = null;
+  this.indentLevel = 0;
+  this.indentRe = options.indentRe || null;
+  this.indentWidth = options.indentWidth || 0;
+  // This gets set to true when something other than pipeless text is
+  // encountered, since we can't really be sure of the indentation scheme if
+  // all we have is pipeless text.
+  this.indentFairlySure = false
   this.pipeless = false;
+
+  this.retryWithIndentWidth = 0;
 
   this.tokens = [];
   this.ended = false;
@@ -161,7 +171,7 @@ Lexer.prototype = {
     if (this.interpolated) {
       this.error('NO_END_BRACKET', 'End of line was reached with no closing bracket for interpolation.');
     }
-    for (var i = 0; i < this.indentStack.length; i++) {
+    for (var i = 0; i < this.indentLevel; i++) {
       this.tokens.push(this.tok('outdent'));
     }
     this.tokens.push(this.tok('eos'));
@@ -898,18 +908,31 @@ Lexer.prototype = {
       }
 
       // established
-      if (captures && captures[1].length) this.indentRe = re;
+      if (captures && captures[1].length) {
+        this.indentRe = re;
+        this.indentWidth = captures[1].length;
+      }
     }
 
     if (captures) {
+      // When we are here at indent(), we are certain of the indentation
+      // scheme now. If we are not, we would have been caught in
+      // pipelessText().
+      this.indentFairlySure = true;
+
       var tok
-        , indents = captures[1].length;
+        , indents = captures[1].length / this.indentWidth;
 
       ++this.lineno;
-      this.consume(indents + 1);
+      this.consume(captures[1].length + 1);
 
       if (' ' == this.input[0] || '\t' == this.input[0]) {
         this.error('INVALID_INDENTATION', 'Invalid indentation, you can use tabs or spaces but not both');
+      }
+      if (captures[1].length % this.indentWidth) {
+        this.error('INCONSISTENT_INDENTATION', 'Inconsistent indentation. ' +
+          'Expected multiples of ' + this.indentWidth + ' spaces/tabs, ' +
+          'got ' + captures[1].length + ' spaces/tabs.');
       }
 
       // blank line
@@ -919,15 +942,21 @@ Lexer.prototype = {
       }
 
       // outdent
-      if (this.indentStack.length && indents < this.indentStack[0]) {
-        while (this.indentStack.length && this.indentStack[0] > indents) {
+      if (this.indentLevel && indents < this.indentLevel) {
+        while (this.indentLevel && indents < this.indentLevel) {
           this.tokens.push(this.tok('outdent'));
-          this.indentStack.shift();
+          this.indentLevel--;
         }
       // indent
-      } else if (indents && indents != this.indentStack[0]) {
-        this.indentStack.unshift(indents);
-        this.tokens.push(this.tok('indent', indents));
+      } else if (indents && indents != this.indentLevel) {
+        if (indents === this.indentLevel + 1) {
+          this.indentLevel++;
+          this.tokens.push(this.tok('indent', indents));
+        } else {
+          this.error('INCONSISTENT_INDENTATION', 'Inconsistent indentation. ' +
+            'Expected ' + (this.indentLevel + 1) * this.indentWidth + ' spaces/tabs, ' +
+            'got ' + captures[1].length + ' spaces/tabs.');
+        }
       // newline
       } else {
         this.tokens.push(this.tok('newline'));
@@ -963,14 +992,18 @@ Lexer.prototype = {
       }
 
       // established
-      if (captures && captures[1].length) this.indentRe = re;
+      if (captures && captures[1].length) {
+        this.indentRe = re;
+        this.indentWidth = captures[1].length;
+      }
     }
 
 
-    var indents = captures && captures[1].length;
-    if (indents && (this.indentStack.length === 0 || indents > this.indentStack[0])) {
+    var indents = captures && captures[1].length / this.indentWidth;
+    if (indents && (!this.indentLevel || indents > this.indentLevel)) {
       this.tokens.push(this.tok('start-pipeless-text'));
-      var indent = captures[1];
+      var indentChars = (this.indentLevel + 1) * this.indentWidth;
+      var indent = Array(indentChars + 1).join(captures[1][0]);
       var tokens = [];
       var isMatch;
       do {
@@ -978,11 +1011,29 @@ Lexer.prototype = {
         var i = this.input.substr(1).indexOf('\n');
         if (-1 == i) i = this.input.length - 1;
         var str = this.input.substr(1, i);
-        isMatch = str.substr(0, indent.length) === indent || !str.trim();
+        isMatch = str.substr(0, indentChars) === indent || !str.trim();
         if (isMatch) {
           // consume test along with `\n` prefix if match
           this.consume(str.length + 1);
-          tokens.push(str.substr(indent.length));
+          tokens.push(str.substr(indentChars));
+        } else {
+          // No match; check if we are out of pipeless text completely or
+          // there is an inconsistency in indentation.
+          var captures = this.indentRe.exec('\n' + str.substr(0, indentChars));
+          if (captures[1].length > indentChars - this.indentWidth) {
+            // Inconsistency in indentation.
+            // Do we know *for sure* that indentWidth is correct?
+            if (this.indentFairlySure) {
+              // Yes, then throw an error.
+              this.lineno += tokens.length + 1;
+              this.error('INCONSISTENT_INDENTATION', 'Inconsistent indentation. ' +
+                'Expected multiples of ' + this.indentWidth + ' spaces/tabs, ' +
+                'got ' + captures[1].length + ' spaces/tabs.');
+            } else {
+              // No, try lexing the file again with a better indentWidth
+              this.retryWithIndentWidth = Math.min(captures[1].length, this.indentWidth);
+            }
+          }
         }
       } while(this.input.length && isMatch);
       while (this.input.length === 0 && tokens[tokens.length - 1] === '') tokens.pop();
@@ -1065,8 +1116,14 @@ Lexer.prototype = {
    * @api public
    */
   getTokens: function () {
-    while (!this.ended) {
+    while (!this.ended && !this.retryWithIndentWidth) {
       this.advance();
+    }
+    if (this.retryWithIndentWidth) {
+      return internalLex(this.originalInput, this.filename, {
+        indentRe: this.indentRe,
+        indentWidth: this.retryWithIndentWidth
+      });
     }
     return this.tokens;
   }

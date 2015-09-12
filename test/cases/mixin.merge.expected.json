@@ -1,5 +1,5 @@
 {"type":"mixin","line":1,"val":"foo","args":null}
-{"type":"indent","line":2,"val":2}
+{"type":"indent","line":2,"val":1}
 {"type":"tag","line":2,"val":"p","selfClosing":false}
 {"type":"class","line":2,"val":"bar"}
 {"type":"&attributes","line":2,"val":"attributes"}
@@ -22,7 +22,7 @@
 {"type":"text","line":5,"val":"Four"}
 {"type":"outdent","line":7}
 {"type":"tag","line":7,"val":"body","selfClosing":false}
-{"type":"indent","line":8,"val":2}
+{"type":"indent","line":8,"val":1}
 {"type":"call","line":8,"val":"foo"}
 {"type":"class","line":8,"val":"hello"}
 {"type":"newline","line":9}

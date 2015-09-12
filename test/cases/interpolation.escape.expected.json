@@ -2,7 +2,7 @@
 {"type":"code","line":2,"val":"var id = 42;","escape":false,"buffer":false}
 {"type":"newline","line":3}
 {"type":"tag","line":3,"val":"foo","selfClosing":false}
-{"type":"indent","line":4,"val":2}
+{"type":"indent","line":4,"val":1}
 {"type":"text","line":4,"val":"some"}
 {"type":"newline","line":5}
 {"type":"text","line":5,"val":"\\#{text}"}

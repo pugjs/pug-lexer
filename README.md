@@ -58,6 +58,8 @@ Constructor for a Lexer class. This is not meant to be used directly unless you 
 
 - `interpolated` (boolean): if the Lexer is created as a child lexer for inline tag interpolation (e.g. `#[p Hello]`). Defaults to `false`.
 - `startingLine` (integer): the real line number of the first line in the input. It is also used for inline tag interpolation. Defaults to `1`.
+- `indentRe` (regexp): regular expression used to match indentation. Defaults to `null` (autodetected).
+- `indentWidth` (integer): number of characters constituting one level of indentation. Defaults to `0` (autodetected).
 
 ## License
 

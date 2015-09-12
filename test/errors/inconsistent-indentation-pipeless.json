@@ -1,0 +1,5 @@
+{
+  "msg": "Inconsistent indentation. Expected multiples of 2 spaces/tabs, got 3 spaces/tabs.",
+  "code": "JADE:INCONSISTENT_INDENTATION",
+  "line": 5
+}

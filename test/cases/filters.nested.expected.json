@@ -1,5 +1,5 @@
 {"type":"tag","line":1,"val":"script","selfClosing":false}
-{"type":"indent","line":2,"val":2}
+{"type":"indent","line":2,"val":1}
 {"type":"filter","line":2,"val":"cdata"}
 {"type":"filter","line":2,"val":"uglify-js"}
 {"type":"start-pipeless-text","line":2}
@@ -11,7 +11,7 @@
 {"type":"end-pipeless-text","line":5}
 {"type":"outdent","line":6}
 {"type":"tag","line":6,"val":"script","selfClosing":false}
-{"type":"indent","line":7,"val":2}
+{"type":"indent","line":7,"val":1}
 {"type":"filter","line":7,"val":"cdata"}
 {"type":"filter","line":7,"val":"uglify-js"}
 {"type":"filter","line":7,"val":"coffee-script"}

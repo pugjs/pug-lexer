@@ -1,8 +1,8 @@
 {"type":"tag","line":1,"val":"script","selfClosing":false}
 {"type":"attrs","line":1,"attrs":[{"name":"type","val":"'text/x-template'","escaped":true}]}
-{"type":"indent","line":2,"val":2}
+{"type":"indent","line":2,"val":1}
 {"type":"tag","line":2,"val":"article","selfClosing":false}
-{"type":"indent","line":3,"val":4}
+{"type":"indent","line":3,"val":2}
 {"type":"tag","line":3,"val":"h2","selfClosing":false}
 {"type":"text","line":3,"val":"{{title}}"}
 {"type":"newline","line":4}

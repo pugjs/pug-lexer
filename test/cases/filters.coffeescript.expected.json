@@ -1,6 +1,6 @@
 {"type":"tag","line":1,"val":"script","selfClosing":false}
 {"type":"attrs","line":1,"attrs":[{"name":"type","val":"'text/javascript'","escaped":true}]}
-{"type":"indent","line":2,"val":2}
+{"type":"indent","line":2,"val":1}
 {"type":"filter","line":2,"val":"coffee-script"}
 {"type":"start-pipeless-text","line":2}
 {"type":"text","line":3,"val":"regexp = /\\n/"}

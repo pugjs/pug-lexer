@@ -1,6 +1,6 @@
 {"type":"newline","line":2}
 {"type":"text-html","line":2,"val":"<ul>"}
-{"type":"indent","line":3,"val":2}
+{"type":"indent","line":3,"val":1}
 {"type":"text-html","line":3,"val":"<li>foo</li>"}
 {"type":"newline","line":4}
 {"type":"text-html","line":4,"val":"<li>bar</li>"}
