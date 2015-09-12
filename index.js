@@ -353,7 +353,7 @@ Lexer.prototype = {
         startingLine: this.lineno
       });
       var interpolated = child.getTokens();
-      this.tokens.push.apply(this.tokens, interpolated);
+      this.tokens = this.tokens.concat(interpolated);
       this.tokens.push(this.tok('end-jade-interpolation'));
       this.addText(child.input);
       return;
