@@ -4,7 +4,7 @@
   "description": "The jade lexer (takes a string and converts it to an array of tokens)",
   "keywords": [],
   "dependencies": {
-    "character-parser": "^1.2.1",
+    "character-parser": "ForbesLindesay/character-parser",
     "jade-error": "^1.0.0"
   },
   "devDependencies": {
