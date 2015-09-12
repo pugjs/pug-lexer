@@ -944,7 +944,7 @@ Lexer.prototype = {
    * pipeless is true;
    */
 
-  pipelessText: function() {
+  pipelessText: function(indents) {
     if (!this.pipeless) return;
     var captures, re;
 
@@ -968,10 +968,9 @@ Lexer.prototype = {
     }
 
 
-    var indents = captures && captures[1].length;
+    indents = indents || captures && captures[1].length;
     if (indents > this.indentStack[0]) {
       this.tokens.push(this.tok('start-pipeless-text'));
-      var indent = captures[1];
       var tokens = [];
       var isMatch;
       // Index in this.input. Can't use this.consume because we might need to
@@ -982,11 +981,18 @@ Lexer.prototype = {
         var i = this.input.substr(stringPtr + 1).indexOf('\n');
         if (-1 == i) i = this.input.length - stringPtr - 1;
         var str = this.input.substr(stringPtr + 1, i);
-        isMatch = str.substr(0, indent.length) === indent || !str.trim();
+        var lineCaptures = this.indentRe.exec('\n' + str);
+        var lineIndents = lineCaptures && lineCaptures[1].length;
+        isMatch = lineIndents >= indents || !str.trim();
         if (isMatch) {
           // consume test along with `\n` prefix if match
           stringPtr += str.length + 1;
-          tokens.push(str.substr(indent.length));
+          tokens.push(str.substr(indents));
+        } else if (lineIndents > this.indentStack[0]) {
+          // line is indented less than the first line but is still indented
+          // need to retry lexing the text block
+          this.tokens.pop();
+          return this.pipelessText(lineCaptures[1].length);
         }
       } while((this.input.length - stringPtr) && isMatch);
       this.consume(stringPtr);
