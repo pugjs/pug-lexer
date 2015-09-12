@@ -152,6 +152,31 @@ Lexer.prototype = {
     return range;
   },
 
+  scanIndentation: function() {
+    var captures, re;
+
+    // established regexp
+    if (this.indentRe) {
+      captures = this.indentRe.exec(this.input);
+    // determine regexp
+    } else {
+      // tabs
+      re = /^\n(\t*) */;
+      captures = re.exec(this.input);
+
+      // spaces
+      if (captures && !captures[1].length) {
+        re = /^\n( *)/;
+        captures = re.exec(this.input);
+      }
+
+      // established
+      if (captures && captures[1].length) this.indentRe = re;
+    }
+
+    return captures;
+  },
+
   /**
    * end-of-source.
    */
@@ -880,26 +905,7 @@ Lexer.prototype = {
    */
 
   indent: function() {
-    var captures, re;
-
-    // established regexp
-    if (this.indentRe) {
-      captures = this.indentRe.exec(this.input);
-    // determine regexp
-    } else {
-      // tabs
-      re = /^\n(\t*) */;
-      captures = re.exec(this.input);
-
-      // spaces
-      if (captures && !captures[1].length) {
-        re = /^\n( *)/;
-        captures = re.exec(this.input);
-      }
-
-      // established
-      if (captures && captures[1].length) this.indentRe = re;
-    }
+    var captures = this.scanIndentation();
 
     if (captures) {
       var tok
@@ -945,27 +951,7 @@ Lexer.prototype = {
 
   pipelessText: function() {
     if (!this.pipeless) return;
-    var captures, re;
-
-    // established regexp
-    if (this.indentRe) {
-      captures = this.indentRe.exec(this.input);
-    // determine regexp
-    } else {
-      // tabs
-      re = /^\n(\t*) */;
-      captures = re.exec(this.input);
-
-      // spaces
-      if (captures && !captures[1].length) {
-        re = /^\n( *)/;
-        captures = re.exec(this.input);
-      }
-
-      // established
-      if (captures && captures[1].length) this.indentRe = re;
-    }
-
+    var captures = this.scanIndentation();
 
     var indents = captures && captures[1].length;
     if (indents && (this.indentStack.length === 0 || indents > this.indentStack[0])) {
