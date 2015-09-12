@@ -974,18 +974,22 @@ Lexer.prototype = {
       var indent = captures[1];
       var tokens = [];
       var isMatch;
+      // Index in this.input. Can't use this.consume because we might need to
+      // retry lexing the block.
+      var stringPtr = 0;
       do {
         // text has `\n` as a prefix
-        var i = this.input.substr(1).indexOf('\n');
-        if (-1 == i) i = this.input.length - 1;
-        var str = this.input.substr(1, i);
+        var i = this.input.substr(stringPtr + 1).indexOf('\n');
+        if (-1 == i) i = this.input.length - stringPtr - 1;
+        var str = this.input.substr(stringPtr + 1, i);
         isMatch = str.substr(0, indent.length) === indent || !str.trim();
         if (isMatch) {
           // consume test along with `\n` prefix if match
-          this.consume(str.length + 1);
+          stringPtr += str.length + 1;
           tokens.push(str.substr(indent.length));
         }
-      } while(this.input.length && isMatch);
+      } while((this.input.length - stringPtr) && isMatch);
+      this.consume(stringPtr);
       while (this.input.length === 0 && tokens[tokens.length - 1] === '') tokens.pop();
       tokens.forEach(function (token, i) {
         this.lineno++;
