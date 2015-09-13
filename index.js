@@ -58,7 +58,8 @@ Lexer.prototype = {
     try {
       Function('', 'return (' + exp + ')');
     } catch (ex) {
-      this.error('SYNTAX_ERROR', 'Syntax Error');
+      var msg = 'Syntax Error: ' + ex.message;
+      this.error('SYNTAX_ERROR', msg);
     }
   },
 
