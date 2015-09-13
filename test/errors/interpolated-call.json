@@ -1,5 +1,5 @@
 {
-  "msg": "Syntax Error",
+  "msg": "Syntax Error: Unexpected token ]",
   "code": "JADE:SYNTAX_ERROR",
   "line": 5
 }
