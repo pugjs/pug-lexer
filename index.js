@@ -143,12 +143,10 @@ Lexer.prototype = {
     var end = ({'(': ')', '{': '}', '[': ']'})[start];
     var range;
     try {
-      range = characterParser.parseMax(this.input, {start: skip + 1});
+      range = characterParser.parseMaxBracket(this.input, end, {start: skip + 1});
     } catch (ex) {
       this.error('BRACKET_MISMATCH', ex.message);
     }
-    this.assert(this.input[range.end] === end,
-           'start character "' + start + '" should match end character "' + this.input[range.end] + '"');
     return range;
   },
 
