@@ -817,6 +817,9 @@ Lexer.prototype = {
         if (isEndOfAttribute(i)) {
           val = val.trim();
           if (val) this.assertExpression(val)
+          if (key[0] === ':' || key[key.length - 1] === ':') {
+            this.error('COLON_ATTRIBUTE', '":" is not valid as the start or end of an un-quoted attribute.');
+          }
           key = key.trim();
           key = key.replace(/^['"]|['"]$/g, '');
           tok.attrs.push({
