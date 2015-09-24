@@ -28,7 +28,7 @@ function Lexer(str, filename, options) {
   this.filename = filename;
   this.interpolated = options.interpolated || false;
   this.lineno = options.startingLine || 1;
-  this.indentStack = [];
+  this.indentStack = [0];
   this.indentRe = null;
   this.pipeless = false;
 
@@ -185,7 +185,7 @@ Lexer.prototype = {
     if (this.interpolated) {
       this.error('NO_END_BRACKET', 'End of line was reached with no closing bracket for interpolation.');
     }
-    for (var i = 0; i < this.indentStack.length; i++) {
+    for (var i = 0; this.indentStack[i]; i++) {
       this.tokens.push(this.tok('outdent'));
     }
     this.tokens.push(this.tok('eos'));
@@ -924,8 +924,11 @@ Lexer.prototype = {
       }
 
       // outdent
-      if (this.indentStack.length && indents < this.indentStack[0]) {
-        while (this.indentStack.length && this.indentStack[0] > indents) {
+      if (indents < this.indentStack[0]) {
+        while (this.indentStack[0] > indents) {
+          if (this.indentStack[1] < indents) {
+            this.error('INCONSISTENT_INDENTATION', 'Inconsistent indentation. Expecting either ' + this.indentStack[1] + ' or ' + this.indentStack[0] + ' spaces/tabs.');
+          }
           this.tokens.push(this.tok('outdent'));
           this.indentStack.shift();
         }
@@ -948,28 +951,38 @@ Lexer.prototype = {
    * pipeless is true;
    */
 
-  pipelessText: function() {
+  pipelessText: function(indents) {
     if (!this.pipeless) return;
     var captures = this.scanIndentation();
 
-    var indents = captures && captures[1].length;
-    if (indents && (this.indentStack.length === 0 || indents > this.indentStack[0])) {
+    indents = indents || captures && captures[1].length;
+    if (indents > this.indentStack[0]) {
       this.tokens.push(this.tok('start-pipeless-text'));
-      var indent = captures[1];
       var tokens = [];
       var isMatch;
+      // Index in this.input. Can't use this.consume because we might need to
+      // retry lexing the block.
+      var stringPtr = 0;
       do {
         // text has `\n` as a prefix
-        var i = this.input.substr(1).indexOf('\n');
-        if (-1 == i) i = this.input.length - 1;
-        var str = this.input.substr(1, i);
-        isMatch = str.substr(0, indent.length) === indent || !str.trim();
+        var i = this.input.substr(stringPtr + 1).indexOf('\n');
+        if (-1 == i) i = this.input.length - stringPtr - 1;
+        var str = this.input.substr(stringPtr + 1, i);
+        var lineCaptures = this.indentRe.exec('\n' + str);
+        var lineIndents = lineCaptures && lineCaptures[1].length;
+        isMatch = lineIndents >= indents || !str.trim();
         if (isMatch) {
           // consume test along with `\n` prefix if match
-          this.consume(str.length + 1);
-          tokens.push(str.substr(indent.length));
+          stringPtr += str.length + 1;
+          tokens.push(str.substr(indents));
+        } else if (lineIndents > this.indentStack[0]) {
+          // line is indented less than the first line but is still indented
+          // need to retry lexing the text block
+          this.tokens.pop();
+          return this.pipelessText(lineCaptures[1].length);
         }
-      } while(this.input.length && isMatch);
+      } while((this.input.length - stringPtr) && isMatch);
+      this.consume(stringPtr);
       while (this.input.length === 0 && tokens[tokens.length - 1] === '') tokens.pop();
       tokens.forEach(function (token, i) {
         this.lineno++;
