@@ -780,15 +780,6 @@ Lexer.prototype = {
 
       var quote = '';
       var self = this;
-      var interpolate = function (attr) {
-        return attr.replace(/(\\)?#\{(.+)/g, function(_, escape, expr){
-          if (escape) return _;
-          var range = characterParser.parseMax(expr);
-          if (expr[range.end] !== '}') return _.substr(0, 2) + interpolate(_.substr(2));
-          self.assertExpression(range.src)
-          return quote + " + (" + range.src + ") + " + quote + interpolate(expr.substr(range.end + 1));
-        });
-      }
 
       this.consume(index + 1);
       tok.attrs = [];
@@ -796,7 +787,6 @@ Lexer.prototype = {
       var escapedAttr = true
       var key = '';
       var val = '';
-      var interpolatable = '';
       var state = characterParser.defaultState();
       var loc = 'key';
       var isEndOfAttribute = function (i) {
@@ -876,17 +866,14 @@ Lexer.prototype = {
               if (state.isString()) {
                 loc = 'string';
                 quote = str[i];
-                interpolatable = str[i];
-              } else {
-                val += str[i];
               }
+              val += str[i];
               break;
             case 'string':
               state = characterParser.parseChar(str[i], state);
-              interpolatable += str[i];
+              val += str[i];
               if (!state.isString()) {
                 loc = 'value';
-                val += interpolate(interpolatable);
               }
               break;
           }
