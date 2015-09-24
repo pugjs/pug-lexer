@@ -1,0 +1,5 @@
+{
+  "msg": "\":\" is not valid as the start or end of an un-quoted attribute.",
+  "code": "JADE:COLON_ATTRIBUTE",
+  "line": 1
+}
