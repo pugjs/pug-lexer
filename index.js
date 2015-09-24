@@ -31,6 +31,8 @@ function Lexer(str, filename, options) {
   this.indentStack = [];
   this.indentRe = null;
   this.pipeless = false;
+  // If #{} or !{} syntax is allowed when adding text
+  this.interpolationAllowed = true;
 
   this.tokens = [];
   this.ended = false;
@@ -218,6 +220,7 @@ Lexer.prototype = {
       var tok = this.tok('comment', captures[2]);
       tok.buffer = '-' != captures[1];
       this.pipeless = true;
+      this.interpolationAllowed = tok.buffer;
       this.tokens.push(tok);
       return true;
     }
@@ -260,6 +263,7 @@ Lexer.prototype = {
     var tok = this.scan(/^:([\w\-]+)/, 'filter');
     if (tok) {
       this.pipeless = true;
+      this.interpolationAllowed = false;
       this.tokens.push(tok);
       return true;
     }
@@ -363,6 +367,21 @@ Lexer.prototype = {
       }
       this.ended = true;
       this.input = value.substr(value.indexOf(']') + 1) + this.input;
+      return;
+    }
+
+    var match = /(\\)?([#!]){((?:.|\n)*)$/.exec(value);
+    if (this.interpolationAllowed && match && !match[1]) {
+      var before = value.substr(0, match.index);
+      if (prefix || before) this.tokens.push(this.tok('text', prefix + before));
+
+      var rest = match[3];
+      var range = characterParser.parseMaxBracket(rest, '}');
+      var tok = this.tok('interpolated-code', range.src);
+      tok.escape = match[2] === '#';
+      tok.buffer = true;
+      this.tokens.push(tok);
+      if (range.end + 1 < rest.length) this.addText(rest.substr(range.end + 1));
       return;
     }
 
@@ -742,6 +761,7 @@ Lexer.prototype = {
     if (tok = this.scanEndOfLine(/^-/, 'blockcode')) {
       this.tokens.push(tok);
       this.pipeless = true;
+      this.interpolationAllowed = false;
       return true;
     }
   },
@@ -920,6 +940,7 @@ Lexer.prototype = {
       // blank line
       if ('\n' == this.input[0]) {
         this.pipeless = false;
+        this.interpolationAllowed = true;
         return this.tok('newline');
       }
 
@@ -939,6 +960,7 @@ Lexer.prototype = {
       }
 
       this.pipeless = false;
+      this.interpolationAllowed = true;
       return true;
     }
   },
