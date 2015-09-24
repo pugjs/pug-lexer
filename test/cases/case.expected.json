@@ -19,7 +19,9 @@
 {"type":"default","line":7}
 {"type":":","line":7}
 {"type":"tag","line":7,"val":"p","selfClosing":false}
-{"type":"text","line":7,"val":"you have #{friends} friends"}
+{"type":"text","line":7,"val":"you have "}
+{"type":"interpolated-code","line":7,"val":"friends","escape":true,"buffer":true}
+{"type":"text","line":7,"val":" friends"}
 {"type":"outdent","line":8}
 {"type":"code","line":8,"val":"var friends = 0","escape":false,"buffer":false}
 {"type":"newline","line":9}
@@ -35,7 +37,9 @@
 {"type":"default","line":13}
 {"type":"indent","line":14,"val":8}
 {"type":"tag","line":14,"val":"p","selfClosing":false}
-{"type":"text","line":14,"val":"you have #{friends} friends"}
+{"type":"text","line":14,"val":"you have "}
+{"type":"interpolated-code","line":14,"val":"friends","escape":true,"buffer":true}
+{"type":"text","line":14,"val":" friends"}
 {"type":"outdent","line":14}
 {"type":"outdent","line":14}
 {"type":"outdent","line":14}
