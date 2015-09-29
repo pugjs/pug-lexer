@@ -17,7 +17,7 @@
 {"type":"each","line":12,"val":"item","key":"i","code":"items"}
 {"type":"indent","line":13,"val":4}
 {"type":"tag","line":13,"val":"li","selfClosing":false}
-{"type":"attrs","line":13,"attrs":[{"name":"class","val":"'item-' + (i) + ''","escaped":true}]}
+{"type":"attrs","line":13,"attrs":[{"name":"class","val":"'item-' + i","escaped":true}]}
 {"type":"code","line":13,"val":"item","escape":true,"buffer":true}
 {"type":"outdent","line":15}
 {"type":"outdent","line":15}
@@ -48,7 +48,9 @@
 {"type":"each","line":28,"val":"n","code":"nums"}
 {"type":"indent","line":29,"val":6}
 {"type":"tag","line":29,"val":"li","selfClosing":false}
-{"type":"text","line":29,"val":"#{n}: #{l}"}
+{"type":"interpolated-code","line":29,"val":"n","escape":true,"buffer":true}
+{"type":"text","line":29,"val":": "}
+{"type":"interpolated-code","line":29,"val":"l","escape":true,"buffer":true}
 {"type":"outdent","line":31}
 {"type":"outdent","line":31}
 {"type":"outdent","line":31}
@@ -61,7 +63,7 @@
 {"type":"each","line":34,"val":"n","code":"counter()"}
 {"type":"indent","line":35,"val":4}
 {"type":"tag","line":35,"val":"li","selfClosing":false}
-{"type":"text","line":35,"val":"#{n}"}
-{"type":"outdent","line":35}
-{"type":"outdent","line":35}
-{"type":"eos","line":35}
+{"type":"interpolated-code","line":35,"val":"n","escape":true,"buffer":true}
+{"type":"outdent","line":36}
+{"type":"outdent","line":36}
+{"type":"eos","line":36}

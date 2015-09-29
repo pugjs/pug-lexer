@@ -19,7 +19,9 @@
 {"type":"default","line":9}
 {"type":"indent","line":10,"val":8}
 {"type":"tag","line":10,"val":"p","selfClosing":false}
-{"type":"text","line":10,"val":"you have #{friends} friends"}
+{"type":"text","line":10,"val":"you have "}
+{"type":"interpolated-code","line":10,"val":"friends","escape":true,"buffer":true}
+{"type":"text","line":10,"val":" friends"}
 {"type":"outdent","line":10}
 {"type":"outdent","line":10}
 {"type":"outdent","line":10}

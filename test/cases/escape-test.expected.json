@@ -13,7 +13,7 @@
 {"type":"indent","line":7,"val":12}
 {"type":"code","line":7,"val":"var txt = '<param name=\"flashvars\" value=\"a=&quot;value_a&quot;&b=&quot;value_b&quot;&c=3\"/>'","escape":false,"buffer":false}
 {"type":"newline","line":8}
-{"type":"text","line":8,"val":"#{txt}"}
+{"type":"interpolated-code","line":8,"val":"txt","escape":true,"buffer":true}
 {"type":"outdent","line":9}
 {"type":"outdent","line":9}
 {"type":"outdent","line":9}

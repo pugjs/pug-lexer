@@ -9,6 +9,7 @@
 {"type":"newline","line":6}
 {"type":"text","line":6,"val":"here"}
 {"type":"newline","line":7}
-{"type":"text","line":7,"val":"My ID #{\"is {\" + id + \"}\"}"}
+{"type":"text","line":7,"val":"My ID "}
+{"type":"interpolated-code","line":7,"val":"\"is {\" + id + \"}\"","escape":true,"buffer":true}
 {"type":"outdent","line":7}
 {"type":"eos","line":7}
