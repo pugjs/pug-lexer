@@ -18,14 +18,26 @@
 {"type":"attrs","line":8,"attrs":[{"name":"bar","val":"'baz'","escaped":true}]}
 {"type":"text","line":8,"val":"/"}
 {"type":"newline","line":9}
-{"type":"comment","line":9,"val":" can have a single space after them","buffer":false}
+{"type":"interpolation","line":9,"val":"'foo'","selfClosing":true}
 {"type":"newline","line":10}
-{"type":"tag","line":10,"val":"img","selfClosing":false}
-{"type":"text","line":10,"val":" "}
+{"type":"interpolation","line":10,"val":"'foo'"}
+{"type":"attrs","line":10,"attrs":[{"name":"bar","val":"'baz'","escaped":true}],"selfClosing":true}
 {"type":"newline","line":11}
-{"type":"comment","line":11,"val":" can have lots of white space after them","buffer":false}
+{"type":"interpolation","line":11,"val":"'foo'"}
+{"type":"text","line":11,"val":"/"}
 {"type":"newline","line":12}
-{"type":"tag","line":12,"val":"img","selfClosing":false}
-{"type":"text","line":12,"val":"   "}
-{"type":"outdent","line":12}
-{"type":"eos","line":12}
+{"type":"interpolation","line":12,"val":"'foo'"}
+{"type":"attrs","line":12,"attrs":[{"name":"bar","val":"'baz'","escaped":true}]}
+{"type":"text","line":12,"val":"/"}
+{"type":"newline","line":13}
+{"type":"comment","line":13,"val":" can have a single space after them","buffer":false}
+{"type":"newline","line":14}
+{"type":"tag","line":14,"val":"img","selfClosing":false}
+{"type":"text","line":14,"val":" "}
+{"type":"newline","line":15}
+{"type":"comment","line":15,"val":" can have lots of white space after them","buffer":false}
+{"type":"newline","line":16}
+{"type":"tag","line":16,"val":"img","selfClosing":false}
+{"type":"text","line":16,"val":"   "}
+{"type":"outdent","line":17}
+{"type":"eos","line":17}
