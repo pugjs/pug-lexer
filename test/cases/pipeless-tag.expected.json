@@ -3,6 +3,7 @@
 {"type":"start-pipeless-text","line":1}
 {"type":"text","line":2,"val":"  what"}
 {"type":"newline","line":3}
-{"type":"text","line":3,"val":"is going on"}
+{"type":"text","line":3,"val":"is going "}
+{"type":"interpolated-code","line":3,"val":"'on'","escape":true,"buffer":true}
 {"type":"end-pipeless-text","line":3}
 {"type":"eos","line":3}
