@@ -234,7 +234,12 @@ Lexer.prototype = {
     if (/^#\{/.test(this.input)) {
       var match = this.bracketExpression(1);
       this.consume(match.end + 1);
-      this.tokens.push(this.tok('interpolation', match.src));
+      var tok = this.tok('interpolation', match.src);
+      if (this.input[0] === '/') {
+        tok.selfClosing = true;
+        this.consume(1);
+      }
+      this.tokens.push(tok);
       return true;
     }
   },
