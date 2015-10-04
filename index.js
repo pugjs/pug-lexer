@@ -339,17 +339,19 @@ Lexer.prototype = {
     var indexOfEnd = this.interpolated ? value.indexOf(']') : -1;
     var indexOfStart = value.indexOf('#[');
     var indexOfEscaped = value.indexOf('\\#[');
+    var matchOfStringInterp = /(\\)?([#!]){((?:.|\n)*)$/.exec(value);
+    var indexOfStringInterp = this.interpolationAllowed && matchOfStringInterp ? matchOfStringInterp.index : Infinity;
 
     if (indexOfEnd === -1) indexOfEnd = Infinity;
     if (indexOfStart === -1) indexOfStart = Infinity;
     if (indexOfEscaped === -1) indexOfEscaped = Infinity;
 
-    if (indexOfEscaped !== Infinity && indexOfEscaped < indexOfEnd && indexOfEscaped < indexOfStart) {
-      prefix = prefix + value.substr(0, value.indexOf('\\#[')) + '#[';
-      return this.addText(value.substr(value.indexOf('\\#[') + 3), prefix);
+    if (indexOfEscaped !== Infinity && indexOfEscaped < indexOfEnd && indexOfEscaped < indexOfStart && indexOfEscaped < indexOfStringInterp) {
+      prefix = prefix + value.substring(0, indexOfEscaped) + '#[';
+      return this.addText(value.substring(indexOfEscaped + 3), prefix);
     }
-    if (indexOfStart !== Infinity && indexOfStart < indexOfEnd && indexOfStart < indexOfEscaped) {
-      this.tokens.push(this.tok('text', prefix + value.substr(0, indexOfStart)));
+    if (indexOfStart !== Infinity && indexOfStart < indexOfEnd && indexOfStart < indexOfEscaped && indexOfStart < indexOfStringInterp) {
+      this.tokens.push(this.tok('text', prefix + value.substring(0, indexOfStart)));
       this.tokens.push(this.tok('start-jade-interpolation'));
       var child = new this.constructor(value.substr(indexOfStart + 2), this.filename, {
         interpolated: true,
@@ -361,24 +363,22 @@ Lexer.prototype = {
       this.addText(child.input);
       return;
     }
-    if (indexOfEnd !== Infinity && indexOfEnd < indexOfStart && indexOfEnd < indexOfEscaped) {
-      if (prefix + value.substr(0, value.indexOf(']'))) {
-        this.tokens.push(this.tok('text', prefix + value.substr(0, value.indexOf(']'))));
+    if (indexOfEnd !== Infinity && indexOfEnd < indexOfStart && indexOfEnd < indexOfEscaped && indexOfEnd < indexOfStringInterp) {
+      if (prefix + value.substring(0, indexOfEnd)) {
+        this.addText(value.substring(0, indexOfEnd), prefix);
       }
       this.ended = true;
       this.input = value.substr(value.indexOf(']') + 1) + this.input;
       return;
     }
-
-    var match = /(\\)?([#!]){((?:.|\n)*)$/.exec(value);
-    if (this.interpolationAllowed && match && !match[1]) {
-      var before = value.substr(0, match.index);
+    if (indexOfStringInterp !== Infinity && !matchOfStringInterp[1]) {
+      var before = value.substr(0, indexOfStringInterp);
       if (prefix || before) this.tokens.push(this.tok('text', prefix + before));
 
-      var rest = match[3];
+      var rest = matchOfStringInterp[3];
       var range = characterParser.parseMaxBracket(rest, '}');
       var tok = this.tok('interpolated-code', range.src);
-      tok.escape = match[2] === '#';
+      tok.escape = matchOfStringInterp[2] === '#';
       tok.buffer = true;
       this.tokens.push(tok);
       if (range.end + 1 < rest.length) this.addText(rest.substr(range.end + 1));
