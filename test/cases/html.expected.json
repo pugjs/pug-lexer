@@ -11,4 +11,9 @@
 {"type":"newline","line":8}
 {"type":"tag","line":8,"val":"p","selfClosing":false}
 {"type":"text","line":8,"val":"You can <em>embed</em> html as well."}
-{"type":"eos","line":8}
+{"type":"newline","line":9}
+{"type":"tag","line":9,"val":"p","selfClosing":false}
+{"type":":","line":9}
+{"type":"text-html","line":9,"val":"<strong>Even</strong> as the body of a block expansion."}
+{"type":"newline","line":10}
+{"type":"eos","line":10}
