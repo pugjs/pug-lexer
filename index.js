@@ -345,11 +345,11 @@ Lexer.prototype = {
     if (indexOfEscaped === -1) indexOfEscaped = Infinity;
 
     if (indexOfEscaped !== Infinity && indexOfEscaped < indexOfEnd && indexOfEscaped < indexOfStart) {
-      prefix = prefix + value.substr(0, value.indexOf('\\#[')) + '#[';
-      return this.addText(value.substr(value.indexOf('\\#[') + 3), prefix);
+      prefix = prefix + value.substring(0, indexOfEscaped) + '#[';
+      return this.addText(value.substring(indexOfEscaped + 3), prefix);
     }
     if (indexOfStart !== Infinity && indexOfStart < indexOfEnd && indexOfStart < indexOfEscaped) {
-      this.tokens.push(this.tok('text', prefix + value.substr(0, indexOfStart)));
+      this.tokens.push(this.tok('text', prefix + value.substring(0, indexOfStart)));
       this.tokens.push(this.tok('start-jade-interpolation'));
       var child = new this.constructor(value.substr(indexOfStart + 2), this.filename, {
         interpolated: true,
@@ -362,8 +362,8 @@ Lexer.prototype = {
       return;
     }
     if (indexOfEnd !== Infinity && indexOfEnd < indexOfStart && indexOfEnd < indexOfEscaped) {
-      if (prefix + value.substr(0, value.indexOf(']'))) {
-        this.tokens.push(this.tok('text', prefix + value.substr(0, value.indexOf(']'))));
+      if (prefix + value.substring(0, indexOfEnd)) {
+        this.tokens.push(this.tok('text', prefix + value.substring(0, indexOfEnd)));
       }
       this.ended = true;
       this.input = value.substr(value.indexOf(']') + 1) + this.input;
