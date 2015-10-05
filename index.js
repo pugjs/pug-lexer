@@ -633,6 +633,7 @@ Lexer.prototype = {
         }
         if (tok.args) {
           this.assertExpression('[' + tok.args + ']');
+          this.lineno += tok.args.split("\n").length - 1;
         }
       }
       this.tokens.push(tok);
