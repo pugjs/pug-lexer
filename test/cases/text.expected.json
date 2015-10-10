@@ -6,7 +6,6 @@
 {"type":"newline","line":5}
 {"type":"tag","line":5,"val":"p","selfClosing":false}
 {"type":"dot","line":5}
-{"type":"text","line":6,"val":""}
 {"type":"newline","line":7}
 {"type":"tag","line":7,"val":"p","selfClosing":false}
 {"type":"indent","line":8,"val":2}
@@ -33,7 +32,6 @@
 {"type":"end-pipeless-text","line":18}
 {"type":"newline","line":19}
 {"type":"dot","line":19}
-{"type":"text","line":20,"val":""}
 {"type":"newline","line":21}
 {"type":"dot","line":21}
 {"type":"start-pipeless-text","line":21}
