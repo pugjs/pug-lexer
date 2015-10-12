@@ -31,6 +31,7 @@ function Lexer(str, filename, options) {
   this.indentStack = [0];
   this.indentRe = null;
   this.pipeless = false;
+  this.startedPipeless = false;
   // If #{} or !{} syntax is allowed when adding text
   this.interpolationAllowed = true;
 
@@ -204,7 +205,7 @@ Lexer.prototype = {
     if (captures = /^\n[ \t]*\n/.exec(this.input)) {
       this.consume(captures[0].length - 1);
       ++this.lineno;
-      if (this.pipeless) this.tokens.push(this.tok('text', ''));
+      if (this.startedPipeless) this.tokens.push(this.tok('text', ''));
       return true;
     }
   },
@@ -976,6 +977,7 @@ Lexer.prototype = {
     indents = indents || captures && captures[1].length;
     if (indents > this.indentStack[0]) {
       this.tokens.push(this.tok('start-pipeless-text'));
+      this.startedPipeless = true;
       var tokens = [];
       var isMatch;
       // Index in this.input. Can't use this.consume because we might need to
@@ -1007,6 +1009,7 @@ Lexer.prototype = {
         if (i !== 0) this.tokens.push(this.tok('newline'));
         this.addText(token);
       }.bind(this));
+      this.startedPipeless = false;
       this.tokens.push(this.tok('end-pipeless-text'));
       return true;
     }

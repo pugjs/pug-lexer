@@ -1,5 +1,4 @@
 {"type":"comment","line":1,"val":" see https://github.com/jadejs/jade/issues/1589","buffer":false}
-{"type":"text","line":2,"val":""}
 {"type":"newline","line":3}
 {"type":"code","line":3,"val":"var ajax = true","escape":false,"buffer":false}
 {"type":"newline","line":5}
