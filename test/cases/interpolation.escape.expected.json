@@ -5,7 +5,7 @@
 {"type":"indent","line":4,"val":2}
 {"type":"text","line":4,"val":"some"}
 {"type":"newline","line":5}
-{"type":"text","line":5,"val":"\\#{text}"}
+{"type":"text","line":5,"val":"#{text}"}
 {"type":"newline","line":6}
 {"type":"text","line":6,"val":"here"}
 {"type":"newline","line":7}

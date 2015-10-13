@@ -377,7 +377,11 @@ Lexer.prototype = {
       this.input = value.substr(value.indexOf(']') + 1) + this.input;
       return;
     }
-    if (indexOfStringInterp !== Infinity && !matchOfStringInterp[1]) {
+    if (indexOfStringInterp !== Infinity) {
+      if (matchOfStringInterp[1]) {
+        prefix = prefix + value.substring(0, indexOfStringInterp) + '#{';
+        return this.addText(value.substring(indexOfStringInterp + 3), prefix);
+      }
       var before = value.substr(0, indexOfStringInterp);
       if (prefix || before) this.tokens.push(this.tok('text', prefix + before));
 
