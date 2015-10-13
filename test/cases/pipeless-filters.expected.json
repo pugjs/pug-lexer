@@ -1,4 +1,4 @@
-{"type":"filter","line":1,"val":"markdown"}
+{"type":"filter","line":1,"val":"marked"}
 {"type":"start-pipeless-text","line":1}
 {"type":"text","line":2,"val":"    code sample"}
 {"type":"newline","line":3}
