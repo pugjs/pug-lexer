@@ -791,39 +791,60 @@ Lexer.prototype = {
       this.consume(index + 1);
       tok.attrs = [];
 
+      var whitespaceRe = /[ \n\t]/;
+      var quoteRe = /['"]/;
+
       var escapedAttr = true
       var key = '';
       var val = '';
       var state = characterParser.defaultState();
       var loc = 'key';
       var isEndOfAttribute = function (i) {
+        // if the key is not started, then the attribute cannot be ended
         if (key.trim() === '') return false;
+        // if there's nothing more then the attribute must be ended
         if (i === str.length) return true;
+
         if (loc === 'key') {
-          if (str[i] === ' ' || str[i] === '\n' || str[i] === '\t') {
+          if (whitespaceRe.test(str[i])) {
+            // find the first non-whitespace character
             for (var x = i; x < str.length; x++) {
-              if (str[x] != ' ' && str[x] != '\n' && str[x] != '\t') {
-                if (str[x] === '=' || str[x] === '!' || str[x] === ',') return false;
+              if (!whitespaceRe.test(str[x])) {
+                // starts a `value`
+                if (str[x] === '=' || str[x] === '!') return false;
+                // will be handled when x === i
+                else if (str[x] === ',') return false;
+                // attribute ended
                 else return true;
               }
             }
           }
-          return str[i] === ','
-        } else if (loc === 'value' && !state.isNesting()) {
+          // if there's no whitespace and the character is not ',', the
+          // attribute did not end.
+          return str[i] === ',';
+        } else if (loc === 'value') {
+          // if the character is in a string or in parentheses/brackets/braces
+          if (state.isNesting() || state.isString()) return false;
           try {
+            // if the current value expression is not valid JavaScript, then
+            // assume that the user did not end the value
             self.assertExpression(val);
-            if (str[i] === ' ' || str[i] === '\n' || str[i] === '\t') {
-              for (var x = i; x < str.length; x++) {
-                if (str[x] != ' ' && str[x] != '\n' && str[x] != '\t') {
-                  if (characterParser.isPunctuator(str[x]) && str[x] != '"' && str[x] != "'") return false;
-                  else return true;
-                }
-              }
-            }
-            return str[i] === ',';
           } catch (ex) {
             return false;
           }
+          if (whitespaceRe.test(str[i])) {
+            // find the first non-whitespace character
+            for (var x = i; x < str.length; x++) {
+              if (!whitespaceRe.test(str[x])) {
+                // if it is a JavaScript punctuator, then assume that it is
+                // a part of the value
+                return !characterParser.isPunctuator(str[x]) && !quoteRe.test(str[x]);
+              }
+            }
+          }
+          // if there's no whitespace and the character is not ',', the
+          // attribute did not end.
+          return str[i] === ',';
         }
       }
 
@@ -851,14 +872,14 @@ Lexer.prototype = {
             case 'key-char':
               if (str[i] === quote) {
                 loc = 'key';
-                if (i + 1 < str.length && [' ', ',', '!', '=', '\n', '\t'].indexOf(str[i + 1]) === -1)
-                  this.error('INVALID_KEY_CHARACTER', 'Unexpected character ' + str[i + 1] + ' expected ` `, `\\n`, `\t`, `,`, `!` or `=`');
+                if (i + 1 < str.length && !/[ ,!=\n\t]/.test(str[i + 1]))
+                  this.error('INVALID_KEY_CHARACTER', 'Unexpected character "' + str[i + 1] + '" expected ` `, `\\n`, `\t`, `,`, `!` or `=`');
               } else {
                 key += str[i];
               }
               break;
             case 'key':
-              if (key === '' && (str[i] === '"' || str[i] === "'")) {
+              if (key === '' && quoteRe.test(str[i])) {
                 loc = 'key-char';
                 quote = str[i];
               } else if (str[i] === '!' || str[i] === '=') {
@@ -873,18 +894,7 @@ Lexer.prototype = {
               break;
             case 'value':
               state = characterParser.parseChar(str[i], state);
-              if (state.isString()) {
-                loc = 'string';
-                quote = str[i];
-              }
               val += str[i];
-              break;
-            case 'string':
-              state = characterParser.parseChar(str[i], state);
-              val += str[i];
-              if (!state.isString()) {
-                loc = 'value';
-              }
               break;
           }
         }
