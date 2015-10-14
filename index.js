@@ -236,10 +236,6 @@ Lexer.prototype = {
       var match = this.bracketExpression(1);
       this.consume(match.end + 1);
       var tok = this.tok('interpolation', match.src);
-      if (this.input[0] === '/') {
-        tok.selfClosing = true;
-        this.consume(1);
-      }
       this.tokens.push(tok);
       return true;
     }
@@ -251,11 +247,10 @@ Lexer.prototype = {
 
   tag: function() {
     var captures;
-    if (captures = /^(\w(?:[-:\w]*\w)?)(\/?)/.exec(this.input)) {
+    if (captures = /^(\w(?:[-:\w]*\w)?)/.exec(this.input)) {
       this.consume(captures[0].length);
       var tok, name = captures[1];
       tok = this.tok('tag', name);
-      tok.selfClosing = !!captures[2];
       this.tokens.push(tok);
       return true;
     }
@@ -904,10 +899,6 @@ Lexer.prototype = {
         }
       }
 
-      if ('/' == this.input.charAt(0)) {
-        this.consume(1);
-        tok.selfClosing = true;
-      }
       if (push) {
         this.tokens.push(tok);
         return true;
@@ -1030,6 +1021,18 @@ Lexer.prototype = {
   },
 
   /**
+   * Slash.
+   */
+
+  slash: function() {
+    var tok = this.scan(/^\//, 'slash');
+    if (tok) {
+      this.tokens.push(tok);
+      return true;
+    }
+  },
+
+  /**
    * ':'
    */
 
@@ -1086,6 +1089,7 @@ Lexer.prototype = {
       || this.text()
       || this.textHtml()
       || this.comment()
+      || this.slash()
       || this.colon()
       || this.fail();
   },
