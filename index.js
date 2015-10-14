@@ -529,7 +529,7 @@ Lexer.prototype = {
     if (tok) {
       this.tokens.push(tok);
       while (this.filter({ inInclude: true })) {
-        this.attrs(true);
+        this.attrs();
       }
       if (!this.path()) {
         if (/^[^ \n]+/.test(this.input)) {
@@ -776,7 +776,7 @@ Lexer.prototype = {
    * Attributes.
    */
 
-  attrs: function(push) {
+  attrs: function() {
     if ('(' == this.input.charAt(0)) {
       var index = this.bracketExpression().end
         , str = this.input.substr(1, index-1)
@@ -899,11 +899,8 @@ Lexer.prototype = {
         }
       }
 
-      if (push) {
-        this.tokens.push(tok);
-        return true;
-      }
-      return tok;
+      this.tokens.push(tok);
+      return true;
     }
   },
 
@@ -1083,7 +1080,7 @@ Lexer.prototype = {
       || this.id()
       || this.dot()
       || this.className()
-      || this.attrs(true)
+      || this.attrs()
       || this.attributesBlock()
       || this.indent()
       || this.text()
