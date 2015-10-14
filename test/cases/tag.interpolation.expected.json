@@ -7,11 +7,15 @@
 {"type":"text","line":5,"val":"value"}
 {"type":"newline","line":6}
 {"type":"interpolation","line":6,"val":"tag"}
-{"type":"attrs","line":6,"attrs":[{"name":"foo","val":"'bar'","escaped":true}]}
+{"type":"start-attributes","line":6}
+{"type":"attribute","line":6,"name":"foo","val":"'bar'","escaped":true}
+{"type":"end-attributes","line":6}
 {"type":"text","line":6,"val":"value"}
 {"type":"newline","line":7}
 {"type":"interpolation","line":7,"val":"foo ? 'a' : 'li'"}
-{"type":"attrs","line":7,"attrs":[{"name":"something","val":true,"escaped":true}]}
+{"type":"start-attributes","line":7}
+{"type":"attribute","line":7,"name":"something","val":true,"escaped":true}
+{"type":"end-attributes","line":7}
 {"type":"text","line":7,"val":"here"}
 {"type":"newline","line":9}
 {"type":"mixin","line":9,"val":"item","args":"icon"}
@@ -25,7 +29,9 @@
 {"type":"indent","line":13,"val":8}
 {"type":"tag","line":13,"val":"img"}
 {"type":"class","line":13,"val":"icon"}
-{"type":"attrs","line":13,"attrs":[{"name":"src","val":"icon","escaped":true}]}
+{"type":"start-attributes","line":13}
+{"type":"attribute","line":13,"name":"src","val":"icon","escaped":true}
+{"type":"end-attributes","line":13}
 {"type":"newline","line":14}
 {"type":"mixin-block","line":14}
 {"type":"outdent","line":15}
@@ -37,7 +43,9 @@
 {"type":"indent","line":17,"val":8}
 {"type":"tag","line":17,"val":"img"}
 {"type":"class","line":17,"val":"icon"}
-{"type":"attrs","line":17,"attrs":[{"name":"src","val":"icon","escaped":true}]}
+{"type":"start-attributes","line":17}
+{"type":"attribute","line":17,"name":"src","val":"icon","escaped":true}
+{"type":"end-attributes","line":17}
 {"type":"newline","line":18}
 {"type":"mixin-block","line":18}
 {"type":"outdent","line":20}
@@ -50,7 +58,9 @@
 {"type":"text","line":21,"val":"Contact"}
 {"type":"newline","line":22}
 {"type":"call","line":22,"val":"item"}
-{"type":"attrs","line":22,"attrs":[{"name":"href","val":"'/contact'","escaped":true}]}
+{"type":"start-attributes","line":22}
+{"type":"attribute","line":22,"name":"href","val":"'/contact'","escaped":true}
+{"type":"end-attributes","line":22}
 {"type":"text","line":22,"val":"Contact"}
 {"type":"outdent","line":23}
 {"type":"eos","line":23}

@@ -1,5 +1,7 @@
 {"type":"tag","line":1,"val":"script"}
-{"type":"attrs","line":1,"attrs":[{"name":"type","val":"'text/x-template'","escaped":true}]}
+{"type":"start-attributes","line":1}
+{"type":"attribute","line":1,"name":"type","val":"'text/x-template'","escaped":true}
+{"type":"end-attributes","line":1}
 {"type":"indent","line":2,"val":2}
 {"type":"tag","line":2,"val":"article"}
 {"type":"indent","line":3,"val":4}
@@ -11,7 +13,9 @@
 {"type":"outdent","line":6}
 {"type":"outdent","line":6}
 {"type":"tag","line":6,"val":"script"}
-{"type":"attrs","line":6,"attrs":[{"name":"type","val":"'text/x-template'","escaped":true}]}
+{"type":"start-attributes","line":6}
+{"type":"attribute","line":6,"name":"type","val":"'text/x-template'","escaped":true}
+{"type":"end-attributes","line":6}
 {"type":"dot","line":6}
 {"type":"start-pipeless-text","line":6}
 {"type":"text","line":7,"val":"article"}

@@ -17,7 +17,9 @@
 {"type":"each","line":12,"val":"item","key":"i","code":"items"}
 {"type":"indent","line":13,"val":4}
 {"type":"tag","line":13,"val":"li"}
-{"type":"attrs","line":13,"attrs":[{"name":"class","val":"'item-' + i","escaped":true}]}
+{"type":"start-attributes","line":13}
+{"type":"attribute","line":13,"name":"class","val":"'item-' + i","escaped":true}
+{"type":"end-attributes","line":13}
 {"type":"code","line":13,"val":"item","escape":true,"buffer":true}
 {"type":"outdent","line":15}
 {"type":"outdent","line":15}
