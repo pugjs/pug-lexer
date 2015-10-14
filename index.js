@@ -386,7 +386,7 @@ Lexer.prototype = {
       var rest = matchOfStringInterp[3];
       var range = characterParser.parseMaxBracket(rest, '}');
       var tok = this.tok('interpolated-code', range.src);
-      tok.escape = matchOfStringInterp[2] === '#';
+      tok.mustEscape = matchOfStringInterp[2] === '#';
       tok.buffer = true;
       this.tokens.push(tok);
       if (range.end + 1 < rest.length) this.addText(rest.substr(range.end + 1));
@@ -751,7 +751,7 @@ Lexer.prototype = {
       }
       this.consume(captures[0].length - shortened);
       var tok = this.tok('code', code);
-      tok.escape = flags.charAt(0) === '=';
+      tok.mustEscape = flags.charAt(0) === '=';
       tok.buffer = flags.charAt(0) === '=' || flags.charAt(1) === '=';
       if (tok.buffer) this.assertExpression(code);
       this.tokens.push(tok);
@@ -860,7 +860,7 @@ Lexer.prototype = {
           var tok = this.tok('attribute');
           tok.name = key;
           tok.val = '' == val ? true : val;
-          tok.escaped = escapedAttr;
+          tok.mustEscape = escapedAttr;
           this.tokens.push(tok);
 
           key = val = '';
