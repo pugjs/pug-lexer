@@ -2,7 +2,7 @@
 {"type":"include","line":2}
 {"type":"path","line":2,"val":"auxiliary/mixins"}
 {"type":"newline","line":4}
-{"type":"call","line":4,"val":"foo"}
+{"type":"call","line":4,"val":"foo","args":null}
 {"type":"newline","line":6}
 {"type":"tag","line":6,"val":"body"}
 {"type":"indent","line":7,"val":2}

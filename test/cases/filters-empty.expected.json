@@ -2,7 +2,7 @@
 {"type":"newline","line":3}
 {"type":"tag","line":3,"val":"fb:users"}
 {"type":"indent","line":4,"val":2}
-{"type":"each","line":4,"val":"user","code":"users"}
+{"type":"each","line":4,"val":"user","key":null,"code":"users"}
 {"type":"indent","line":5,"val":4}
 {"type":"tag","line":5,"val":"fb:user"}
 {"type":"start-attributes","line":5}

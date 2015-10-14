@@ -3,5 +3,5 @@
 {"type":"include","line":3}
 {"type":"path","line":3,"val":"../fixtures/mixin-include.jade"}
 {"type":"newline","line":5}
-{"type":"call","line":5,"val":"bang"}
+{"type":"call","line":5,"val":"bang","args":null}
 {"type":"eos","line":5}
