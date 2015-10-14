@@ -1,6 +1,6 @@
 {"type":"mixin","line":1,"val":"m","args":"id"}
 {"type":"indent","line":2,"val":2}
-{"type":"tag","line":2,"val":"div","selfClosing":false}
+{"type":"tag","line":2,"val":"div"}
 {"type":"indent","line":3,"val":4}
 {"type":"mixin-block","line":3}
 {"type":"outdent","line":5}

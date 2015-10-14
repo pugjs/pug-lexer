@@ -1,16 +1,16 @@
 {"type":"newline","line":2}
 {"type":"comment","line":2,"val":" foo","buffer":true}
 {"type":"newline","line":3}
-{"type":"tag","line":3,"val":"ul","selfClosing":false}
+{"type":"tag","line":3,"val":"ul"}
 {"type":"indent","line":4,"val":2}
 {"type":"comment","line":4,"val":" bar","buffer":true}
 {"type":"newline","line":5}
-{"type":"tag","line":5,"val":"li","selfClosing":false}
+{"type":"tag","line":5,"val":"li"}
 {"type":"text","line":5,"val":"one"}
 {"type":"newline","line":6}
 {"type":"comment","line":6,"val":" baz","buffer":true}
 {"type":"newline","line":7}
-{"type":"tag","line":7,"val":"li","selfClosing":false}
+{"type":"tag","line":7,"val":"li"}
 {"type":"text","line":7,"val":"two"}
 {"type":"outdent","line":9}
 {"type":"comment","line":9,"val":"","buffer":true}
@@ -53,7 +53,7 @@
 {"type":"text","line":26,"val":""}
 {"type":"end-pipeless-text","line":26}
 {"type":"newline","line":27}
-{"type":"tag","line":27,"val":"p","selfClosing":false}
+{"type":"tag","line":27,"val":"p"}
 {"type":"text","line":27,"val":"five"}
 {"type":"newline","line":29}
 {"type":"class","line":29,"val":"foo"}

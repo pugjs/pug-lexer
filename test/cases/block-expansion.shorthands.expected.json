@@ -1,6 +1,6 @@
-{"type":"tag","line":1,"val":"ul","selfClosing":false}
+{"type":"tag","line":1,"val":"ul"}
 {"type":"indent","line":2,"val":2}
-{"type":"tag","line":2,"val":"li","selfClosing":false}
+{"type":"tag","line":2,"val":"li"}
 {"type":"class","line":2,"val":"list-item"}
 {"type":":","line":2}
 {"type":"class","line":2,"val":"foo"}

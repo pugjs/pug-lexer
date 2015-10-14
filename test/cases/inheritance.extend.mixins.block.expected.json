@@ -3,7 +3,7 @@
 {"type":"newline","line":3}
 {"type":"block","line":3,"val":"content","mode":"replace"}
 {"type":"indent","line":4,"val":2}
-{"type":"tag","line":4,"val":"p","selfClosing":false}
+{"type":"tag","line":4,"val":"p"}
 {"type":"text","line":4,"val":"Hello World!"}
 {"type":"outdent","line":5}
 {"type":"eos","line":5}

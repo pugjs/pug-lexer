@@ -1,4 +1,4 @@
-{"type":"tag","line":1,"val":"script","selfClosing":false}
+{"type":"tag","line":1,"val":"script"}
 {"type":"attrs","line":1,"attrs":[{"name":"type","val":"'text/javascript'","escaped":true}]}
 {"type":"indent","line":2,"val":2}
 {"type":"filter","line":2,"val":"coffee-script"}

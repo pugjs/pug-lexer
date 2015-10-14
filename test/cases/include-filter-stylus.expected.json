@@ -1,4 +1,4 @@
-{"type":"tag","line":1,"val":"style","selfClosing":false}
+{"type":"tag","line":1,"val":"style"}
 {"type":"attrs","line":1,"attrs":[{"name":"type","val":"\"text/css\"","escaped":true}]}
 {"type":"indent","line":2,"val":2}
 {"type":"include","line":2}

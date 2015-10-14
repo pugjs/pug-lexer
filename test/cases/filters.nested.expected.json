@@ -1,4 +1,4 @@
-{"type":"tag","line":1,"val":"script","selfClosing":false}
+{"type":"tag","line":1,"val":"script"}
 {"type":"indent","line":2,"val":2}
 {"type":"filter","line":2,"val":"cdata"}
 {"type":"filter","line":2,"val":"uglify-js"}
@@ -10,7 +10,7 @@
 {"type":"text","line":5,"val":"})()"}
 {"type":"end-pipeless-text","line":5}
 {"type":"outdent","line":6}
-{"type":"tag","line":6,"val":"script","selfClosing":false}
+{"type":"tag","line":6,"val":"script"}
 {"type":"indent","line":7,"val":2}
 {"type":"filter","line":7,"val":"cdata"}
 {"type":"filter","line":7,"val":"uglify-js"}
