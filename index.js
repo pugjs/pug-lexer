@@ -778,9 +778,9 @@ Lexer.prototype = {
 
   attrs: function() {
     if ('(' == this.input.charAt(0)) {
+      this.tokens.push(this.tok('start-attributes'));
       var index = this.bracketExpression().end
-        , str = this.input.substr(1, index-1)
-        , tok = this.tok('attrs');
+        , str = this.input.substr(1, index-1);
 
       this.assertNestingCorrect(str);
 
@@ -788,7 +788,6 @@ Lexer.prototype = {
       var self = this;
 
       this.consume(index + 1);
-      tok.attrs = [];
 
       var whitespaceRe = /[ \n\t]/;
       var quoteRe = /['"]/;
@@ -797,6 +796,7 @@ Lexer.prototype = {
       var key = '';
       var val = '';
       var state = characterParser.defaultState();
+      var lineno = this.lineno;
       var loc = 'key';
       var isEndOfAttribute = function (i) {
         // if the key is not started, then the attribute cannot be ended
@@ -847,8 +847,6 @@ Lexer.prototype = {
         }
       }
 
-      this.lineno += str.split("\n").length - 1;
-
       for (var i = 0; i <= str.length; i++) {
         if (isEndOfAttribute(i)) {
           val = val.trim();
@@ -858,14 +856,17 @@ Lexer.prototype = {
           }
           key = key.trim();
           key = key.replace(/^['"]|['"]$/g, '');
-          tok.attrs.push({
-            name: key,
-            val: '' == val ? true : val,
-            escaped: escapedAttr
-          });
+
+          var tok = this.tok('attribute');
+          tok.name = key;
+          tok.val = '' == val ? true : val;
+          tok.escaped = escapedAttr;
+          this.tokens.push(tok);
+
           key = val = '';
           loc = 'key';
           escapedAttr = false;
+          this.lineno = lineno;
         } else {
           switch (loc) {
             case 'key-char':
@@ -897,9 +898,16 @@ Lexer.prototype = {
               break;
           }
         }
+        if (str[i] === '\n') {
+          // Save the line number locally to keep this.lineno at the start of
+          // the attribute.
+          lineno++;
+          // If the key has not been started, update this.lineno immediately.
+          if (!key.trim()) this.lineno = lineno;
+        }
       }
 
-      this.tokens.push(tok);
+      this.tokens.push(this.tok('end-attributes'));
       return true;
     }
   },
