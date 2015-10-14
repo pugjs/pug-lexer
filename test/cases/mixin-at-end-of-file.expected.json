@@ -1,4 +1,5 @@
-{"type":"include","line":1,"val":"./auxiliary/mixin-at-end-of-file.jade"}
+{"type":"include","line":1}
+{"type":"path","line":1,"val":"./auxiliary/mixin-at-end-of-file.jade"}
 {"type":"newline","line":3}
 {"type":"call","line":3,"val":"slide","args":""}
 {"type":"indent","line":4,"val":2}

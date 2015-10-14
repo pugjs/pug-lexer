@@ -1,5 +1,6 @@
 {"type":"newline","line":2}
-{"type":"extends","line":2,"val":"../fixtures/append/app-layout"}
+{"type":"extends","line":2}
+{"type":"path","line":2,"val":"../fixtures/append/app-layout"}
 {"type":"newline","line":4}
 {"type":"block","line":4,"val":"head","mode":"append"}
 {"type":"indent","line":5,"val":2}

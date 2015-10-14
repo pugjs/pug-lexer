@@ -1,4 +1,5 @@
-{"type":"extends","line":1,"val":"/auxiliary/inheritance.extend.recursive-parent.jade"}
+{"type":"extends","line":1}
+{"type":"path","line":1,"val":"/auxiliary/inheritance.extend.recursive-parent.jade"}
 {"type":"newline","line":3}
 {"type":"block","line":3,"val":"parent","mode":"replace"}
 {"type":"indent","line":4,"val":4}

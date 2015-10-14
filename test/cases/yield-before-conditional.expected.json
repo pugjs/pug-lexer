@@ -2,7 +2,8 @@
 {"type":"indent","line":2,"val":2}
 {"type":"tag","line":2,"val":"body","selfClosing":false}
 {"type":"indent","line":3,"val":4}
-{"type":"include","line":3,"val":"yield-before-conditional-head"}
+{"type":"include","line":3}
+{"type":"path","line":3,"val":"yield-before-conditional-head"}
 {"type":"indent","line":4,"val":6}
 {"type":"tag","line":4,"val":"script","selfClosing":false}
 {"type":"attrs","line":4,"attrs":[{"name":"src","val":"'/caustic.js'","escaped":true}]}

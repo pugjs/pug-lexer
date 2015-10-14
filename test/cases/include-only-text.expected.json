@@ -4,7 +4,8 @@
 {"type":"indent","line":3,"val":4}
 {"type":"tag","line":3,"val":"p","selfClosing":false}
 {"type":"indent","line":4,"val":6}
-{"type":"include","line":4,"val":"include-only-text-body"}
+{"type":"include","line":4}
+{"type":"path","line":4,"val":"include-only-text-body"}
 {"type":"indent","line":5,"val":8}
 {"type":"tag","line":5,"val":"em","selfClosing":false}
 {"type":"text","line":5,"val":"hello world"}

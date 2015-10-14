@@ -2,6 +2,7 @@
 {"type":"id","line":1,"val":"pet-template"}
 {"type":"attrs","line":1,"attrs":[{"name":"type","val":"'text/x-template'","escaped":true}]}
 {"type":"indent","line":2,"val":2}
-{"type":"include","line":2,"val":"auxiliary/pet"}
+{"type":"include","line":2}
+{"type":"path","line":2,"val":"auxiliary/pet"}
 {"type":"outdent","line":2}
 {"type":"eos","line":2}
