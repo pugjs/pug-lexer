@@ -281,8 +281,8 @@ Lexer.prototype = {
     if (this.scan(/^!!! *([^\n]+)?/, 'doctype')) {
       this.error('OLD_DOCTYPE', '`!!!` is deprecated, you must now use `doctype`');
     }
-    var node = this.scanEndOfLine(/^(?:doctype) *([^\n]+)?/, 'doctype');
-    if (node && node.val && node.val.trim() === '5') {
+    var node = this.scanEndOfLine(/^doctype *([^\n]*)/, 'doctype');
+    if (node && node.val.trim() === '5') {
       this.error('OLD_DOCTYPE', '`doctype 5` is deprecated, you must now use `doctype html`');
     }
     if (node) {
@@ -624,14 +624,13 @@ Lexer.prototype = {
         tok = this.tok('call', '#{'+match.src+'}');
       }
 
+      tok.args = null;
       // Check for args (not attributes)
       if (captures = /^ *\(/.exec(this.input)) {
         var range = this.bracketExpression(captures[0].length - 1);
         if (!/^\s*[-\w]+ *=/.test(range.src)) { // not attributes
           this.consume(range.end + 1);
           tok.args = range.src;
-        }
-        if (tok.args) {
           this.assertExpression('[' + tok.args + ']');
           this.lineno += tok.args.split("\n").length - 1;
         }
@@ -718,7 +717,7 @@ Lexer.prototype = {
     if (captures = /^(?:each|for) +([a-zA-Z_$][\w$]*)(?: *, *([a-zA-Z_$][\w$]*))? * in *([^\n]+)/.exec(this.input)) {
       this.consume(captures[0].length);
       var tok = this.tok('each', captures[1]);
-      tok.key = captures[2];
+      tok.key = captures[2] || null;
       this.assertExpression(captures[3])
       tok.code = captures[3];
       this.tokens.push(tok);
