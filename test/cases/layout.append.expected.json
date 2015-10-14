@@ -6,12 +6,12 @@
 {"type":"indent","line":5,"val":2}
 {"type":"tag","line":5,"val":"script"}
 {"type":"start-attributes","line":5}
-{"type":"attribute","line":5,"name":"src","val":"'foo.js'","escaped":true}
+{"type":"attribute","line":5,"name":"src","val":"'foo.js'","mustEscape":true}
 {"type":"end-attributes","line":5}
 {"type":"newline","line":6}
 {"type":"tag","line":6,"val":"script"}
 {"type":"start-attributes","line":6}
-{"type":"attribute","line":6,"name":"src","val":"'bar.js'","escaped":true}
+{"type":"attribute","line":6,"name":"src","val":"'bar.js'","mustEscape":true}
 {"type":"end-attributes","line":6}
 {"type":"outdent","line":7}
 {"type":"eos","line":7}

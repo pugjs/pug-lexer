@@ -4,7 +4,7 @@
 {"type":"indent","line":3,"val":2}
 {"type":"tag","line":3,"val":"body"}
 {"type":"indent","line":4,"val":3}
-{"type":"code","line":4,"val":"var s = 'this'","escape":false,"buffer":false}
+{"type":"code","line":4,"val":"var s = 'this'","mustEscape":false,"buffer":false}
 {"type":"newline","line":5}
 {"type":"case","line":5,"val":"s"}
 {"type":"indent","line":6,"val":5}

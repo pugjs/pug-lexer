@@ -2,9 +2,9 @@
 {"type":"indent","line":2,"val":2}
 {"type":"tag","line":2,"val":"a"}
 {"type":"start-attributes","line":2}
-{"type":"attribute","line":2,"name":"href","val":"url","escaped":true}
+{"type":"attribute","line":2,"name":"href","val":"url","mustEscape":true}
 {"type":"end-attributes","line":2}
-{"type":"code","line":2,"val":"url","escape":true,"buffer":true}
+{"type":"code","line":2,"val":"url","mustEscape":true,"buffer":true}
 {"type":"outdent","line":4}
 {"type":"tag","line":4,"val":"p"}
 {"type":"text","line":4,"val":"This also works "}

@@ -7,12 +7,12 @@
 {"type":"indent","line":4,"val":6}
 {"type":"tag","line":4,"val":"script"}
 {"type":"start-attributes","line":4}
-{"type":"attribute","line":4,"name":"src","val":"'/caustic.js'","escaped":true}
+{"type":"attribute","line":4,"name":"src","val":"'/caustic.js'","mustEscape":true}
 {"type":"end-attributes","line":4}
 {"type":"newline","line":5}
 {"type":"tag","line":5,"val":"script"}
 {"type":"start-attributes","line":5}
-{"type":"attribute","line":5,"name":"src","val":"'/app.js'","escaped":true}
+{"type":"attribute","line":5,"name":"src","val":"'/app.js'","mustEscape":true}
 {"type":"end-attributes","line":5}
 {"type":"outdent","line":6}
 {"type":"outdent","line":6}

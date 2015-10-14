@@ -14,7 +14,7 @@
 {"type":"newline","line":9}
 {"type":"tag","line":9,"val":"script"}
 {"type":"start-attributes","line":9}
-{"type":"attribute","line":9,"name":"type","val":"\"text/javascript\"","escaped":true}
+{"type":"attribute","line":9,"name":"type","val":"\"text/javascript\"","mustEscape":true}
 {"type":"end-attributes","line":9}
 {"type":"indent","line":10,"val":4}
 {"type":"include","line":10}

@@ -11,7 +11,7 @@
 {"type":"include","line":5}
 {"type":"filter","line":5,"val":"coffee-script"}
 {"type":"start-attributes","line":5}
-{"type":"attribute","line":5,"name":"minify","val":"true","escaped":true}
+{"type":"attribute","line":5,"name":"minify","val":"true","mustEscape":true}
 {"type":"end-attributes","line":5}
 {"type":"path","line":5,"val":"include-filter-coffee.coffee"}
 {"type":"outdent","line":6}
@@ -20,7 +20,7 @@
 {"type":"include","line":7}
 {"type":"filter","line":7,"val":"coffee-script"}
 {"type":"start-attributes","line":7}
-{"type":"attribute","line":7,"name":"minify","val":"false","escaped":true}
+{"type":"attribute","line":7,"name":"minify","val":"false","mustEscape":true}
 {"type":"end-attributes","line":7}
 {"type":"path","line":7,"val":"include-filter-coffee.coffee"}
 {"type":"outdent","line":8}

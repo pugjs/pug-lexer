@@ -1,6 +1,6 @@
 {"type":"tag","line":1,"val":"option"}
 {"type":"start-attributes","line":1}
-{"type":"attribute","line":1,"name":"value","val":"''","escaped":true}
+{"type":"attribute","line":1,"name":"value","val":"''","mustEscape":true}
 {"type":"end-attributes","line":1}
 {"type":"text","line":1,"val":"-- (selected) --"}
 {"type":"newline","line":3}

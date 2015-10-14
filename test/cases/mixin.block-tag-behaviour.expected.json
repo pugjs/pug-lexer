@@ -5,7 +5,7 @@
 {"type":"class","line":3,"val":"article"}
 {"type":"indent","line":4,"val":4}
 {"type":"tag","line":4,"val":"h1"}
-{"type":"code","line":4,"val":"name","escape":true,"buffer":true}
+{"type":"code","line":4,"val":"name","mustEscape":true,"buffer":true}
 {"type":"newline","line":5}
 {"type":"mixin-block","line":5}
 {"type":"outdent","line":7}
@@ -26,7 +26,7 @@
 {"type":"class","line":12,"val":"article"}
 {"type":"indent","line":13,"val":4}
 {"type":"tag","line":13,"val":"h1"}
-{"type":"code","line":13,"val":"name","escape":true,"buffer":true}
+{"type":"code","line":13,"val":"name","mustEscape":true,"buffer":true}
 {"type":"newline","line":14}
 {"type":"tag","line":14,"val":"p"}
 {"type":"indent","line":15,"val":6}

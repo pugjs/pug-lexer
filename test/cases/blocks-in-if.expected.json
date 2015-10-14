@@ -1,8 +1,8 @@
 {"type":"comment","line":1,"val":" see https://github.com/jadejs/jade/issues/1589","buffer":false}
 {"type":"newline","line":3}
-{"type":"code","line":3,"val":"var ajax = true","escape":false,"buffer":false}
+{"type":"code","line":3,"val":"var ajax = true","mustEscape":false,"buffer":false}
 {"type":"newline","line":5}
-{"type":"code","line":5,"val":"if( ajax )","escape":false,"buffer":false}
+{"type":"code","line":5,"val":"if( ajax )","mustEscape":false,"buffer":false}
 {"type":"indent","line":6,"val":4}
 {"type":"comment","line":6,"val":" return only contents if ajax requests","buffer":false}
 {"type":"newline","line":7}
@@ -12,7 +12,7 @@
 {"type":"text","line":8,"val":"ajax contents"}
 {"type":"outdent","line":10}
 {"type":"outdent","line":10}
-{"type":"code","line":10,"val":"else","escape":false,"buffer":false}
+{"type":"code","line":10,"val":"else","mustEscape":false,"buffer":false}
 {"type":"indent","line":11,"val":4}
 {"type":"comment","line":11,"val":" return all html","buffer":false}
 {"type":"newline","line":12}
@@ -24,7 +24,7 @@
 {"type":"indent","line":15,"val":12}
 {"type":"tag","line":15,"val":"meta"}
 {"type":"start-attributes","line":15}
-{"type":"attribute","line":15,"name":"charset","val":"'utf8'","escaped":true}
+{"type":"attribute","line":15,"name":"charset","val":"'utf8'","mustEscape":true}
 {"type":"end-attributes","line":15}
 {"type":"newline","line":16}
 {"type":"tag","line":16,"val":"title"}

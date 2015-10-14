@@ -21,13 +21,13 @@
 {"type":"text","line":6,"val":""}
 {"type":"start-jade-interpolation","line":6}
 {"type":"tag","line":6,"val":"strong"}
-{"type":"code","line":6,"val":"'[foo]'","escape":true,"buffer":true}
+{"type":"code","line":6,"val":"'[foo]'","mustEscape":true,"buffer":true}
 {"type":"end-jade-interpolation","line":6}
 {"type":"text","line":6,"val":""}
 {"type":"newline","line":7}
 {"type":"text","line":7,"val":""}
 {"type":"start-jade-interpolation","line":7}
-{"type":"code","line":7,"val":"var foo = 'foo]'","escape":false,"buffer":false}
+{"type":"code","line":7,"val":"var foo = 'foo]'","mustEscape":false,"buffer":false}
 {"type":"end-jade-interpolation","line":7}
 {"type":"text","line":7,"val":""}
 {"type":"newline","line":8}
@@ -50,13 +50,13 @@
 {"type":"text","line":13,"val":""}
 {"type":"start-jade-interpolation","line":13}
 {"type":"tag","line":13,"val":"strong"}
-{"type":"code","line":13,"val":"'[foo]'","escape":true,"buffer":true}
+{"type":"code","line":13,"val":"'[foo]'","mustEscape":true,"buffer":true}
 {"type":"end-jade-interpolation","line":13}
 {"type":"text","line":13,"val":""}
 {"type":"newline","line":14}
 {"type":"text","line":14,"val":""}
 {"type":"start-jade-interpolation","line":14}
-{"type":"code","line":14,"val":"var foo = 'foo]'","escape":false,"buffer":false}
+{"type":"code","line":14,"val":"var foo = 'foo]'","mustEscape":false,"buffer":false}
 {"type":"end-jade-interpolation","line":14}
 {"type":"text","line":14,"val":""}
 {"type":"newline","line":15}

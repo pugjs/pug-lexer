@@ -1,7 +1,7 @@
 {"type":"tag","line":1,"val":"script"}
 {"type":"id","line":1,"val":"pet-template"}
 {"type":"start-attributes","line":1}
-{"type":"attribute","line":1,"name":"type","val":"'text/x-template'","escaped":true}
+{"type":"attribute","line":1,"name":"type","val":"'text/x-template'","mustEscape":true}
 {"type":"end-attributes","line":1}
 {"type":"indent","line":2,"val":2}
 {"type":"include","line":2}

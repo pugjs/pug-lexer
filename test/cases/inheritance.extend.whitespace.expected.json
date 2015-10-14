@@ -6,7 +6,7 @@
 {"type":"indent","line":6,"val":2}
 {"type":"tag","line":6,"val":"script"}
 {"type":"start-attributes","line":6}
-{"type":"attribute","line":6,"name":"src","val":"'jquery.js'","escaped":true}
+{"type":"attribute","line":6,"name":"src","val":"'jquery.js'","mustEscape":true}
 {"type":"end-attributes","line":6}
 {"type":"outdent","line":8}
 {"type":"block","line":8,"val":"content","mode":"replace"}

@@ -33,14 +33,14 @@
 {"type":"indent","line":16,"val":1}
 {"type":"tag","line":16,"val":"script"}
 {"type":"start-attributes","line":16}
-{"type":"attribute","line":16,"name":"src","val":"'jquery.js'","escaped":true}
+{"type":"attribute","line":16,"name":"src","val":"'jquery.js'","mustEscape":true}
 {"type":"end-attributes","line":16}
 {"type":"outdent","line":18}
 {"type":"block","line":18,"val":"head","mode":"prepend"}
 {"type":"indent","line":19,"val":1}
 {"type":"tag","line":19,"val":"script"}
 {"type":"start-attributes","line":19}
-{"type":"attribute","line":19,"name":"src","val":"'foo.js'","escaped":true}
+{"type":"attribute","line":19,"name":"src","val":"'foo.js'","mustEscape":true}
 {"type":"end-attributes","line":19}
 {"type":"outdent","line":20}
 {"type":"eos","line":20}

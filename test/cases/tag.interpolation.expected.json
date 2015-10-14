@@ -1,20 +1,20 @@
 {"type":"newline","line":2}
-{"type":"code","line":2,"val":"var tag = 'p'","escape":false,"buffer":false}
+{"type":"code","line":2,"val":"var tag = 'p'","mustEscape":false,"buffer":false}
 {"type":"newline","line":3}
-{"type":"code","line":3,"val":"var foo = 'bar'","escape":false,"buffer":false}
+{"type":"code","line":3,"val":"var foo = 'bar'","mustEscape":false,"buffer":false}
 {"type":"newline","line":5}
 {"type":"interpolation","line":5,"val":"tag"}
 {"type":"text","line":5,"val":"value"}
 {"type":"newline","line":6}
 {"type":"interpolation","line":6,"val":"tag"}
 {"type":"start-attributes","line":6}
-{"type":"attribute","line":6,"name":"foo","val":"'bar'","escaped":true}
+{"type":"attribute","line":6,"name":"foo","val":"'bar'","mustEscape":true}
 {"type":"end-attributes","line":6}
 {"type":"text","line":6,"val":"value"}
 {"type":"newline","line":7}
 {"type":"interpolation","line":7,"val":"foo ? 'a' : 'li'"}
 {"type":"start-attributes","line":7}
-{"type":"attribute","line":7,"name":"something","val":true,"escaped":true}
+{"type":"attribute","line":7,"name":"something","val":true,"mustEscape":true}
 {"type":"end-attributes","line":7}
 {"type":"text","line":7,"val":"here"}
 {"type":"newline","line":9}
@@ -30,7 +30,7 @@
 {"type":"tag","line":13,"val":"img"}
 {"type":"class","line":13,"val":"icon"}
 {"type":"start-attributes","line":13}
-{"type":"attribute","line":13,"name":"src","val":"icon","escaped":true}
+{"type":"attribute","line":13,"name":"src","val":"icon","mustEscape":true}
 {"type":"end-attributes","line":13}
 {"type":"newline","line":14}
 {"type":"mixin-block","line":14}
@@ -44,7 +44,7 @@
 {"type":"tag","line":17,"val":"img"}
 {"type":"class","line":17,"val":"icon"}
 {"type":"start-attributes","line":17}
-{"type":"attribute","line":17,"name":"src","val":"icon","escaped":true}
+{"type":"attribute","line":17,"name":"src","val":"icon","mustEscape":true}
 {"type":"end-attributes","line":17}
 {"type":"newline","line":18}
 {"type":"mixin-block","line":18}
@@ -59,7 +59,7 @@
 {"type":"newline","line":22}
 {"type":"call","line":22,"val":"item"}
 {"type":"start-attributes","line":22}
-{"type":"attribute","line":22,"name":"href","val":"'/contact'","escaped":true}
+{"type":"attribute","line":22,"name":"href","val":"'/contact'","mustEscape":true}
 {"type":"end-attributes","line":22}
 {"type":"text","line":22,"val":"Contact"}
 {"type":"outdent","line":23}

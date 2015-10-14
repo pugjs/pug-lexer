@@ -4,7 +4,7 @@
 {"type":"indent","line":3,"val":4}
 {"type":"tag","line":3,"val":"style"}
 {"type":"start-attributes","line":3}
-{"type":"attribute","line":3,"name":"type","val":"\"text/css\"","escaped":true}
+{"type":"attribute","line":3,"name":"type","val":"\"text/css\"","mustEscape":true}
 {"type":"end-attributes","line":3}
 {"type":"indent","line":4,"val":6}
 {"type":"filter","line":4,"val":"less"}

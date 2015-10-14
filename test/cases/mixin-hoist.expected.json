@@ -2,7 +2,7 @@
 {"type":"mixin","line":2,"val":"foo","args":null}
 {"type":"indent","line":3,"val":2}
 {"type":"tag","line":3,"val":"h1"}
-{"type":"code","line":3,"val":"title","escape":true,"buffer":true}
+{"type":"code","line":3,"val":"title","mustEscape":true,"buffer":true}
 {"type":"outdent","line":5}
 {"type":"tag","line":5,"val":"html"}
 {"type":"indent","line":6,"val":2}
