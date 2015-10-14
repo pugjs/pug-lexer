@@ -1,5 +1,5 @@
 {
-  "msg": "unexpected text foo.£",
+  "msg": "unexpected text \"foo.£\"",
   "code": "JADE:UNEXPECTED_TEXT",
   "line": 1
 }

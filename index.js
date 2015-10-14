@@ -1042,7 +1042,7 @@ Lexer.prototype = {
   },
 
   fail: function () {
-    this.error('UNEXPECTED_TEXT', 'unexpected text ' + this.input.substr(0, 5));
+    this.error('UNEXPECTED_TEXT', 'unexpected text "' + this.input.substr(0, 5) + '"');
   },
 
   /**
