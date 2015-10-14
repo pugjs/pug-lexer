@@ -265,11 +265,14 @@ Lexer.prototype = {
    * Filter.
    */
 
-  filter: function() {
+  filter: function(opts) {
     var tok = this.scan(/^:([\w\-]+)/, 'filter');
+    var inInclude = opts && opts.inInclude;
     if (tok) {
-      this.pipeless = true;
-      this.interpolationAllowed = false;
+      if (!inInclude) {
+        this.pipeless = true;
+        this.interpolationAllowed = false;
+      }
       this.tokens.push(tok);
       return true;
     }
@@ -433,9 +436,12 @@ Lexer.prototype = {
    */
 
   "extends": function() {
-    var tok = this.scanEndOfLine(/^extends? +([^\n]+)/, 'extends');
+    var tok = this.scan(/^extends?(?= |$|\n)/, 'extends');
     if (tok) {
       this.tokens.push(tok);
+      if (!this.path()) {
+        this.error('NO_EXTENDS_PATH', 'missing path for extends');
+      }
       return true;
     }
   },
@@ -524,42 +530,36 @@ Lexer.prototype = {
    */
 
   include: function() {
-    var tok = this.scanEndOfLine(/^include +([^\n]+)/, 'include');
+    var tok = this.scan(/^include(?=:| |$|\n)/, 'include');
     if (tok) {
       this.tokens.push(tok);
+      while (this.filter({ inInclude: true })) {
+        this.attrs(true);
+      }
+      if (!this.path()) {
+        if (/^[^ \n]+/.test(this.input)) {
+          // if there is more text
+          this.fail();
+        } else {
+          // if not
+          this.error('NO_INCLUDE_PATH', 'missing path for include');
+        }
+      }
       return true;
-    }
-    if (this.scan(/^include\b/)) {
-      this.error('NO_INCLUDE_PATH', 'missing path for include');
     }
   },
 
   /**
-   * Include with filter
+   * Path
    */
 
-  includeFiltered: function() {
-    var captures;
-    if (captures = /^include:([\w\-]+)([\( ])/.exec(this.input)) {
-      this.consume(captures[0].length - 1);
-      var filter = captures[1];
-      var attrs = captures[2] === '(' ? this.attrs() : null;
-      if (!(captures[2] === ' ' || this.input[0] === ' ')) {
-        this.error('NO_FILTER_SPACE', 'expected space after include:filter but got ' + JSON.stringify(this.input[0]));
-      }
-      captures = /^ *([^\n]+)/.exec(this.input);
-      if (!captures || captures[1].trim() === '') {
-        this.error('NO_INCLUDE_PATH', 'missing path for include:filter');
-      }
-      this.consume(captures[0].length);
-      var path = captures[1];
-      var tok = this.tok('include', path);
-      tok.filter = filter;
-      tok.attrs = attrs;
+  path: function() {
+    var tok = this.scanEndOfLine(/^ +([^\n]+)/, 'path');
+    // the .trim() is necessary since we want to avoid `  ` from being
+    // matched, as the second space satisfies `[^\n]+`
+    if (tok && tok.val.trim()) {
       this.tokens.push(tok);
       return true;
-    } else if (/^include:([\w\-]+)/.test(this.input)) {
-      this.error('NO_INCLUDE_PATH', 'missing path for include:filter');
     }
   },
 
@@ -1067,7 +1067,6 @@ Lexer.prototype = {
       || this.prepend()
       || this.block()
       || this.mixinBlock()
-      || this.includeFiltered()
       || this.include()
       || this.mixin()
       || this.call()
