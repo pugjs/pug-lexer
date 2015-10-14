@@ -1,7 +1,10 @@
-{"type":"tag","line":1,"val":"script","selfClosing":false}
+{"type":"tag","line":1,"val":"script"}
 {"type":"id","line":1,"val":"pet-template"}
-{"type":"attrs","line":1,"attrs":[{"name":"type","val":"'text/x-template'","escaped":true}]}
+{"type":"start-attributes","line":1}
+{"type":"attribute","line":1,"name":"type","val":"'text/x-template'","mustEscape":true}
+{"type":"end-attributes","line":1}
 {"type":"indent","line":2,"val":2}
-{"type":"include","line":2,"val":"auxiliary/pet"}
+{"type":"include","line":2}
+{"type":"path","line":2,"val":"auxiliary/pet"}
 {"type":"outdent","line":2}
 {"type":"eos","line":2}

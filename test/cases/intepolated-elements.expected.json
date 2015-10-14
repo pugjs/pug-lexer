@@ -1,28 +1,37 @@
-{"type":"tag","line":1,"val":"p","selfClosing":false}
+{"type":"tag","line":1,"val":"p"}
 {"type":"text","line":1,"val":""}
 {"type":"start-jade-interpolation","line":1}
-{"type":"tag","line":1,"val":"a","selfClosing":false}
+{"type":"tag","line":1,"val":"a"}
 {"type":"class","line":1,"val":"rho"}
-{"type":"attrs","line":1,"attrs":[{"name":"href","val":"'#'","escaped":true},{"name":"class","val":"'rho--modifier'","escaped":true}]}
+{"type":"start-attributes","line":1}
+{"type":"attribute","line":1,"name":"href","val":"'#'","mustEscape":true}
+{"type":"attribute","line":1,"name":"class","val":"'rho--modifier'","mustEscape":true}
+{"type":"end-attributes","line":1}
 {"type":"text","line":1,"val":"with inline link"}
 {"type":"end-jade-interpolation","line":1}
 {"type":"text","line":1,"val":""}
 {"type":"newline","line":2}
-{"type":"tag","line":2,"val":"p","selfClosing":false}
+{"type":"tag","line":2,"val":"p"}
 {"type":"text","line":2,"val":"Some text "}
 {"type":"start-jade-interpolation","line":2}
-{"type":"tag","line":2,"val":"a","selfClosing":false}
+{"type":"tag","line":2,"val":"a"}
 {"type":"class","line":2,"val":"rho"}
-{"type":"attrs","line":2,"attrs":[{"name":"href","val":"'#'","escaped":true},{"name":"class","val":"'rho--modifier'","escaped":true}]}
+{"type":"start-attributes","line":2}
+{"type":"attribute","line":2,"name":"href","val":"'#'","mustEscape":true}
+{"type":"attribute","line":2,"name":"class","val":"'rho--modifier'","mustEscape":true}
+{"type":"end-attributes","line":2}
 {"type":"end-jade-interpolation","line":2}
 {"type":"text","line":2,"val":""}
 {"type":"newline","line":3}
-{"type":"tag","line":3,"val":"p","selfClosing":false}
+{"type":"tag","line":3,"val":"p"}
 {"type":"text","line":3,"val":"Some text "}
 {"type":"start-jade-interpolation","line":3}
-{"type":"tag","line":3,"val":"a","selfClosing":false}
+{"type":"tag","line":3,"val":"a"}
 {"type":"class","line":3,"val":"rho"}
-{"type":"attrs","line":3,"attrs":[{"name":"href","val":"'#'","escaped":true},{"name":"class","val":"'rho--modifier'","escaped":true}]}
+{"type":"start-attributes","line":3}
+{"type":"attribute","line":3,"name":"href","val":"'#'","mustEscape":true}
+{"type":"attribute","line":3,"name":"class","val":"'rho--modifier'","mustEscape":true}
+{"type":"end-attributes","line":3}
 {"type":"text","line":3,"val":"with inline link"}
 {"type":"end-jade-interpolation","line":3}
 {"type":"text","line":3,"val":""}

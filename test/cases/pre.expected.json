@@ -1,4 +1,4 @@
-{"type":"tag","line":1,"val":"pre","selfClosing":false}
+{"type":"tag","line":1,"val":"pre"}
 {"type":"dot","line":1}
 {"type":"start-pipeless-text","line":1}
 {"type":"text","line":2,"val":"foo"}
@@ -10,9 +10,9 @@
 {"type":"text","line":5,"val":""}
 {"type":"end-pipeless-text","line":5}
 {"type":"newline","line":6}
-{"type":"tag","line":6,"val":"pre","selfClosing":false}
+{"type":"tag","line":6,"val":"pre"}
 {"type":"indent","line":7,"val":2}
-{"type":"tag","line":7,"val":"code","selfClosing":false}
+{"type":"tag","line":7,"val":"code"}
 {"type":"dot","line":7}
 {"type":"start-pipeless-text","line":7}
 {"type":"text","line":8,"val":"foo"}

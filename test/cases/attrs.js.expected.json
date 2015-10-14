@@ -1,47 +1,78 @@
-{"type":"code","line":1,"val":"var id = 5","escape":false,"buffer":false}
+{"type":"code","line":1,"val":"var id = 5","mustEscape":false,"buffer":false}
 {"type":"newline","line":2}
-{"type":"code","line":2,"val":"function answer() { return 42; }","escape":false,"buffer":false}
+{"type":"code","line":2,"val":"function answer() { return 42; }","mustEscape":false,"buffer":false}
 {"type":"newline","line":3}
-{"type":"tag","line":3,"val":"a","selfClosing":false}
-{"type":"attrs","line":3,"attrs":[{"name":"href","val":"'/user/' + id","escaped":true},{"name":"class","val":"'button'","escaped":true}]}
+{"type":"tag","line":3,"val":"a"}
+{"type":"start-attributes","line":3}
+{"type":"attribute","line":3,"name":"href","val":"'/user/' + id","mustEscape":true}
+{"type":"attribute","line":3,"name":"class","val":"'button'","mustEscape":true}
+{"type":"end-attributes","line":3}
 {"type":"newline","line":4}
-{"type":"tag","line":4,"val":"a","selfClosing":false}
-{"type":"attrs","line":4,"attrs":[{"name":"href","val":"'/user/' + id","escaped":true},{"name":"class","val":"'button'","escaped":true}]}
+{"type":"tag","line":4,"val":"a"}
+{"type":"start-attributes","line":4}
+{"type":"attribute","line":4,"name":"href","val":"'/user/' + id","mustEscape":true}
+{"type":"attribute","line":4,"name":"class","val":"'button'","mustEscape":true}
+{"type":"end-attributes","line":4}
 {"type":"newline","line":5}
-{"type":"tag","line":5,"val":"meta","selfClosing":false}
-{"type":"attrs","line":5,"attrs":[{"name":"key","val":"'answer'","escaped":true},{"name":"value","val":"answer()","escaped":true}]}
+{"type":"tag","line":5,"val":"meta"}
+{"type":"start-attributes","line":5}
+{"type":"attribute","line":5,"name":"key","val":"'answer'","mustEscape":true}
+{"type":"attribute","line":5,"name":"value","val":"answer()","mustEscape":true}
+{"type":"end-attributes","line":5}
 {"type":"newline","line":6}
-{"type":"tag","line":6,"val":"a","selfClosing":false}
-{"type":"attrs","line":6,"attrs":[{"name":"class","val":"['class1', 'class2']","escaped":true}]}
+{"type":"tag","line":6,"val":"a"}
+{"type":"start-attributes","line":6}
+{"type":"attribute","line":6,"name":"class","val":"['class1', 'class2']","mustEscape":true}
+{"type":"end-attributes","line":6}
 {"type":"newline","line":7}
-{"type":"tag","line":7,"val":"a","selfClosing":false}
+{"type":"tag","line":7,"val":"a"}
 {"type":"class","line":7,"val":"tag-class"}
-{"type":"attrs","line":7,"attrs":[{"name":"class","val":"['class1', 'class2']","escaped":true}]}
+{"type":"start-attributes","line":7}
+{"type":"attribute","line":7,"name":"class","val":"['class1', 'class2']","mustEscape":true}
+{"type":"end-attributes","line":7}
 {"type":"newline","line":9}
-{"type":"tag","line":9,"val":"a","selfClosing":false}
-{"type":"attrs","line":9,"attrs":[{"name":"href","val":"'/user/' + id","escaped":true},{"name":"class","val":"'button'","escaped":true}]}
+{"type":"tag","line":9,"val":"a"}
+{"type":"start-attributes","line":9}
+{"type":"attribute","line":9,"name":"href","val":"'/user/' + id","mustEscape":true}
+{"type":"attribute","line":9,"name":"class","val":"'button'","mustEscape":true}
+{"type":"end-attributes","line":9}
 {"type":"newline","line":10}
-{"type":"tag","line":10,"val":"a","selfClosing":false}
-{"type":"attrs","line":10,"attrs":[{"name":"href","val":"'/user/' + id","escaped":true},{"name":"class","val":"'button'","escaped":true}]}
+{"type":"tag","line":10,"val":"a"}
+{"type":"start-attributes","line":10}
+{"type":"attribute","line":10,"name":"href","val":"'/user/' + id","mustEscape":true}
+{"type":"attribute","line":10,"name":"class","val":"'button'","mustEscape":true}
+{"type":"end-attributes","line":10}
 {"type":"newline","line":11}
-{"type":"tag","line":11,"val":"meta","selfClosing":false}
-{"type":"attrs","line":11,"attrs":[{"name":"key","val":"'answer'","escaped":true},{"name":"value","val":"answer()","escaped":true}]}
+{"type":"tag","line":11,"val":"meta"}
+{"type":"start-attributes","line":11}
+{"type":"attribute","line":11,"name":"key","val":"'answer'","mustEscape":true}
+{"type":"attribute","line":11,"name":"value","val":"answer()","mustEscape":true}
+{"type":"end-attributes","line":11}
 {"type":"newline","line":12}
-{"type":"tag","line":12,"val":"a","selfClosing":false}
-{"type":"attrs","line":12,"attrs":[{"name":"class","val":"['class1', 'class2']","escaped":true}]}
+{"type":"tag","line":12,"val":"a"}
+{"type":"start-attributes","line":12}
+{"type":"attribute","line":12,"name":"class","val":"['class1', 'class2']","mustEscape":true}
+{"type":"end-attributes","line":12}
 {"type":"newline","line":13}
-{"type":"tag","line":13,"val":"a","selfClosing":false}
+{"type":"tag","line":13,"val":"a"}
 {"type":"class","line":13,"val":"tag-class"}
-{"type":"attrs","line":13,"attrs":[{"name":"class","val":"['class1', 'class2']","escaped":true}]}
+{"type":"start-attributes","line":13}
+{"type":"attribute","line":13,"name":"class","val":"['class1', 'class2']","mustEscape":true}
+{"type":"end-attributes","line":13}
 {"type":"newline","line":15}
-{"type":"tag","line":15,"val":"div","selfClosing":false}
-{"type":"attrs","line":15,"attrs":[{"name":"id","val":"id","escaped":true}]}
+{"type":"tag","line":15,"val":"div"}
+{"type":"start-attributes","line":15}
+{"type":"attribute","line":15,"name":"id","val":"id","mustEscape":true}
+{"type":"end-attributes","line":15}
 {"type":"&attributes","line":15,"val":"{foo: 'bar'}"}
 {"type":"newline","line":16}
-{"type":"code","line":16,"val":"var bar = null","escape":false,"buffer":false}
+{"type":"code","line":16,"val":"var bar = null","mustEscape":false,"buffer":false}
 {"type":"newline","line":17}
-{"type":"tag","line":17,"val":"div","selfClosing":false}
-{"type":"attrs","line":17,"attrs":[{"name":"foo","val":"null","escaped":true},{"name":"bar","val":"bar","escaped":true}]}
+{"type":"tag","line":17,"val":"div"}
+{"type":"start-attributes","line":17}
+{"type":"attribute","line":17,"name":"foo","val":"null","mustEscape":true}
+{"type":"attribute","line":17,"name":"bar","val":"bar","mustEscape":true}
+{"type":"end-attributes","line":17}
 {"type":"&attributes","line":17,"val":"{baz: 'baz'}"}
 {"type":"newline","line":18}
 {"type":"eos","line":18}

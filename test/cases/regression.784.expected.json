@@ -1,5 +1,5 @@
-{"type":"code","line":1,"val":"var url = 'http://www.google.com'","escape":false,"buffer":false}
+{"type":"code","line":1,"val":"var url = 'http://www.google.com'","mustEscape":false,"buffer":false}
 {"type":"newline","line":2}
 {"type":"class","line":2,"val":"url"}
-{"type":"interpolated-code","line":2,"val":"url.replace('http://', '').replace(/^www\\./, '')","escape":true,"buffer":true}
+{"type":"interpolated-code","line":2,"val":"url.replace('http://', '').replace(/^www\\./, '')","mustEscape":true,"buffer":true}
 {"type":"eos","line":2}

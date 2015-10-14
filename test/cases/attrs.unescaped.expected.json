@@ -1,10 +1,14 @@
-{"type":"tag","line":1,"val":"script","selfClosing":false}
-{"type":"attrs","line":1,"attrs":[{"name":"type","val":"'text/x-template'","escaped":true}]}
+{"type":"tag","line":1,"val":"script"}
+{"type":"start-attributes","line":1}
+{"type":"attribute","line":1,"name":"type","val":"'text/x-template'","mustEscape":true}
+{"type":"end-attributes","line":1}
 {"type":"indent","line":2,"val":2}
-{"type":"tag","line":2,"val":"div","selfClosing":false}
-{"type":"attrs","line":2,"attrs":[{"name":"id","val":"'user-<%= user.id %>'","escaped":false}]}
+{"type":"tag","line":2,"val":"div"}
+{"type":"start-attributes","line":2}
+{"type":"attribute","line":2,"name":"id","val":"'user-<%= user.id %>'","mustEscape":false}
+{"type":"end-attributes","line":2}
 {"type":"indent","line":3,"val":4}
-{"type":"tag","line":3,"val":"h1","selfClosing":false}
+{"type":"tag","line":3,"val":"h1"}
 {"type":"text","line":3,"val":"<%= user.title %>"}
 {"type":"outdent","line":3}
 {"type":"outdent","line":3}

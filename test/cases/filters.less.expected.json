@@ -1,9 +1,11 @@
-{"type":"tag","line":1,"val":"html","selfClosing":false}
+{"type":"tag","line":1,"val":"html"}
 {"type":"indent","line":2,"val":2}
-{"type":"tag","line":2,"val":"head","selfClosing":false}
+{"type":"tag","line":2,"val":"head"}
 {"type":"indent","line":3,"val":4}
-{"type":"tag","line":3,"val":"style","selfClosing":false}
-{"type":"attrs","line":3,"attrs":[{"name":"type","val":"\"text/css\"","escaped":true}]}
+{"type":"tag","line":3,"val":"style"}
+{"type":"start-attributes","line":3}
+{"type":"attribute","line":3,"name":"type","val":"\"text/css\"","mustEscape":true}
+{"type":"end-attributes","line":3}
 {"type":"indent","line":4,"val":6}
 {"type":"filter","line":4,"val":"less"}
 {"type":"start-pipeless-text","line":4}

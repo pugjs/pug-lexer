@@ -22,7 +22,7 @@
 {"type":"text","line":11,"val":"item.slice(1);"}
 {"type":"end-pipeless-text","line":11}
 {"type":"newline","line":12}
-{"type":"tag","line":12,"val":"li","selfClosing":false}
-{"type":"code","line":12,"val":"string","escape":true,"buffer":true}
+{"type":"tag","line":12,"val":"li"}
+{"type":"code","line":12,"val":"string","mustEscape":true,"buffer":true}
 {"type":"outdent","line":13}
 {"type":"eos","line":13}

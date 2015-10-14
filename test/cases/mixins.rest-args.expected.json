@@ -4,8 +4,8 @@
 {"type":"indent","line":3,"val":4}
 {"type":"each","line":3,"val":"item","code":"items"}
 {"type":"indent","line":4,"val":6}
-{"type":"tag","line":4,"val":"li","selfClosing":false}
-{"type":"code","line":4,"val":"item","escape":true,"buffer":true}
+{"type":"tag","line":4,"val":"li"}
+{"type":"code","line":4,"val":"item","mustEscape":true,"buffer":true}
 {"type":"outdent","line":6}
 {"type":"outdent","line":6}
 {"type":"outdent","line":6}

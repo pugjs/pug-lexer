@@ -1,4 +1,4 @@
-{"type":"tag","line":1,"val":"p","selfClosing":false}
+{"type":"tag","line":1,"val":"p"}
 {"type":"text","line":1,"val":"before "}
 {"type":"start-jade-interpolation","line":1}
 {"type":"filter","line":1,"val":"cdata"}

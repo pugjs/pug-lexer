@@ -1,5 +1,5 @@
 {
-  "msg": "missing path for include:filter",
+  "msg": "missing path for include",
   "code": "JADE:NO_INCLUDE_PATH",
   "line": 1
 }

@@ -1,5 +1,5 @@
 {
-  "msg": "expected space after include:filter but got \"f\"",
-  "code": "JADE:NO_FILTER_SPACE",
+  "msg": "unexpected text \"foo.£\"",
+  "code": "JADE:UNEXPECTED_TEXT",
   "line": 1
 }

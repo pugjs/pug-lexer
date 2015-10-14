@@ -236,10 +236,6 @@ Lexer.prototype = {
       var match = this.bracketExpression(1);
       this.consume(match.end + 1);
       var tok = this.tok('interpolation', match.src);
-      if (this.input[0] === '/') {
-        tok.selfClosing = true;
-        this.consume(1);
-      }
       this.tokens.push(tok);
       return true;
     }
@@ -251,11 +247,10 @@ Lexer.prototype = {
 
   tag: function() {
     var captures;
-    if (captures = /^(\w(?:[-:\w]*\w)?)(\/?)/.exec(this.input)) {
+    if (captures = /^(\w(?:[-:\w]*\w)?)/.exec(this.input)) {
       this.consume(captures[0].length);
       var tok, name = captures[1];
       tok = this.tok('tag', name);
-      tok.selfClosing = !!captures[2];
       this.tokens.push(tok);
       return true;
     }
@@ -265,11 +260,14 @@ Lexer.prototype = {
    * Filter.
    */
 
-  filter: function() {
+  filter: function(opts) {
     var tok = this.scan(/^:([\w\-]+)/, 'filter');
+    var inInclude = opts && opts.inInclude;
     if (tok) {
-      this.pipeless = true;
-      this.interpolationAllowed = false;
+      if (!inInclude) {
+        this.pipeless = true;
+        this.interpolationAllowed = false;
+      }
       this.tokens.push(tok);
       return true;
     }
@@ -388,7 +386,7 @@ Lexer.prototype = {
       var rest = matchOfStringInterp[3];
       var range = characterParser.parseMaxBracket(rest, '}');
       var tok = this.tok('interpolated-code', range.src);
-      tok.escape = matchOfStringInterp[2] === '#';
+      tok.mustEscape = matchOfStringInterp[2] === '#';
       tok.buffer = true;
       this.tokens.push(tok);
       if (range.end + 1 < rest.length) this.addText(rest.substr(range.end + 1));
@@ -433,9 +431,12 @@ Lexer.prototype = {
    */
 
   "extends": function() {
-    var tok = this.scanEndOfLine(/^extends? +([^\n]+)/, 'extends');
+    var tok = this.scan(/^extends?(?= |$|\n)/, 'extends');
     if (tok) {
       this.tokens.push(tok);
+      if (!this.path()) {
+        this.error('NO_EXTENDS_PATH', 'missing path for extends');
+      }
       return true;
     }
   },
@@ -524,42 +525,36 @@ Lexer.prototype = {
    */
 
   include: function() {
-    var tok = this.scanEndOfLine(/^include +([^\n]+)/, 'include');
+    var tok = this.scan(/^include(?=:| |$|\n)/, 'include');
     if (tok) {
       this.tokens.push(tok);
+      while (this.filter({ inInclude: true })) {
+        this.attrs();
+      }
+      if (!this.path()) {
+        if (/^[^ \n]+/.test(this.input)) {
+          // if there is more text
+          this.fail();
+        } else {
+          // if not
+          this.error('NO_INCLUDE_PATH', 'missing path for include');
+        }
+      }
       return true;
-    }
-    if (this.scan(/^include\b/)) {
-      this.error('NO_INCLUDE_PATH', 'missing path for include');
     }
   },
 
   /**
-   * Include with filter
+   * Path
    */
 
-  includeFiltered: function() {
-    var captures;
-    if (captures = /^include:([\w\-]+)([\( ])/.exec(this.input)) {
-      this.consume(captures[0].length - 1);
-      var filter = captures[1];
-      var attrs = captures[2] === '(' ? this.attrs() : null;
-      if (!(captures[2] === ' ' || this.input[0] === ' ')) {
-        this.error('NO_FILTER_SPACE', 'expected space after include:filter but got ' + JSON.stringify(this.input[0]));
-      }
-      captures = /^ *([^\n]+)/.exec(this.input);
-      if (!captures || captures[1].trim() === '') {
-        this.error('NO_INCLUDE_PATH', 'missing path for include:filter');
-      }
-      this.consume(captures[0].length);
-      var path = captures[1];
-      var tok = this.tok('include', path);
-      tok.filter = filter;
-      tok.attrs = attrs;
+  path: function() {
+    var tok = this.scanEndOfLine(/^ +([^\n]+)/, 'path');
+    // the .trim() is necessary since we want to avoid `  ` from being
+    // matched, as the second space satisfies `[^\n]+`
+    if (tok && tok.val.trim()) {
       this.tokens.push(tok);
       return true;
-    } else if (/^include:([\w\-]+)/.test(this.input)) {
-      this.error('NO_INCLUDE_PATH', 'missing path for include:filter');
     }
   },
 
@@ -756,7 +751,7 @@ Lexer.prototype = {
       }
       this.consume(captures[0].length - shortened);
       var tok = this.tok('code', code);
-      tok.escape = flags.charAt(0) === '=';
+      tok.mustEscape = flags.charAt(0) === '=';
       tok.buffer = flags.charAt(0) === '=' || flags.charAt(1) === '=';
       if (tok.buffer) this.assertExpression(code);
       this.tokens.push(tok);
@@ -781,11 +776,11 @@ Lexer.prototype = {
    * Attributes.
    */
 
-  attrs: function(push) {
+  attrs: function() {
     if ('(' == this.input.charAt(0)) {
+      this.tokens.push(this.tok('start-attributes'));
       var index = this.bracketExpression().end
-        , str = this.input.substr(1, index-1)
-        , tok = this.tok('attrs');
+        , str = this.input.substr(1, index-1);
 
       this.assertNestingCorrect(str);
 
@@ -793,7 +788,6 @@ Lexer.prototype = {
       var self = this;
 
       this.consume(index + 1);
-      tok.attrs = [];
 
       var whitespaceRe = /[ \n\t]/;
       var quoteRe = /['"]/;
@@ -802,6 +796,7 @@ Lexer.prototype = {
       var key = '';
       var val = '';
       var state = characterParser.defaultState();
+      var lineno = this.lineno;
       var loc = 'key';
       var isEndOfAttribute = function (i) {
         // if the key is not started, then the attribute cannot be ended
@@ -852,8 +847,6 @@ Lexer.prototype = {
         }
       }
 
-      this.lineno += str.split("\n").length - 1;
-
       for (var i = 0; i <= str.length; i++) {
         if (isEndOfAttribute(i)) {
           val = val.trim();
@@ -863,14 +856,17 @@ Lexer.prototype = {
           }
           key = key.trim();
           key = key.replace(/^['"]|['"]$/g, '');
-          tok.attrs.push({
-            name: key,
-            val: '' == val ? true : val,
-            escaped: escapedAttr
-          });
+
+          var tok = this.tok('attribute');
+          tok.name = key;
+          tok.val = '' == val ? true : val;
+          tok.mustEscape = escapedAttr;
+          this.tokens.push(tok);
+
           key = val = '';
           loc = 'key';
           escapedAttr = false;
+          this.lineno = lineno;
         } else {
           switch (loc) {
             case 'key-char':
@@ -902,17 +898,17 @@ Lexer.prototype = {
               break;
           }
         }
+        if (str[i] === '\n') {
+          // Save the line number locally to keep this.lineno at the start of
+          // the attribute.
+          lineno++;
+          // If the key has not been started, update this.lineno immediately.
+          if (!key.trim()) this.lineno = lineno;
+        }
       }
 
-      if ('/' == this.input.charAt(0)) {
-        this.consume(1);
-        tok.selfClosing = true;
-      }
-      if (push) {
-        this.tokens.push(tok);
-        return true;
-      }
-      return tok;
+      this.tokens.push(this.tok('end-attributes'));
+      return true;
     }
   },
 
@@ -1030,6 +1026,18 @@ Lexer.prototype = {
   },
 
   /**
+   * Slash.
+   */
+
+  slash: function() {
+    var tok = this.scan(/^\//, 'slash');
+    if (tok) {
+      this.tokens.push(tok);
+      return true;
+    }
+  },
+
+  /**
    * ':'
    */
 
@@ -1042,7 +1050,7 @@ Lexer.prototype = {
   },
 
   fail: function () {
-    this.error('UNEXPECTED_TEXT', 'unexpected text ' + this.input.substr(0, 5));
+    this.error('UNEXPECTED_TEXT', 'unexpected text "' + this.input.substr(0, 5) + '"');
   },
 
   /**
@@ -1067,7 +1075,6 @@ Lexer.prototype = {
       || this.prepend()
       || this.block()
       || this.mixinBlock()
-      || this.includeFiltered()
       || this.include()
       || this.mixin()
       || this.call()
@@ -1081,12 +1088,13 @@ Lexer.prototype = {
       || this.id()
       || this.dot()
       || this.className()
-      || this.attrs(true)
+      || this.attrs()
       || this.attributesBlock()
       || this.indent()
       || this.text()
       || this.textHtml()
       || this.comment()
+      || this.slash()
       || this.colon()
       || this.fail();
   },

@@ -1,8 +1,11 @@
 {"type":"doctype","line":1,"val":"xml"}
 {"type":"newline","line":2}
-{"type":"tag","line":2,"val":"category","selfClosing":false}
-{"type":"attrs","line":2,"attrs":[{"name":"term","val":"'some term'","escaped":true}],"selfClosing":true}
+{"type":"tag","line":2,"val":"category"}
+{"type":"start-attributes","line":2}
+{"type":"attribute","line":2,"name":"term","val":"'some term'","mustEscape":true}
+{"type":"end-attributes","line":2}
+{"type":"slash","line":2}
 {"type":"newline","line":3}
-{"type":"tag","line":3,"val":"link","selfClosing":false}
+{"type":"tag","line":3,"val":"link"}
 {"type":"text","line":3,"val":"http://google.com"}
 {"type":"eos","line":3}

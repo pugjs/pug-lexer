@@ -1,21 +1,33 @@
-{"type":"code","line":1,"val":"var user = { name: 'tobi' }","escape":false,"buffer":false}
+{"type":"code","line":1,"val":"var user = { name: 'tobi' }","mustEscape":false,"buffer":false}
 {"type":"newline","line":2}
-{"type":"tag","line":2,"val":"foo","selfClosing":false}
-{"type":"attrs","line":2,"attrs":[{"name":"data-user","val":"user","escaped":true}]}
+{"type":"tag","line":2,"val":"foo"}
+{"type":"start-attributes","line":2}
+{"type":"attribute","line":2,"name":"data-user","val":"user","mustEscape":true}
+{"type":"end-attributes","line":2}
 {"type":"newline","line":3}
-{"type":"tag","line":3,"val":"foo","selfClosing":false}
-{"type":"attrs","line":3,"attrs":[{"name":"data-items","val":"[1,2,3]","escaped":true}]}
+{"type":"tag","line":3,"val":"foo"}
+{"type":"start-attributes","line":3}
+{"type":"attribute","line":3,"name":"data-items","val":"[1,2,3]","mustEscape":true}
+{"type":"end-attributes","line":3}
 {"type":"newline","line":4}
-{"type":"tag","line":4,"val":"foo","selfClosing":false}
-{"type":"attrs","line":4,"attrs":[{"name":"data-username","val":"'tobi'","escaped":true}]}
+{"type":"tag","line":4,"val":"foo"}
+{"type":"start-attributes","line":4}
+{"type":"attribute","line":4,"name":"data-username","val":"'tobi'","mustEscape":true}
+{"type":"end-attributes","line":4}
 {"type":"newline","line":5}
-{"type":"tag","line":5,"val":"foo","selfClosing":false}
-{"type":"attrs","line":5,"attrs":[{"name":"data-escaped","val":"{message: \"Let's rock!\"}","escaped":true}]}
+{"type":"tag","line":5,"val":"foo"}
+{"type":"start-attributes","line":5}
+{"type":"attribute","line":5,"name":"data-escaped","val":"{message: \"Let's rock!\"}","mustEscape":true}
+{"type":"end-attributes","line":5}
 {"type":"newline","line":6}
-{"type":"tag","line":6,"val":"foo","selfClosing":false}
-{"type":"attrs","line":6,"attrs":[{"name":"data-ampersand","val":"{message: \"a quote: &quot; this & that\"}","escaped":true}]}
+{"type":"tag","line":6,"val":"foo"}
+{"type":"start-attributes","line":6}
+{"type":"attribute","line":6,"name":"data-ampersand","val":"{message: \"a quote: &quot; this & that\"}","mustEscape":true}
+{"type":"end-attributes","line":6}
 {"type":"newline","line":7}
-{"type":"tag","line":7,"val":"foo","selfClosing":false}
-{"type":"attrs","line":7,"attrs":[{"name":"data-epoc","val":"new Date(0)","escaped":true}]}
+{"type":"tag","line":7,"val":"foo"}
+{"type":"start-attributes","line":7}
+{"type":"attribute","line":7,"name":"data-epoc","val":"new Date(0)","mustEscape":true}
+{"type":"end-attributes","line":7}
 {"type":"newline","line":8}
 {"type":"eos","line":8}

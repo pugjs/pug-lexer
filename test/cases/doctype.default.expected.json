@@ -1,10 +1,10 @@
 {"type":"doctype","line":1}
 {"type":"newline","line":2}
-{"type":"tag","line":2,"val":"html","selfClosing":false}
+{"type":"tag","line":2,"val":"html"}
 {"type":"indent","line":3,"val":2}
-{"type":"tag","line":3,"val":"body","selfClosing":false}
+{"type":"tag","line":3,"val":"body"}
 {"type":"indent","line":4,"val":4}
-{"type":"tag","line":4,"val":"h1","selfClosing":false}
+{"type":"tag","line":4,"val":"h1"}
 {"type":"text","line":4,"val":"Title"}
 {"type":"outdent","line":4}
 {"type":"outdent","line":4}

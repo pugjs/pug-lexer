@@ -1,13 +1,13 @@
-{"type":"tag","line":1,"val":"pre","selfClosing":false}
+{"type":"tag","line":1,"val":"pre"}
 {"type":"dot","line":1}
 {"type":"start-pipeless-text","line":1}
 {"type":"text","line":2,"val":"  what"}
 {"type":"newline","line":3}
 {"type":"text","line":3,"val":"is "}
-{"type":"interpolated-code","line":3,"val":"'going'","escape":true,"buffer":true}
+{"type":"interpolated-code","line":3,"val":"'going'","mustEscape":true,"buffer":true}
 {"type":"text","line":3,"val":" "}
 {"type":"start-jade-interpolation","line":3}
-{"type":"interpolated-code","line":3,"val":"'on'","escape":true,"buffer":true}
+{"type":"interpolated-code","line":3,"val":"'on'","mustEscape":true,"buffer":true}
 {"type":"end-jade-interpolation","line":3}
 {"type":"text","line":3,"val":""}
 {"type":"end-pipeless-text","line":3}

@@ -1,6 +1,10 @@
-{"type":"tag","line":1,"val":"style","selfClosing":false}
-{"type":"attrs","line":1,"attrs":[{"name":"type","val":"\"text/css\"","escaped":true}]}
+{"type":"tag","line":1,"val":"style"}
+{"type":"start-attributes","line":1}
+{"type":"attribute","line":1,"name":"type","val":"\"text/css\"","mustEscape":true}
+{"type":"end-attributes","line":1}
 {"type":"indent","line":2,"val":2}
-{"type":"include","line":2,"val":"some.styl","filter":"stylus","attrs":null}
+{"type":"include","line":2}
+{"type":"filter","line":2,"val":"stylus"}
+{"type":"path","line":2,"val":"some.styl"}
 {"type":"outdent","line":3}
 {"type":"eos","line":3}
