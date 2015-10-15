@@ -439,6 +439,9 @@ Lexer.prototype = {
       }
       return true;
     }
+    if (this.scan(/^extends?\b/)) {
+      this.error('MALFORMED_EXTENDS', 'malformed extends');
+    }
   },
 
   /**
@@ -541,6 +544,9 @@ Lexer.prototype = {
         }
       }
       return true;
+    }
+    if (this.scan(/^include\b/)) {
+      this.error('MALFORMED_INCLUDE', 'malformed include');
     }
   },
 
