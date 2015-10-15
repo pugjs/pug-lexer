@@ -79,13 +79,13 @@
 {"type":"indent","line":30,"val":2}
 {"type":"id","line":30,"val":"foo"}
 {"type":"indent","line":31,"val":4}
-{"type":"call","line":31,"val":"bar"}
+{"type":"call","line":31,"val":"bar","args":null}
 {"type":"indent","line":32,"val":6}
 {"type":"mixin-block","line":32}
 {"type":"outdent","line":34}
 {"type":"outdent","line":34}
 {"type":"outdent","line":34}
-{"type":"call","line":34,"val":"foo"}
+{"type":"call","line":34,"val":"foo","args":null}
 {"type":"indent","line":35,"val":2}
 {"type":"tag","line":35,"val":"p"}
 {"type":"text","line":35,"val":"one"}

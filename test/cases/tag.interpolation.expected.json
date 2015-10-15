@@ -57,7 +57,7 @@
 {"type":"call","line":21,"val":"item","args":"'contact'"}
 {"type":"text","line":21,"val":"Contact"}
 {"type":"newline","line":22}
-{"type":"call","line":22,"val":"item"}
+{"type":"call","line":22,"val":"item","args":null}
 {"type":"start-attributes","line":22}
 {"type":"attribute","line":22,"name":"href","val":"'/contact'","mustEscape":true}
 {"type":"end-attributes","line":22}

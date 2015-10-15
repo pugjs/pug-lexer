@@ -53,7 +53,7 @@
 {"type":"outdent","line":19}
 {"type":"tag","line":19,"val":"body"}
 {"type":"indent","line":20,"val":2}
-{"type":"call","line":20,"val":"centered"}
+{"type":"call","line":20,"val":"centered","args":null}
 {"type":"id","line":20,"val":"First"}
 {"type":"text","line":20,"val":"Hello World"}
 {"type":"newline","line":21}
@@ -82,7 +82,7 @@
 {"type":"tag","line":26,"val":"p"}
 {"type":"text","line":26,"val":"Last content."}
 {"type":"outdent","line":27}
-{"type":"call","line":27,"val":"bottom"}
+{"type":"call","line":27,"val":"bottom","args":null}
 {"type":"class","line":27,"val":"foo"}
 {"type":"start-attributes","line":27}
 {"type":"attribute","line":27,"name":"class","val":"'bar'","mustEscape":true}
@@ -94,7 +94,7 @@
 {"type":"tag","line":28,"val":"p"}
 {"type":"text","line":28,"val":"Some final words."}
 {"type":"outdent","line":29}
-{"type":"call","line":29,"val":"bottom"}
+{"type":"call","line":29,"val":"bottom","args":null}
 {"type":"start-attributes","line":29}
 {"type":"attribute","line":29,"name":"class","val":"['class1', 'class2']","mustEscape":true}
 {"type":"end-attributes","line":29}
@@ -113,7 +113,7 @@
 {"type":"newline","line":35}
 {"type":"code","line":35,"val":"var classes = ['foo', 'bar']","mustEscape":false,"buffer":false}
 {"type":"newline","line":36}
-{"type":"call","line":36,"val":"foo"}
+{"type":"call","line":36,"val":"foo","args":null}
 {"type":"start-attributes","line":36}
 {"type":"attribute","line":36,"name":"attr3","val":"'baz'","mustEscape":true}
 {"type":"attribute","line":36,"name":"data-foo","val":"val","mustEscape":true}
@@ -136,7 +136,7 @@
 {"type":"attribute","line":41,"name":"data-creator-name","val":"'name'","mustEscape":true}
 {"type":"end-attributes","line":41}
 {"type":"newline","line":43}
-{"type":"call","line":43,"val":"foo"}
+{"type":"call","line":43,"val":"foo","args":null}
 {"type":"start-attributes","line":43}
 {"type":"attribute","line":44,"name":"attr3","val":"\"qux\"","mustEscape":true}
 {"type":"attribute","line":45,"name":"class","val":"\"baz\"","mustEscape":true}

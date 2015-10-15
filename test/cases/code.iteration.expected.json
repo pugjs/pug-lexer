@@ -33,7 +33,7 @@
 {"type":"outdent","line":19}
 {"type":"tag","line":19,"val":"ul"}
 {"type":"indent","line":20,"val":2}
-{"type":"each","line":20,"val":"$item","code":"items"}
+{"type":"each","line":20,"val":"$item","key":null,"code":"items"}
 {"type":"indent","line":21,"val":4}
 {"type":"tag","line":21,"val":"li"}
 {"type":"code","line":21,"val":"$item","mustEscape":true,"buffer":true}
@@ -45,9 +45,9 @@
 {"type":"newline","line":26}
 {"type":"tag","line":26,"val":"ul"}
 {"type":"indent","line":27,"val":2}
-{"type":"each","line":27,"val":"l","code":"letters"}
+{"type":"each","line":27,"val":"l","key":null,"code":"letters"}
 {"type":"indent","line":28,"val":4}
-{"type":"each","line":28,"val":"n","code":"nums"}
+{"type":"each","line":28,"val":"n","key":null,"code":"nums"}
 {"type":"indent","line":29,"val":6}
 {"type":"tag","line":29,"val":"li"}
 {"type":"interpolated-code","line":29,"val":"n","mustEscape":true,"buffer":true}
@@ -62,7 +62,7 @@
 {"type":"newline","line":33}
 {"type":"tag","line":33,"val":"ul"}
 {"type":"indent","line":34,"val":2}
-{"type":"each","line":34,"val":"n","code":"counter()"}
+{"type":"each","line":34,"val":"n","key":null,"code":"counter()"}
 {"type":"indent","line":35,"val":4}
 {"type":"tag","line":35,"val":"li"}
 {"type":"interpolated-code","line":35,"val":"n","mustEscape":true,"buffer":true}
