@@ -555,10 +555,8 @@ Lexer.prototype = {
    */
 
   path: function() {
-    var tok = this.scanEndOfLine(/^ +([^\n]+)/, 'path');
-    // the .trim() is necessary since we want to avoid `  ` from being
-    // matched, as the second space satisfies `[^\n]+`
-    if (tok && tok.val.trim()) {
+    var tok = this.scanEndOfLine(/^ ([^\n]+)/, 'path');
+    if (tok && (tok.val = tok.val.trim())) {
       this.tokens.push(tok);
       return true;
     }
