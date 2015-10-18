@@ -836,7 +836,7 @@ Lexer.prototype = {
               if (!whitespaceRe.test(str[x])) {
                 // if it is a JavaScript punctuator, then assume that it is
                 // a part of the value
-                return !characterParser.isPunctuator(str[x]) && !quoteRe.test(str[x]);
+                return !characterParser.isPunctuator(str[x]) || quoteRe.test(str[x]);
               }
             }
           }
