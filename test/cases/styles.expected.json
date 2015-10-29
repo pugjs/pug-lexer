@@ -1,64 +1,64 @@
-{"type":"tag","line":1,"val":"html"}
-{"type":"indent","line":2,"val":2}
-{"type":"tag","line":2,"val":"head"}
-{"type":"indent","line":3,"val":4}
-{"type":"tag","line":3,"val":"style"}
-{"type":"dot","line":3}
-{"type":"start-pipeless-text","line":3}
-{"type":"text","line":4,"val":"body {"}
-{"type":"newline","line":5}
-{"type":"text","line":5,"val":"  padding: 50px;"}
-{"type":"newline","line":6}
-{"type":"text","line":6,"val":"}"}
-{"type":"end-pipeless-text","line":6}
-{"type":"outdent","line":7}
-{"type":"tag","line":7,"val":"body"}
-{"type":"indent","line":8,"val":4}
-{"type":"tag","line":8,"val":"div"}
-{"type":"start-attributes","line":8}
-{"type":"attribute","line":8,"name":"style","val":"'color:red;background:green'","mustEscape":true}
-{"type":"end-attributes","line":8}
-{"type":"newline","line":9}
-{"type":"tag","line":9,"val":"div"}
-{"type":"start-attributes","line":9}
-{"type":"attribute","line":9,"name":"style","val":"{color: 'red', background: 'green'}","mustEscape":true}
-{"type":"end-attributes","line":9}
-{"type":"newline","line":10}
-{"type":"tag","line":10,"val":"div"}
-{"type":"&attributes","line":10,"val":"{style: 'color:red;background:green'}"}
-{"type":"newline","line":11}
-{"type":"tag","line":11,"val":"div"}
-{"type":"&attributes","line":11,"val":"{style: {color: 'red', background: 'green'}}"}
-{"type":"newline","line":12}
-{"type":"mixin","line":12,"val":"div","args":null}
-{"type":"indent","line":13,"val":6}
-{"type":"tag","line":13,"val":"div"}
-{"type":"&attributes","line":13,"val":"attributes"}
-{"type":"outdent","line":14}
-{"type":"call","line":14,"val":"div","args":null}
-{"type":"start-attributes","line":14}
-{"type":"attribute","line":14,"name":"style","val":"'color:red;background:green'","mustEscape":true}
-{"type":"end-attributes","line":14}
-{"type":"newline","line":15}
-{"type":"call","line":15,"val":"div","args":null}
-{"type":"start-attributes","line":15}
-{"type":"attribute","line":15,"name":"style","val":"{color: 'red', background: 'green'}","mustEscape":true}
-{"type":"end-attributes","line":15}
-{"type":"newline","line":16}
-{"type":"code","line":16,"val":"var bg = 'green';","mustEscape":false,"buffer":false}
-{"type":"newline","line":17}
-{"type":"tag","line":17,"val":"div"}
-{"type":"start-attributes","line":17}
-{"type":"attribute","line":17,"name":"style","val":"{color: 'red', background: bg}","mustEscape":true}
-{"type":"end-attributes","line":17}
-{"type":"newline","line":18}
-{"type":"tag","line":18,"val":"div"}
-{"type":"&attributes","line":18,"val":"{style: {color: 'red', background: bg}}"}
-{"type":"newline","line":19}
-{"type":"call","line":19,"val":"div","args":null}
-{"type":"start-attributes","line":19}
-{"type":"attribute","line":19,"name":"style","val":"{color: 'red', background: bg}","mustEscape":true}
-{"type":"end-attributes","line":19}
-{"type":"outdent","line":20}
-{"type":"outdent","line":20}
-{"type":"eos","line":20}
+{"type":"tag","line":1,"col":1,"val":"html"}
+{"type":"indent","line":2,"col":1,"val":2}
+{"type":"tag","line":2,"col":3,"val":"head"}
+{"type":"indent","line":3,"col":1,"val":4}
+{"type":"tag","line":3,"col":5,"val":"style"}
+{"type":"dot","line":3,"col":10}
+{"type":"start-pipeless-text","line":3,"col":11}
+{"type":"text","line":4,"col":7,"val":"body {"}
+{"type":"newline","line":5,"col":1}
+{"type":"text","line":5,"col":7,"val":"  padding: 50px;"}
+{"type":"newline","line":6,"col":1}
+{"type":"text","line":6,"col":7,"val":"}"}
+{"type":"end-pipeless-text","line":6,"col":8}
+{"type":"outdent","line":7,"col":3}
+{"type":"tag","line":7,"col":3,"val":"body"}
+{"type":"indent","line":8,"col":1,"val":4}
+{"type":"tag","line":8,"col":5,"val":"div"}
+{"type":"start-attributes","line":8,"col":8}
+{"type":"attribute","line":8,"col":9,"name":"style","val":"'color:red;background:green'","mustEscape":true}
+{"type":"end-attributes","line":8,"col":43}
+{"type":"newline","line":9,"col":1}
+{"type":"tag","line":9,"col":5,"val":"div"}
+{"type":"start-attributes","line":9,"col":8}
+{"type":"attribute","line":9,"col":9,"name":"style","val":"{color: 'red', background: 'green'}","mustEscape":true}
+{"type":"end-attributes","line":9,"col":50}
+{"type":"newline","line":10,"col":1}
+{"type":"tag","line":10,"col":5,"val":"div"}
+{"type":"&attributes","line":10,"col":8,"val":"{style: 'color:red;background:green'}"}
+{"type":"newline","line":11,"col":1}
+{"type":"tag","line":11,"col":5,"val":"div"}
+{"type":"&attributes","line":11,"col":8,"val":"{style: {color: 'red', background: 'green'}}"}
+{"type":"newline","line":12,"col":1}
+{"type":"mixin","line":12,"col":5,"val":"div","args":null}
+{"type":"indent","line":13,"col":1,"val":6}
+{"type":"tag","line":13,"col":7,"val":"div"}
+{"type":"&attributes","line":13,"col":10,"val":"attributes"}
+{"type":"outdent","line":14,"col":5}
+{"type":"call","line":14,"col":5,"val":"div","args":null}
+{"type":"start-attributes","line":14,"col":9}
+{"type":"attribute","line":14,"col":10,"name":"style","val":"'color:red;background:green'","mustEscape":true}
+{"type":"end-attributes","line":14,"col":44}
+{"type":"newline","line":15,"col":1}
+{"type":"call","line":15,"col":5,"val":"div","args":null}
+{"type":"start-attributes","line":15,"col":9}
+{"type":"attribute","line":15,"col":10,"name":"style","val":"{color: 'red', background: 'green'}","mustEscape":true}
+{"type":"end-attributes","line":15,"col":51}
+{"type":"newline","line":16,"col":1}
+{"type":"code","line":16,"col":5,"val":"var bg = 'green';","mustEscape":false,"buffer":false}
+{"type":"newline","line":17,"col":1}
+{"type":"tag","line":17,"col":5,"val":"div"}
+{"type":"start-attributes","line":17,"col":8}
+{"type":"attribute","line":17,"col":9,"name":"style","val":"{color: 'red', background: bg}","mustEscape":true}
+{"type":"end-attributes","line":17,"col":45}
+{"type":"newline","line":18,"col":1}
+{"type":"tag","line":18,"col":5,"val":"div"}
+{"type":"&attributes","line":18,"col":8,"val":"{style: {color: 'red', background: bg}}"}
+{"type":"newline","line":19,"col":1}
+{"type":"call","line":19,"col":5,"val":"div","args":null}
+{"type":"start-attributes","line":19,"col":9}
+{"type":"attribute","line":19,"col":10,"name":"style","val":"{color: 'red', background: bg}","mustEscape":true}
+{"type":"end-attributes","line":19,"col":46}
+{"type":"outdent","line":20,"col":3}
+{"type":"outdent","line":20,"col":1}
+{"type":"eos","line":20,"col":1}
