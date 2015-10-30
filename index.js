@@ -86,12 +86,11 @@ Lexer.prototype = {
    */
 
   tok: function(type, val, columnIncrement){
-    var res = {type: type, line: this.lineno};
+    var res = {type: type, line: this.lineno, col: this.colno };
 
-    if (this.colno !== null) res.col = this.colno;
     if (val !== undefined) res.val = val;
 
-    if (columnIncrement !== undefined) this.incrementColumn(columnIncrement);
+    this.incrementColumn(isNaN(columnIncrement) ? 0 : columnIncrement)
 
     return res;
   },
@@ -103,14 +102,9 @@ Lexer.prototype = {
    * @api private
   **/
 
-  incrementLine: function(increment, startingColumn){
-    if (increment !== undefined) {
-      this.lineno += increment;
-    } else {
-      ++this.lineno;
-    }
-
-    this.colno = startingColumn || 1;
+  incrementLine: function(increment){
+    this.lineno += isNaN(increment) ? 1 : increment;
+    this.colno = 1;
   },
 
   /**
@@ -121,11 +115,7 @@ Lexer.prototype = {
   **/
 
   incrementColumn: function(increment){
-    if (increment !== undefined) {
-      this.colno += increment;
-    } else {
-      ++this.colno;
-    }
+    this.colno += isNaN(increment) ? 1 : increment
   },
 
   /**
