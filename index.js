@@ -688,20 +688,27 @@ Lexer.prototype = {
         tok = this.tok('call', '#{'+match.src+'}');
       }
 
+      this.incrementColumn(increment);
+
       tok.args = null;
       // Check for args (not attributes)
       if (captures = /^ *\(/.exec(this.input)) {
-        var range = this.bracketExpression(captures[0].length - 1);
+        var range = this.bracketExpression(captures[0].length - 1)
         if (!/^\s*[-\w]+ *=/.test(range.src)) { // not attributes
-          increment += range.end + 1;
+          this.incrementColumn();
           this.consume(range.end + 1);
           tok.args = range.src;
           this.assertExpression('[' + tok.args + ']');
-          this.incrementLine(tok.args.split("\n").length - 1, this.colno);
+          for (var i = 0; i <= tok.args.length; i++) {
+            if (tok.args[i] === '\n') {
+              this.incrementLine();
+            } else {
+              this.incrementColumn();
+            }
+          }
         }
       }
       this.tokens.push(tok);
-      this.incrementColumn(increment);
       return true;
     }
   },
