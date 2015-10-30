@@ -878,10 +878,10 @@ Lexer.prototype = {
       var lineno = startingLine;
       var colno = this.colno;
       var loc = 'key';
-      var isEndOfAttribute = function (i, context) {
+      var isEndOfAttribute = function (i) {
         // if the key is not started, then the attribute cannot be ended
         if (key.trim() === '') {
-          colno = context.colno;
+          colno = this.colno;
           return false;
         }
         // if there's nothing more then the attribute must be ended
@@ -931,7 +931,7 @@ Lexer.prototype = {
       }
 
       for (var i = 0; i <= str.length; i++) {
-        if (isEndOfAttribute(i, this)) {
+        if (isEndOfAttribute.call(this, i)) {
           val = val.trim();
           if (val) this.assertExpression(val)
           if (key[0] === ':' || key[key.length - 1] === ':') {
