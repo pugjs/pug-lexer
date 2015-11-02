@@ -1,15 +1,15 @@
-{"type":"mixin","line":1,"val":"linkit","args":"url"}
-{"type":"indent","line":2,"val":2}
-{"type":"tag","line":2,"val":"a"}
-{"type":"start-attributes","line":2}
-{"type":"attribute","line":2,"name":"href","val":"url","mustEscape":true}
-{"type":"end-attributes","line":2}
-{"type":"code","line":2,"val":"url","mustEscape":true,"buffer":true}
-{"type":"outdent","line":4}
-{"type":"tag","line":4,"val":"p"}
-{"type":"text","line":4,"val":"This also works "}
-{"type":"start-jade-interpolation","line":4}
-{"type":"call","line":4,"val":"linkit","args":"'http://www.bing.com'"}
-{"type":"end-jade-interpolation","line":4}
-{"type":"text","line":4,"val":" so hurrah for Jade"}
-{"type":"eos","line":4}
+{"type":"mixin","line":1,"col":1,"val":"linkit","args":"url"}
+{"type":"indent","line":2,"col":1,"val":2}
+{"type":"tag","line":2,"col":3,"val":"a"}
+{"type":"start-attributes","line":2,"col":4}
+{"type":"attribute","line":2,"col":5,"name":"href","val":"url","mustEscape":true}
+{"type":"end-attributes","line":2,"col":13}
+{"type":"code","line":2,"col":14,"val":"url","mustEscape":true,"buffer":true}
+{"type":"outdent","line":4,"col":1}
+{"type":"tag","line":4,"col":1,"val":"p"}
+{"type":"text","line":4,"col":3,"val":"This also works "}
+{"type":"start-jade-interpolation","line":4,"col":19}
+{"type":"call","line":4,"col":21,"val":"linkit","args":"'http://www.bing.com'"}
+{"type":"end-jade-interpolation","line":4,"col":51}
+{"type":"text","line":4,"col":52,"val":" so hurrah for Jade"}
+{"type":"eos","line":4,"col":71}

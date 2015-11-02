@@ -28,6 +28,7 @@ function Lexer(str, filename, options) {
   this.filename = filename;
   this.interpolated = options.interpolated || false;
   this.lineno = options.startingLine || 1;
+  this.colno = options.startingColumn || 1;
   this.indentStack = [0];
   this.indentRe = null;
   this.pipeless = false;
@@ -48,7 +49,7 @@ Lexer.prototype = {
   constructor: Lexer,
 
   error: function (code, message) {
-    var err = error(code, message, {line: this.lineno, filename: this.filename, src: this.originalInput});
+    var err = error(code, message, {line: this.lineno, column: this.colno, filename: this.filename, src: this.originalInput});
     throw err;
   },
 
@@ -84,10 +85,35 @@ Lexer.prototype = {
    * @api private
    */
 
-  tok: function(type, val){
-    return val === undefined ?
-      {type: type, line: this.lineno} :
-      {type: type, line: this.lineno, val: val};
+  tok: function(type, val, columnIncrement){
+    var res = {type: type, line: this.lineno, col: this.colno };
+
+    if (val !== undefined) res.val = val;
+
+    return res;
+  },
+
+  /**
+   * Increment `this.lineno` and reset `this.colno`.
+   *
+   * @param {Number} increment
+   * @api private
+  **/
+
+  incrementLine: function(increment){
+    this.lineno += increment;
+    this.colno = 1;
+  },
+
+  /**
+   * Increment `this.colno`.
+   *
+   * @param {Number} increment
+   * @api private
+  **/
+
+  incrementColumn: function(increment){
+    this.colno += increment
   },
 
   /**
@@ -113,21 +139,37 @@ Lexer.prototype = {
   scan: function(regexp, type){
     var captures;
     if (captures = regexp.exec(this.input)) {
-      this.consume(captures[0].length);
-      return this.tok(type, captures[1]);
+      var len = captures[0].length;
+      var val = captures[1];
+      var diff = len - (val ? val.length : 0);
+      var tok = this.tok(type, val);
+      this.consume(len);
+      this.incrementColumn(diff);
+      return tok;
     }
   },
   scanEndOfLine: function (regexp, type) {
     var captures;
     if (captures = regexp.exec(this.input)) {
+      var whitespaceLength = 0;
+      var whitespace;
+      var tok;
+      if (whitespace = /^([ ]+)([^ ]*)/.exec(captures[0])) {
+        whitespaceLength = whitespace[1].length;
+        this.incrementColumn(whitespaceLength);
+      }
       var newInput = this.input.substr(captures[0].length);
       if (newInput[0] === ':') {
         this.input = newInput;
-        return this.tok(type, captures[1]);
+        tok = this.tok(type, captures[1]);
+        this.incrementColumn(captures[0].length - whitespaceLength);
+        return tok;
       }
       if (/^[ \t]*(\n|$)/.test(newInput)) {
         this.input = newInput.substr(/^[ \t]*/.exec(newInput)[0].length);
-        return this.tok(type, captures[1]);
+        tok = this.tok(type, captures[1]);
+        this.incrementColumn(captures[0].length - whitespaceLength);
+        return tok;
       }
     }
   },
@@ -204,7 +246,7 @@ Lexer.prototype = {
     var captures;
     if (captures = /^\n[ \t]*\n/.exec(this.input)) {
       this.consume(captures[0].length - 1);
-      ++this.lineno;
+      this.incrementLine(1);
       if (this.startedPipeless) this.tokens.push(this.tok('text', ''));
       return true;
     }
@@ -223,6 +265,7 @@ Lexer.prototype = {
       this.pipeless = true;
       this.interpolationAllowed = tok.buffer;
       this.tokens.push(tok);
+      this.incrementColumn(captures[0].length);
       return true;
     }
   },
@@ -237,6 +280,7 @@ Lexer.prototype = {
       this.consume(match.end + 1);
       var tok = this.tok('interpolation', match.src);
       this.tokens.push(tok);
+      this.incrementColumn(match.end + 1);
       return true;
     }
   },
@@ -247,11 +291,13 @@ Lexer.prototype = {
 
   tag: function() {
     var captures;
+
     if (captures = /^(\w(?:[-:\w]*\w)?)/.exec(this.input)) {
-      this.consume(captures[0].length);
-      var tok, name = captures[1];
+      var tok, name = captures[1], len = captures[0].length;
+      this.consume(len);
       tok = this.tok('tag', name);
       this.tokens.push(tok);
+      this.incrementColumn(len);
       return true;
     }
   },
@@ -269,6 +315,7 @@ Lexer.prototype = {
         this.interpolationAllowed = false;
       }
       this.tokens.push(tok);
+      this.incrementColumn(tok.val.length);
       return true;
     }
   },
@@ -299,6 +346,7 @@ Lexer.prototype = {
     var tok = this.scan(/^#([\w-]+)/, 'id');
     if (tok) {
       this.tokens.push(tok);
+      this.incrementColumn(tok.val.length);
       return true;
     }
     if (/^#/.test(this.input)) {
@@ -314,6 +362,7 @@ Lexer.prototype = {
     var tok = this.scan(/^\.(\-?[_a-z][_a-z0-9\-]*)/i, 'class');
     if (tok) {
       this.tokens.push(tok);
+      this.incrementColumn(tok.val.length);
       return true;
     }
     if (/^\.\-/i.test(this.input)) {
@@ -337,7 +386,7 @@ Lexer.prototype = {
       return true;
     }
   },
-  addText: function (value, prefix) {
+  addText: function (value, prefix, escaped) {
     if (value + prefix === '') return;
     prefix = prefix || '';
     var indexOfEnd = this.interpolated ? value.indexOf(']') : -1;
@@ -352,18 +401,24 @@ Lexer.prototype = {
 
     if (indexOfEscaped !== Infinity && indexOfEscaped < indexOfEnd && indexOfEscaped < indexOfStart && indexOfEscaped < indexOfStringInterp) {
       prefix = prefix + value.substring(0, indexOfEscaped) + '#[';
-      return this.addText(value.substring(indexOfEscaped + 3), prefix);
+      return this.addText(value.substring(indexOfEscaped + 3), prefix, true);
     }
     if (indexOfStart !== Infinity && indexOfStart < indexOfEnd && indexOfStart < indexOfEscaped && indexOfStart < indexOfStringInterp) {
       this.tokens.push(this.tok('text', prefix + value.substring(0, indexOfStart)));
+      this.incrementColumn(prefix.length + indexOfStart);
+      if (escaped) this.incrementColumn(1);
       this.tokens.push(this.tok('start-jade-interpolation'));
+      this.incrementColumn(2);
       var child = new this.constructor(value.substr(indexOfStart + 2), this.filename, {
         interpolated: true,
-        startingLine: this.lineno
+        startingLine: this.lineno,
+        startingColumn: this.colno
       });
       var interpolated = child.getTokens();
+      this.colno = child.colno;
       this.tokens = this.tokens.concat(interpolated);
       this.tokens.push(this.tok('end-jade-interpolation'));
+      this.incrementColumn(1);
       this.addText(child.input);
       return;
     }
@@ -381,7 +436,11 @@ Lexer.prototype = {
         return this.addText(value.substring(indexOfStringInterp + 3), prefix);
       }
       var before = value.substr(0, indexOfStringInterp);
-      if (prefix || before) this.tokens.push(this.tok('text', prefix + before));
+      if (prefix || before) {
+        before = prefix + before;
+        this.tokens.push(this.tok('text', before));
+        this.incrementColumn(before.length);
+      }
 
       var rest = matchOfStringInterp[3];
       var range = characterParser.parseMaxBracket(rest, '}');
@@ -389,11 +448,20 @@ Lexer.prototype = {
       tok.mustEscape = matchOfStringInterp[2] === '#';
       tok.buffer = true;
       this.tokens.push(tok);
-      if (range.end + 1 < rest.length) this.addText(rest.substr(range.end + 1));
+
+      if (range.end + 1 < rest.length) {
+        rest = rest.substr(range.end + 1);
+        this.incrementColumn(matchOfStringInterp[0].length - rest.length);
+        this.addText(rest);
+      } else {
+        this.incrementColumn(matchOfStringInterp[0].length);
+      }
       return;
     }
 
-    this.tokens.push(this.tok('text', prefix + value));
+    value = prefix + value;
+    this.tokens.push(this.tok('text', value));
+    this.incrementColumn(value.length);
   },
 
   text: function() {
@@ -613,30 +681,41 @@ Lexer.prototype = {
 
   call: function(){
 
-    var tok, captures;
+    var tok, captures, increment;
     if (captures = /^\+(\s*)(([-\w]+)|(#\{))/.exec(this.input)) {
       // try to consume simple or interpolated call
       if (captures[3]) {
         // simple call
-        this.consume(captures[0].length);
+        increment = captures[0].length;
+        this.consume(increment);
         tok = this.tok('call', captures[3]);
       } else {
         // interpolated call
         var match = this.bracketExpression(2 + captures[1].length);
-        this.consume(match.end + 1);
+        increment = match.end + 1;
+        this.consume(increment);
         this.assertExpression(match.src);
         tok = this.tok('call', '#{'+match.src+'}');
       }
 
+      this.incrementColumn(increment);
+
       tok.args = null;
       // Check for args (not attributes)
       if (captures = /^ *\(/.exec(this.input)) {
-        var range = this.bracketExpression(captures[0].length - 1);
+        var range = this.bracketExpression(captures[0].length - 1)
         if (!/^\s*[-\w]+ *=/.test(range.src)) { // not attributes
+          this.incrementColumn(1);
           this.consume(range.end + 1);
           tok.args = range.src;
           this.assertExpression('[' + tok.args + ']');
-          this.lineno += tok.args.split("\n").length - 1;
+          for (var i = 0; i <= tok.args.length; i++) {
+            if (tok.args[i] === '\n') {
+              this.incrementLine(1);
+            } else {
+              this.incrementColumn(1);
+            }
+          }
         }
       }
       this.tokens.push(tok);
@@ -752,12 +831,14 @@ Lexer.prototype = {
         shortened = code.length - parsed.end;
         code = parsed.src;
       }
-      this.consume(captures[0].length - shortened);
+      var consumed = captures[0].length - shortened;
+      this.consume(consumed);
       var tok = this.tok('code', code);
       tok.mustEscape = flags.charAt(0) === '=';
       tok.buffer = flags.charAt(0) === '=' || flags.charAt(1) === '=';
       if (tok.buffer) this.assertExpression(code);
       this.tokens.push(tok);
+      this.incrementColumn(consumed);
       return true;
     }
   },
@@ -781,7 +862,9 @@ Lexer.prototype = {
 
   attrs: function() {
     if ('(' == this.input.charAt(0)) {
+      var startingLine = this.lineno;
       this.tokens.push(this.tok('start-attributes'));
+      this.incrementColumn(1);
       var index = this.bracketExpression().end
         , str = this.input.substr(1, index-1);
 
@@ -799,11 +882,15 @@ Lexer.prototype = {
       var key = '';
       var val = '';
       var state = characterParser.defaultState();
-      var lineno = this.lineno;
+      var lineno = startingLine;
+      var colno = this.colno;
       var loc = 'key';
       var isEndOfAttribute = function (i) {
         // if the key is not started, then the attribute cannot be ended
-        if (key.trim() === '') return false;
+        if (key.trim() === '') {
+          colno = this.colno;
+          return false;
+        }
         // if there's nothing more then the attribute must be ended
         if (i === str.length) return true;
 
@@ -851,7 +938,7 @@ Lexer.prototype = {
       }
 
       for (var i = 0; i <= str.length; i++) {
-        if (isEndOfAttribute(i)) {
+        if (isEndOfAttribute.call(this, i)) {
           val = val.trim();
           if (val) this.assertExpression(val)
           if (key[0] === ':' || key[key.length - 1] === ':') {
@@ -863,6 +950,7 @@ Lexer.prototype = {
           var tok = this.tok('attribute');
           tok.name = key;
           tok.val = '' == val ? true : val;
+          tok.col = colno;
           tok.mustEscape = escapedAttr;
           this.tokens.push(tok);
 
@@ -887,7 +975,10 @@ Lexer.prototype = {
                 quote = str[i];
               } else if (str[i] === '!' || str[i] === '=') {
                 escapedAttr = str[i] !== '!';
-                if (str[i] === '!') i++;
+                if (str[i] === '!') {
+                  this.incrementColumn(1);
+                  i++;
+                }
                 if (str[i] !== '=') this.error('INVALID_KEY_CHARACTER', 'Unexpected character ' + str[i] + ' expected `=`');
                 loc = 'value';
                 state = characterParser.defaultState();
@@ -905,12 +996,20 @@ Lexer.prototype = {
           // Save the line number locally to keep this.lineno at the start of
           // the attribute.
           lineno++;
+          this.colno = 1;
           // If the key has not been started, update this.lineno immediately.
           if (!key.trim()) this.lineno = lineno;
+        } else if (str[i] !== undefined) {
+          this.incrementColumn(1);
         }
       }
 
+      // Reset the line numbers based on the line started on
+      // plus the number of newline characters encountered
+      this.lineno = startingLine + (str.match(/\n/g) || []).length;
+
       this.tokens.push(this.tok('end-attributes'));
+      this.incrementColumn(1);
       return true;
     }
   },
@@ -921,10 +1020,13 @@ Lexer.prototype = {
   attributesBlock: function () {
     var captures;
     if (/^&attributes\b/.test(this.input)) {
-      this.consume(11);
+      var consumed = 11;
+      this.consume(consumed);
       var args = this.bracketExpression();
+      consumed += args.end + 1;
       this.consume(args.end + 1);
       this.tokens.push(this.tok('&attributes', args.src));
+      this.incrementColumn(consumed);
       return true;
     }
   },
@@ -940,7 +1042,7 @@ Lexer.prototype = {
       var tok
         , indents = captures[1].length;
 
-      ++this.lineno;
+      this.incrementLine(1);
       this.consume(indents + 1);
 
       if (' ' == this.input[0] || '\t' == this.input[0]) {
@@ -960,16 +1062,19 @@ Lexer.prototype = {
           if (this.indentStack[1] < indents) {
             this.error('INCONSISTENT_INDENTATION', 'Inconsistent indentation. Expecting either ' + this.indentStack[1] + ' or ' + this.indentStack[0] + ' spaces/tabs.');
           }
+          this.colno = this.indentStack[1] + 1;
           this.tokens.push(this.tok('outdent'));
           this.indentStack.shift();
         }
       // indent
       } else if (indents && indents != this.indentStack[0]) {
-        this.indentStack.unshift(indents);
         this.tokens.push(this.tok('indent', indents));
+        this.colno = 1 + indents;
+        this.indentStack.unshift(indents);
       // newline
       } else {
         this.tokens.push(this.tok('newline'));
+        this.colno = 1 + (this.indentStack[0] || 0);
       }
 
       this.pipeless = false;
@@ -1018,8 +1123,9 @@ Lexer.prototype = {
       this.consume(stringPtr);
       while (this.input.length === 0 && tokens[tokens.length - 1] === '') tokens.pop();
       tokens.forEach(function (token, i) {
-        this.lineno++;
+        this.incrementLine(1);
         if (i !== 0) this.tokens.push(this.tok('newline'));
+        this.incrementColumn(indents);
         this.addText(token);
       }.bind(this));
       this.startedPipeless = false;
