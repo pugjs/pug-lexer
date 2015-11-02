@@ -186,12 +186,17 @@ Lexer.prototype = {
     var start = this.input[skip];
     assert(start === '(' || start === '{' || start === '[',
            'The start character should be "(", "{" or "["');
-    var end = ({'(': ')', '{': '}', '[': ']'})[start];
+    var end = characterParser.BRACKETS[start];
     var range;
     try {
-      range = characterParser.parseMaxBracket(this.input, end, {start: skip + 1});
+      range = characterParser.parseUntil(this.input, end, {start: skip + 1});
     } catch (ex) {
-      this.error('BRACKET_MISMATCH', ex.message);
+      if (ex.code === 'CHARACTER_PARSER:END_OF_STRING_REACHED') {
+        this.error(characterParserErrCode[ex.code], 'The end of the string reached with no closing bracket ' + end + ' found.');
+      } else if (ex.code === 'CHARACTER_PARSER:MISMATCHED_BRACKET') {
+        this.error('BRACKET_MISMATCH', ex.message);
+      }
+      throw ex;
     }
     return range;
   },
@@ -443,7 +448,18 @@ Lexer.prototype = {
       }
 
       var rest = matchOfStringInterp[3];
-      var range = characterParser.parseMaxBracket(rest, '}');
+      var range;
+      try {
+        range = characterParser.parseUntil(rest, '}');
+      } catch (ex) {
+        if (ex.code === 'CHARACTER_PARSER:END_OF_STRING_REACHED') {
+          this.error('NO_END_BRACKET', 'End of line was reached with no closing bracket for interpolation.');
+        } else if (ex.code === 'CHARACTER_PARSER:MISMATCHED_BRACKET') {
+          this.error('BRACKET_MISMATCH', ex.message);
+        } else {
+          throw ex;
+        }
+      }
       var tok = this.tok('interpolated-code', range.src);
       tok.mustEscape = matchOfStringInterp[2] === '#';
       tok.buffer = true;
@@ -824,9 +840,15 @@ Lexer.prototype = {
       if (this.interpolated) {
         var parsed;
         try {
-          parsed = characterParser.parseMaxBracket(code, ']');
+          parsed = characterParser.parseUntil(code, ']');
         } catch (err) {
-          this.error('NO_END_BRACKET', 'End of line was reached with no closing bracket for interpolation.');
+          if (err.code === 'CHARACTER_PARSER:END_OF_STRING_REACHED') {
+            this.error('NO_END_BRACKET', 'End of line was reached with no closing bracket for interpolation.');
+          } else if (err.code === 'CHARACTER_PARSER:MISMATCHED_BRACKET') {
+            this.error('BRACKET_MISMATCH', err.message);
+          } else {
+            throw err;
+          }
         }
         shortened = code.length - parsed.end;
         code = parsed.src;
