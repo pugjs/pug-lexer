@@ -103,7 +103,7 @@ Lexer.prototype = {
   **/
 
   incrementLine: function(increment){
-    this.lineno += isNaN(increment) ? 1 : increment;
+    this.lineno += increment;
     this.colno = 1;
   },
 
@@ -115,7 +115,7 @@ Lexer.prototype = {
   **/
 
   incrementColumn: function(increment){
-    this.colno += isNaN(increment) ? 1 : increment
+    this.colno += increment
   },
 
   /**
@@ -241,7 +241,7 @@ Lexer.prototype = {
     var captures;
     if (captures = /^\n[ \t]*\n/.exec(this.input)) {
       this.consume(captures[0].length - 1);
-      this.incrementLine();
+      this.incrementLine(1);
       if (this.startedPipeless) this.tokens.push(this.tok('text', ''));
       return true;
     }
@@ -400,7 +400,7 @@ Lexer.prototype = {
     if (indexOfStart !== Infinity && indexOfStart < indexOfEnd && indexOfStart < indexOfEscaped && indexOfStart < indexOfStringInterp) {
       this.tokens.push(this.tok('text', prefix + value.substring(0, indexOfStart)));
       this.incrementColumn(prefix.length + indexOfStart);
-      if (escaped) this.incrementColumn();
+      if (escaped) this.incrementColumn(1);
       this.tokens.push(this.tok('start-jade-interpolation'));
       this.incrementColumn(2);
       var child = new this.constructor(value.substr(indexOfStart + 2), this.filename, {
@@ -412,7 +412,7 @@ Lexer.prototype = {
       this.colno = child.colno;
       this.tokens = this.tokens.concat(interpolated);
       this.tokens.push(this.tok('end-jade-interpolation'));
-      this.incrementColumn();
+      this.incrementColumn(1);
       this.addText(child.input);
       return;
     }
@@ -695,15 +695,15 @@ Lexer.prototype = {
       if (captures = /^ *\(/.exec(this.input)) {
         var range = this.bracketExpression(captures[0].length - 1)
         if (!/^\s*[-\w]+ *=/.test(range.src)) { // not attributes
-          this.incrementColumn();
+          this.incrementColumn(1);
           this.consume(range.end + 1);
           tok.args = range.src;
           this.assertExpression('[' + tok.args + ']');
           for (var i = 0; i <= tok.args.length; i++) {
             if (tok.args[i] === '\n') {
-              this.incrementLine();
+              this.incrementLine(1);
             } else {
-              this.incrementColumn();
+              this.incrementColumn(1);
             }
           }
         }
@@ -854,7 +854,7 @@ Lexer.prototype = {
     if ('(' == this.input.charAt(0)) {
       var startingLine = this.lineno;
       this.tokens.push(this.tok('start-attributes'));
-      this.incrementColumn();
+      this.incrementColumn(1);
       var index = this.bracketExpression().end
         , str = this.input.substr(1, index-1);
 
@@ -966,7 +966,7 @@ Lexer.prototype = {
               } else if (str[i] === '!' || str[i] === '=') {
                 escapedAttr = str[i] !== '!';
                 if (str[i] === '!') {
-                  this.incrementColumn();
+                  this.incrementColumn(1);
                   i++;
                 }
                 if (str[i] !== '=') this.error('INVALID_KEY_CHARACTER', 'Unexpected character ' + str[i] + ' expected `=`');
@@ -990,7 +990,7 @@ Lexer.prototype = {
           // If the key has not been started, update this.lineno immediately.
           if (!key.trim()) this.lineno = lineno;
         } else if (str[i] !== undefined) {
-          this.incrementColumn();
+          this.incrementColumn(1);
         }
       }
 
@@ -999,7 +999,7 @@ Lexer.prototype = {
       this.lineno = startingLine + (str.match(/\n/g) || []).length;
 
       this.tokens.push(this.tok('end-attributes'));
-      this.incrementColumn();
+      this.incrementColumn(1);
       return true;
     }
   },
@@ -1032,7 +1032,7 @@ Lexer.prototype = {
       var tok
         , indents = captures[1].length;
 
-      this.incrementLine();
+      this.incrementLine(1);
       this.consume(indents + 1);
 
       if (' ' == this.input[0] || '\t' == this.input[0]) {
@@ -1113,7 +1113,7 @@ Lexer.prototype = {
       this.consume(stringPtr);
       while (this.input.length === 0 && tokens[tokens.length - 1] === '') tokens.pop();
       tokens.forEach(function (token, i) {
-        this.incrementLine();
+        this.incrementLine(1);
         if (i !== 0) this.tokens.push(this.tok('newline'));
         this.incrementColumn(indents);
         this.addText(token);
