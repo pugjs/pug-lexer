@@ -90,8 +90,6 @@ Lexer.prototype = {
 
     if (val !== undefined) res.val = val;
 
-    this.incrementColumn(isNaN(columnIncrement) ? 0 : columnIncrement)
-
     return res;
   },
 
@@ -144,8 +142,10 @@ Lexer.prototype = {
       var len = captures[0].length;
       var val = captures[1];
       var diff = len - (val ? val.length : 0);
+      var tok = this.tok(type, val);
       this.consume(len);
-      return this.tok(type, val, diff);
+      this.incrementColumn(diff);
+      return tok;
     }
   },
   scanEndOfLine: function (regexp, type) {
@@ -153,6 +153,7 @@ Lexer.prototype = {
     if (captures = regexp.exec(this.input)) {
       var whitespaceLength = 0;
       var whitespace;
+      var tok;
       if (whitespace = /^([ ]+)([^ ]*)/.exec(captures[0])) {
         whitespaceLength = whitespace[1].length;
         this.incrementColumn(whitespaceLength);
@@ -160,11 +161,15 @@ Lexer.prototype = {
       var newInput = this.input.substr(captures[0].length);
       if (newInput[0] === ':') {
         this.input = newInput;
-        return this.tok(type, captures[1], captures[0].length - whitespaceLength);
+        tok = this.tok(type, captures[1]);
+        this.incrementColumn(captures[0].length - whitespaceLength);
+        return tok;
       }
       if (/^[ \t]*(\n|$)/.test(newInput)) {
         this.input = newInput.substr(/^[ \t]*/.exec(newInput)[0].length);
-        return this.tok(type, captures[1], captures[0].length - whitespaceLength);
+        tok = this.tok(type, captures[1]);
+        this.incrementColumn(captures[0].length - whitespaceLength);
+        return tok;
       }
     }
   },
@@ -290,8 +295,9 @@ Lexer.prototype = {
     if (captures = /^(\w(?:[-:\w]*\w)?)/.exec(this.input)) {
       var tok, name = captures[1], len = captures[0].length;
       this.consume(len);
-      tok = this.tok('tag', name, len);
+      tok = this.tok('tag', name);
       this.tokens.push(tok);
+      this.incrementColumn(len);
       return true;
     }
   },
