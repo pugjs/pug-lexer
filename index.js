@@ -835,8 +835,10 @@ Lexer.prototype = {
       this.consume(captures[0].length);
       var tok = this.tok('each', captures[1]);
       tok.key = captures[2] || null;
+      this.incrementColumn(captures[0].length - captures[3].length);
       this.assertExpression(captures[3])
       tok.code = captures[3];
+      this.incrementColumn(captures[3].length);
       this.tokens.push(tok);
       return true;
     }
@@ -984,6 +986,9 @@ Lexer.prototype = {
         if (isEndOfAttribute.call(this, i)) {
           val = val.trim();
           if (val) this.assertExpression(val)
+
+          if (key[0] === ':') this.incrementColumn(-key.length);
+          else if (key[key.length - 1] === ':') this.incrementColumn(-1);
           if (key[0] === ':' || key[key.length - 1] === ':') {
             this.error('COLON_ATTRIBUTE', '":" is not valid as the start or end of an un-quoted attribute.');
           }
