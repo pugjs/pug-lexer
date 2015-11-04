@@ -1,6 +1,7 @@
 'use strict';
 
 var assert = require('assert');
+var acorn = require('acorn');
 var characterParser = require('character-parser');
 var error = require('jade-error');
 
@@ -57,14 +58,27 @@ Lexer.prototype = {
     if (!value) this.error('ASSERT_FAILED', message);
   },
 
-  assertExpression: function (exp) {
+  assertExpression: function (exp, noThrow) {
     //this verifies that a JavaScript expression is valid
     try {
-      Function('', 'return (' + exp + ')');
+      var parser = new acorn.Parser({ecmaVersion: 6}, exp, 0);
+      parser.nextToken();
+      parser.parseExpression();
+      if (parser.type !== acorn.tokTypes.eof) {
+        parser.unexpected();
+      }
     } catch (ex) {
-      var msg = 'Syntax Error: ' + ex.message;
+      if (noThrow) return false;
+
+      // not coming from acorn
+      if (!ex.loc) throw ex;
+
+      this.incrementLine(ex.loc.line - 1);
+      this.incrementColumn(ex.loc.column);
+      var msg = 'Syntax Error: ' + ex.message.replace(/ \([0-9]+:[0-9]+\)$/, '');
       this.error('SYNTAX_ERROR', msg);
     }
+    if (noThrow) return true;
   },
 
   assertNestingCorrect: function (exp) {
@@ -959,13 +973,9 @@ Lexer.prototype = {
         } else if (loc === 'value') {
           // if the character is in a string or in parentheses/brackets/braces
           if (state.isNesting() || state.isString()) return false;
-          try {
-            // if the current value expression is not valid JavaScript, then
-            // assume that the user did not end the value
-            self.assertExpression(val);
-          } catch (ex) {
-            return false;
-          }
+          // if the current value expression is not valid JavaScript, then
+          // assume that the user did not end the value
+          if (!self.assertExpression(val, true)) return false;
           if (whitespaceRe.test(str[i])) {
             // find the first non-whitespace character
             for (var x = i; x < str.length; x++) {

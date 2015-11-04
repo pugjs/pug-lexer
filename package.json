@@ -4,6 +4,7 @@
   "description": "The jade lexer (takes a string and converts it to an array of tokens)",
   "keywords": [],
   "dependencies": {
+    "acorn": "^2.5.2",
     "character-parser": "^2.1.1",
     "jade-error": "^1.0.0"
   },
