@@ -1,5 +1,6 @@
 {
   "msg": "missing expression for when",
   "code": "JADE:NO_WHEN_EXPRESSION",
-  "line": 1
+  "line": 1,
+  "column": 5
 }

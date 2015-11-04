@@ -1,5 +1,6 @@
 {
   "msg": "malformed extends",
   "code": "JADE:MALFORMED_EXTENDS",
-  "line": 1
+  "line": 1,
+  "column": 7
 }

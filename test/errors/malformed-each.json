@@ -1,5 +1,6 @@
 {
   "msg": "malformed each",
   "code": "JADE:MALFORMED_EACH",
-  "line": 1
+  "line": 1,
+  "column": 5
 }

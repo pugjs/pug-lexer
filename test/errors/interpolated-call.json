@@ -1,5 +1,6 @@
 {
-  "msg": "Syntax Error: Unexpected token ]",
-  "code": "JADE:SYNTAX_ERROR",
-  "line": 5
+  "msg": "Mismatched Bracket: ]",
+  "code": "JADE:BRACKET_MISMATCH",
+  "line": 5,
+  "column": 11
 }

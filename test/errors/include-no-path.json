@@ -1,5 +1,6 @@
 {
   "msg": "missing path for include",
   "code": "JADE:NO_INCLUDE_PATH",
-  "line": 1
+  "line": 1,
+  "column": 8
 }

@@ -1,5 +1,6 @@
 {
   "msg": "default should not have an expression",
   "code": "JADE:DEFAULT_WITH_EXPRESSION",
-  "line": 1
+  "line": 1,
+  "column": 8
 }
