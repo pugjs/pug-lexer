@@ -1,5 +1,6 @@
 {
   "msg": "missing path for extends",
   "code": "JADE:NO_EXTENDS_PATH",
-  "line": 1
+  "line": 1,
+  "column": 8
 }

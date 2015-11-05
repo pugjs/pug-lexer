@@ -177,6 +177,9 @@ Lexer.prototype = {
   /**
    * Return the indexOf `(` or `{` or `[` / `)` or `}` or `]` delimiters.
    *
+   * Make sure that when calling this function, colno is at the character
+   * immediately before the beginning.
+   *
    * @return {Number}
    * @api private
    */
@@ -186,12 +189,20 @@ Lexer.prototype = {
     var start = this.input[skip];
     assert(start === '(' || start === '{' || start === '[',
            'The start character should be "(", "{" or "["');
-    var end = ({'(': ')', '{': '}', '[': ']'})[start];
+    var end = characterParser.BRACKETS[start];
     var range;
     try {
-      range = characterParser.parseMaxBracket(this.input, end, {start: skip + 1});
+      range = characterParser.parseUntil(this.input, end, {start: skip + 1});
     } catch (ex) {
-      this.error('BRACKET_MISMATCH', ex.message);
+      if (ex.index !== undefined) {
+        this.incrementColumn(ex.index);
+      }
+      if (ex.code === 'CHARACTER_PARSER:END_OF_STRING_REACHED') {
+        this.error(characterParserErrCode[ex.code], 'The end of the string reached with no closing bracket ' + end + ' found.');
+      } else if (ex.code === 'CHARACTER_PARSER:MISMATCHED_BRACKET') {
+        this.error('BRACKET_MISMATCH', ex.message);
+      }
+      throw ex;
     }
     return range;
   },
@@ -414,7 +425,16 @@ Lexer.prototype = {
         startingLine: this.lineno,
         startingColumn: this.colno
       });
-      var interpolated = child.getTokens();
+      var interpolated;
+      try {
+        interpolated = child.getTokens();
+      } catch (ex) {
+        if (ex.code && /^JADE:/.test(ex.code)) {
+          this.colno = ex.column;
+          this.error(ex.code.substr(5), ex.msg);
+        }
+        throw ex;
+      }
       this.colno = child.colno;
       this.tokens = this.tokens.concat(interpolated);
       this.tokens.push(this.tok('end-jade-interpolation'));
@@ -443,7 +463,21 @@ Lexer.prototype = {
       }
 
       var rest = matchOfStringInterp[3];
-      var range = characterParser.parseMaxBracket(rest, '}');
+      var range;
+      try {
+        range = characterParser.parseUntil(rest, '}');
+      } catch (ex) {
+        if (ex.index !== undefined) {
+          this.incrementColumn(2 + ex.index);
+        }
+        if (ex.code === 'CHARACTER_PARSER:END_OF_STRING_REACHED') {
+          this.error('NO_END_BRACKET', 'End of line was reached with no closing bracket for interpolation.');
+        } else if (ex.code === 'CHARACTER_PARSER:MISMATCHED_BRACKET') {
+          this.error('BRACKET_MISMATCH', ex.message);
+        } else {
+          throw ex;
+        }
+      }
       var tok = this.tok('interpolated-code', range.src);
       tok.mustEscape = matchOfStringInterp[2] === '#';
       tok.buffer = true;
@@ -824,9 +858,18 @@ Lexer.prototype = {
       if (this.interpolated) {
         var parsed;
         try {
-          parsed = characterParser.parseMaxBracket(code, ']');
+          parsed = characterParser.parseUntil(code, ']');
         } catch (err) {
-          this.error('NO_END_BRACKET', 'End of line was reached with no closing bracket for interpolation.');
+          if (err.index !== undefined) {
+            this.incrementColumn(captures[0].length - code.length + err.index);
+          }
+          if (err.code === 'CHARACTER_PARSER:END_OF_STRING_REACHED') {
+            this.error('NO_END_BRACKET', 'End of line was reached with no closing bracket for interpolation.');
+          } else if (err.code === 'CHARACTER_PARSER:MISMATCHED_BRACKET') {
+            this.error('BRACKET_MISMATCH', err.message);
+          } else {
+            throw err;
+          }
         }
         shortened = code.length - parsed.end;
         code = parsed.src;
@@ -864,10 +907,10 @@ Lexer.prototype = {
     if ('(' == this.input.charAt(0)) {
       var startingLine = this.lineno;
       this.tokens.push(this.tok('start-attributes'));
-      this.incrementColumn(1);
       var index = this.bracketExpression().end
         , str = this.input.substr(1, index-1);
 
+      this.incrementColumn(1);
       this.assertNestingCorrect(str);
 
       var quote = '';
@@ -1022,10 +1065,13 @@ Lexer.prototype = {
     if (/^&attributes\b/.test(this.input)) {
       var consumed = 11;
       this.consume(consumed);
+      var tok = this.tok('&attributes');
+      this.incrementColumn(consumed);
       var args = this.bracketExpression();
-      consumed += args.end + 1;
-      this.consume(args.end + 1);
-      this.tokens.push(this.tok('&attributes', args.src));
+      consumed = args.end + 1;
+      this.consume(consumed);
+      tok.val = args.src;
+      this.tokens.push(tok);
       this.incrementColumn(consumed);
       return true;
     }

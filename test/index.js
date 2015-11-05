@@ -32,7 +32,8 @@ fs.readdirSync(edir).forEach(function (testCase) {
       actual = {
         msg: ex.msg,
         code: ex.code,
-        line: ex.line
+        line: ex.line,
+        column: ex.column
       };
     }
     assert.deepEqual(expected, actual);

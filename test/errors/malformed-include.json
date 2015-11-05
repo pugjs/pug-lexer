@@ -1,5 +1,6 @@
 {
   "msg": "malformed include",
   "code": "JADE:MALFORMED_INCLUDE",
-  "line": 1
+  "line": 1,
+  "column": 8
 }
