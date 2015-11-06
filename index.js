@@ -796,6 +796,9 @@ Lexer.prototype = {
       this.consume(captures[0].length);
       var type = captures[1].replace(/ /g, '-');
       var js = captures[2] && captures[2].trim();
+      // type can be "if", "else-if" and "else"
+      var tok = this.tok(type, js);
+      this.incrementColumn(captures[0].length - js.length);
 
       switch (type) {
         case 'if':
@@ -804,8 +807,8 @@ Lexer.prototype = {
           break;
         case 'unless':
           this.assertExpression(js);
-          js = '!(' + js + ')';
-          type = 'if';
+          tok.val = '!(' + js + ')';
+          tok.type = 'if';
           break;
         case 'else':
           if (js) {
@@ -816,8 +819,7 @@ Lexer.prototype = {
           }
           break;
       }
-      // type can be "if", "else-if" and "else"
-      this.tokens.push(this.tok(type, js));
+      this.tokens.push(tok);
       return true;
     }
   },
