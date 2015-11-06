@@ -891,9 +891,36 @@ Lexer.prototype = {
       var tok = this.tok('code', code);
       tok.mustEscape = flags.charAt(0) === '=';
       tok.buffer = flags.charAt(0) === '=' || flags.charAt(1) === '=';
+
+      // p #[!=    abc] hey
+      //     ^              original colno
+      //     -------------- captures[0]
+      //           -------- captures[2]
+      //     ------         captures[0] - captures[2]
+      //           ^        after colno
+
+      // =   abc
+      // ^                  original colno
+      // -------            captures[0]
+      //     ---            captures[2]
+      // ----               captures[0] - captures[2]
+      //     ^              after colno
+      this.incrementColumn(captures[0].length - captures[2].length);
       if (tok.buffer) this.assertExpression(code);
       this.tokens.push(tok);
-      this.incrementColumn(consumed);
+
+      // p #[!=    abc] hey
+      //           ^        original colno
+      //              ----- shortened
+      //           ---      code
+      //              ^     after colno
+
+      // =   abc
+      //     ^              original colno
+      //                    shortened
+      //     ---            code
+      //        ^           after colno
+      this.incrementColumn(code.length);
       return true;
     }
   },
