@@ -198,7 +198,7 @@ Lexer.prototype = {
         this.incrementColumn(ex.index);
       }
       if (ex.code === 'CHARACTER_PARSER:END_OF_STRING_REACHED') {
-        this.error(characterParserErrCode[ex.code], 'The end of the string reached with no closing bracket ' + end + ' found.');
+        this.error('NO_END_BRACKET', 'The end of the string reached with no closing bracket ' + end + ' found.');
       } else if (ex.code === 'CHARACTER_PARSER:MISMATCHED_BRACKET') {
         this.error('BRACKET_MISMATCH', ex.message);
       }
