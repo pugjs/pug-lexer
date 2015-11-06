@@ -1,6 +1,6 @@
 {"type":"newline","line":2,"col":1}
 {"type":"extends","line":2,"col":1}
-{"type":"path","line":2,"col":8,"val":"auxiliary/layout"}
+{"type":"path","line":2,"col":8,"val":"auxiliary/layout.jade"}
 {"type":"newline","line":4,"col":1}
 {"type":"mixin","line":4,"col":1,"val":"article","args":"title"}
 {"type":"indent","line":5,"col":1,"val":2}
@@ -17,6 +17,6 @@
 {"type":"indent","line":11,"col":1,"val":4}
 {"type":"tag","line":11,"col":5,"val":"p"}
 {"type":"text","line":11,"col":7,"val":"Foo bar baz!"}
-{"type":"outdent","line":11,"col":19}
-{"type":"outdent","line":11,"col":19}
-{"type":"eos","line":11,"col":19}
+{"type":"outdent","line":12,"col":3}
+{"type":"outdent","line":12,"col":1}
+{"type":"eos","line":12,"col":1}
