@@ -2,5 +2,5 @@
   "msg": "`else` cannot have a condition, perhaps you meant `else if`",
   "code": "JADE:ELSE_CONDITION",
   "line": 3,
-  "column": 1
+  "column": 6
 }
