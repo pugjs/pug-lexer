@@ -1,6 +1,0 @@
-{
-  "msg": "`doctype 5` is deprecated, you must now use `doctype html`",
-  "code": "JADE:OLD_DOCTYPE",
-  "line": 1,
-  "column": 10
-}

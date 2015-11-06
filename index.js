@@ -350,13 +350,7 @@ Lexer.prototype = {
    */
 
   doctype: function() {
-    if (this.scan(/^!!! *([^\n]+)?/, 'doctype')) {
-      this.error('OLD_DOCTYPE', '`!!!` is deprecated, you must now use `doctype`');
-    }
     var node = this.scanEndOfLine(/^doctype *([^\n]*)/, 'doctype');
-    if (node && node.val.trim() === '5') {
-      this.error('OLD_DOCTYPE', '`doctype 5` is deprecated, you must now use `doctype html`');
-    }
     if (node) {
       this.tokens.push(node);
       return true;
