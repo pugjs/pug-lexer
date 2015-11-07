@@ -102,7 +102,7 @@ Lexer.prototype = {
 
   incrementLine: function(increment){
     this.lineno += increment;
-    this.colno = 1;
+    if (increment) this.colno = 1;
   },
 
   /**
