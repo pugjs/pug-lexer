@@ -31,8 +31,6 @@ function Lexer(str, filename, options) {
   this.colno = options.startingColumn || 1;
   this.indentStack = [0];
   this.indentRe = null;
-  this.pipeless = false;
-  this.startedPipeless = false;
   // If #{} or !{} syntax is allowed when adding text
   this.interpolationAllowed = true;
 
@@ -258,7 +256,6 @@ Lexer.prototype = {
     if (captures = /^\n[ \t]*\n/.exec(this.input)) {
       this.consume(captures[0].length - 1);
       this.incrementLine(1);
-      if (this.startedPipeless) this.tokens.push(this.tok('text', ''));
       return true;
     }
   },
@@ -273,10 +270,10 @@ Lexer.prototype = {
       this.consume(captures[0].length);
       var tok = this.tok('comment', captures[2]);
       tok.buffer = '-' != captures[1];
-      this.pipeless = true;
       this.interpolationAllowed = tok.buffer;
       this.tokens.push(tok);
       this.incrementColumn(captures[0].length);
+      this.pipelessText();
       return true;
     }
   },
@@ -321,12 +318,13 @@ Lexer.prototype = {
     var tok = this.scan(/^:([\w\-]+)/, 'filter');
     var inInclude = opts && opts.inInclude;
     if (tok) {
-      if (!inInclude) {
-        this.pipeless = true;
-        this.interpolationAllowed = false;
-      }
       this.tokens.push(tok);
       this.incrementColumn(tok.val.length);
+      this.attrs();
+      if (!inInclude) {
+        this.interpolationAllowed = false;
+        this.pipelessText();
+      }
       return true;
     }
   },
@@ -522,8 +520,8 @@ Lexer.prototype = {
   dot: function() {
     var tok;
     if (tok = this.scanEndOfLine(/^\./, 'dot')) {
-      this.pipeless = true;
       this.tokens.push(tok);
+      this.pipelessText();
       return true;
     }
   },
@@ -633,9 +631,7 @@ Lexer.prototype = {
     var tok = this.scan(/^include(?=:| |$|\n)/, 'include');
     if (tok) {
       this.tokens.push(tok);
-      while (this.filter({ inInclude: true })) {
-        this.attrs();
-      }
+      while (this.filter({ inInclude: true }));
       if (!this.path()) {
         if (/^[^ \n]+/.test(this.input)) {
           // if there is more text
@@ -893,8 +889,8 @@ Lexer.prototype = {
     var tok
     if (tok = this.scanEndOfLine(/^-/, 'blockcode')) {
       this.tokens.push(tok);
-      this.pipeless = true;
       this.interpolationAllowed = false;
+      this.pipelessText();
       return true;
     }
   },
@@ -1097,7 +1093,6 @@ Lexer.prototype = {
 
       // blank line
       if ('\n' == this.input[0]) {
-        this.pipeless = false;
         this.interpolationAllowed = true;
         return this.tok('newline');
       }
@@ -1123,25 +1118,19 @@ Lexer.prototype = {
         this.colno = 1 + (this.indentStack[0] || 0);
       }
 
-      this.pipeless = false;
       this.interpolationAllowed = true;
       return true;
     }
   },
 
-  /**
-   * Pipe-less text consumed only when
-   * pipeless is true;
-   */
-
   pipelessText: function(indents) {
-    if (!this.pipeless) return;
+    while (this.blank());
+
     var captures = this.scanIndentation();
 
     indents = indents || captures && captures[1].length;
     if (indents > this.indentStack[0]) {
       this.tokens.push(this.tok('start-pipeless-text'));
-      this.startedPipeless = true;
       var tokens = [];
       var isMatch;
       // Index in this.input. Can't use this.consume because we might need to
@@ -1174,7 +1163,6 @@ Lexer.prototype = {
         this.incrementColumn(indents);
         this.addText(token);
       }.bind(this));
-      this.startedPipeless = false;
       this.tokens.push(this.tok('end-pipeless-text'));
       return true;
     }
@@ -1218,7 +1206,6 @@ Lexer.prototype = {
     return this.blank()
       || this.eos()
       || this.endInterpolation()
-      || this.pipelessText()
       || this.yield()
       || this.doctype()
       || this.interpolation()
