@@ -318,7 +318,12 @@ Lexer.prototype = {
       this.consume(match.end + 1);
       var tok = this.tok('interpolation', match.src);
       this.tokens.push(tok);
-      this.incrementColumn(match.end + 1);
+      this.incrementColumn(2); // '#{'
+
+      var splitted = match.src.split('\n');
+      var lines = splitted.length - 1;
+      this.incrementLine(lines);
+      this.incrementColumn(splitted[lines].length + 1); // + 1 → '}'
       return true;
     }
   },
