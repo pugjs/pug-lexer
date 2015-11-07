@@ -209,7 +209,20 @@ Lexer.prototype = {
       range = characterParser.parseUntil(this.input, end, {start: skip + 1});
     } catch (ex) {
       if (ex.index !== undefined) {
-        this.incrementColumn(ex.index);
+        var idx = ex.index;
+        // starting from this.input[skip]
+        var tmp = this.input.substr(skip).indexOf('\n');
+        // starting from this.input[0]
+        var nextNewline = tmp + skip;
+        var ptr = 0;
+        while (idx > nextNewline && tmp !== -1) {
+          this.incrementLine(1);
+          idx -= nextNewline + 1;
+          ptr += nextNewline + 1;
+          tmp = nextNewline = this.input.substr(ptr).indexOf('\n');
+        };
+
+        this.incrementColumn(idx);
       }
       if (ex.code === 'CHARACTER_PARSER:END_OF_STRING_REACHED') {
         this.error('NO_END_BRACKET', 'The end of the string reached with no closing bracket ' + end + ' found.');
