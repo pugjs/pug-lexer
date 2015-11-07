@@ -1037,7 +1037,11 @@ Lexer.prototype = {
       for (var i = 0; i <= str.length; i++) {
         if (isEndOfAttribute.call(this, i)) {
           val = val.trim();
-          if (val) this.assertExpression(val)
+          if (val) {
+            this.incrementColumn(-val.length);
+            this.assertExpression(val)
+            this.incrementColumn(val.length);
+          }
 
           if (key[0] === ':') this.incrementColumn(-key.length);
           else if (key[key.length - 1] === ':') this.incrementColumn(-1);
