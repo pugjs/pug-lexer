@@ -1,3 +1,4 @@
 {"type":"include","line":1,"col":1}
-{"type":"path","line":1,"col":9,"val":"/auxiliary/extends-from-root"}
-{"type":"eos","line":1,"col":37}
+{"type":"path","line":1,"col":9,"val":"/auxiliary/extends-from-root.jade"}
+{"type":"newline","line":2,"col":1}
+{"type":"eos","line":2,"col":1}
