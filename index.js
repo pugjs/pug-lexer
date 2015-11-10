@@ -491,11 +491,13 @@ Lexer.prototype = {
 
       var rest = matchOfStringInterp[3];
       var range;
+      var tok = this.tok('interpolated-code');
+      this.incrementColumn(2);
       try {
         range = characterParser.parseUntil(rest, '}');
       } catch (ex) {
         if (ex.index !== undefined) {
-          this.incrementColumn(2 + ex.index);
+          this.incrementColumn(ex.index);
         }
         if (ex.code === 'CHARACTER_PARSER:END_OF_STRING_REACHED') {
           this.error('NO_END_BRACKET', 'End of line was reached with no closing bracket for interpolation.');
@@ -505,17 +507,18 @@ Lexer.prototype = {
           throw ex;
         }
       }
-      var tok = this.tok('interpolated-code', range.src);
       tok.mustEscape = matchOfStringInterp[2] === '#';
       tok.buffer = true;
+      tok.val = range.src;
+      this.assertExpression(range.src);
       this.tokens.push(tok);
 
       if (range.end + 1 < rest.length) {
         rest = rest.substr(range.end + 1);
-        this.incrementColumn(matchOfStringInterp[0].length - rest.length);
+        this.incrementColumn(range.end + 1);
         this.addText(rest);
       } else {
-        this.incrementColumn(matchOfStringInterp[0].length);
+        this.incrementColumn(rest.length);
       }
       return;
     }
