@@ -53,5 +53,7 @@
 {"type":"newline","line":16,"col":1}
 {"type":"tag","line":16,"col":3,"val":"img"}
 {"type":"text","line":16,"col":7,"val":"   "}
-{"type":"outdent","line":17,"col":1}
-{"type":"eos","line":17,"col":1}
+{"type":"newline","line":17,"col":1}
+{"type":"interpolation","line":17,"col":3,"val":"\n    'foo'\n  "}
+{"type":"outdent","line":20,"col":1}
+{"type":"eos","line":20,"col":1}
