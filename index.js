@@ -30,6 +30,7 @@ function Lexer(str, filename, options) {
   this.interpolated = options.interpolated || false;
   this.lineno = options.startingLine || 1;
   this.colno = options.startingColumn || 1;
+  this.plugins = options.plugins || [];
   this.indentStack = [0];
   this.indentRe = null;
   // If #{} or !{} syntax is allowed when adding text
@@ -300,7 +301,7 @@ Lexer.prototype = {
       this.interpolationAllowed = tok.buffer;
       this.tokens.push(tok);
       this.incrementColumn(captures[0].length);
-      this.pipelessText();
+      this.callLexerFunction('pipelessText');
       return true;
     }
   },
@@ -353,10 +354,10 @@ Lexer.prototype = {
     if (tok) {
       this.tokens.push(tok);
       this.incrementColumn(tok.val.length);
-      this.attrs();
+      this.callLexerFunction('attrs');
       if (!inInclude) {
         this.interpolationAllowed = false;
-        this.pipelessText();
+        this.callLexerFunction('pipelessText');
       }
       return true;
     }
@@ -551,7 +552,7 @@ Lexer.prototype = {
     var tok;
     if (tok = this.scanEndOfLine(/^\./, 'dot')) {
       this.tokens.push(tok);
-      this.pipelessText();
+      this.callLexerFunction('pipelessText');
       return true;
     }
   },
@@ -564,7 +565,7 @@ Lexer.prototype = {
     var tok = this.scan(/^extends?(?= |$|\n)/, 'extends');
     if (tok) {
       this.tokens.push(tok);
-      if (!this.path()) {
+      if (!this.callLexerFunction('path')) {
         this.error('NO_EXTENDS_PATH', 'missing path for extends');
       }
       return true;
@@ -661,8 +662,8 @@ Lexer.prototype = {
     var tok = this.scan(/^include(?=:| |$|\n)/, 'include');
     if (tok) {
       this.tokens.push(tok);
-      while (this.filter({ inInclude: true }));
-      if (!this.path()) {
+      while (this.callLexerFunction('filter', { inInclude: true }));
+      if (!this.callLexerFunction('path')) {
         if (/^[^ \n]+/.test(this.input)) {
           // if there is more text
           this.fail();
@@ -951,7 +952,7 @@ Lexer.prototype = {
     if (tok = this.scanEndOfLine(/^-/, 'blockcode')) {
       this.tokens.push(tok);
       this.interpolationAllowed = false;
-      this.pipelessText();
+      this.callLexerFunction('pipelessText');
       return true;
     }
   },
@@ -1188,7 +1189,7 @@ Lexer.prototype = {
   },
 
   pipelessText: function(indents) {
-    while (this.blank());
+    while (this.callLexerFunction('blank'));
 
     var captures = this.scanIndentation();
 
@@ -1260,6 +1261,21 @@ Lexer.prototype = {
     this.error('UNEXPECTED_TEXT', 'unexpected text "' + this.input.substr(0, 5) + '"');
   },
 
+  callLexerFunction: function (func) {
+    var rest = [];
+    for (var i = 1; i < arguments.length; i++) {
+      rest.push(arguments[i]);
+    }
+    var pluginArgs = [this].concat(rest);
+    for (var i = 0; i < this.plugins.length; i++) {
+      var plugin = this.plugins[i];
+      if (plugin[func] && plugin[func].apply(plugin, pluginArgs)) {
+        return true;
+      }
+    }
+    return this[func].apply(this, rest);
+  },
+
   /**
    * Move to the next token
    *
@@ -1267,41 +1283,41 @@ Lexer.prototype = {
    */
 
   advance: function() {
-    return this.blank()
-      || this.eos()
-      || this.endInterpolation()
-      || this.yield()
-      || this.doctype()
-      || this.interpolation()
-      || this["case"]()
-      || this.when()
-      || this["default"]()
-      || this["extends"]()
-      || this.append()
-      || this.prepend()
-      || this.block()
-      || this.mixinBlock()
-      || this.include()
-      || this.mixin()
-      || this.call()
-      || this.conditional()
-      || this.each()
-      || this["while"]()
-      || this.tag()
-      || this.filter()
-      || this.blockCode()
-      || this.code()
-      || this.id()
-      || this.dot()
-      || this.className()
-      || this.attrs()
-      || this.attributesBlock()
-      || this.indent()
-      || this.text()
-      || this.textHtml()
-      || this.comment()
-      || this.slash()
-      || this.colon()
+    return this.callLexerFunction('blank')
+      || this.callLexerFunction('eos')
+      || this.callLexerFunction('endInterpolation')
+      || this.callLexerFunction('yield')
+      || this.callLexerFunction('doctype')
+      || this.callLexerFunction('interpolation')
+      || this.callLexerFunction('case')
+      || this.callLexerFunction('when')
+      || this.callLexerFunction('default')
+      || this.callLexerFunction('extends')
+      || this.callLexerFunction('append')
+      || this.callLexerFunction('prepend')
+      || this.callLexerFunction('block')
+      || this.callLexerFunction('mixinBlock')
+      || this.callLexerFunction('include')
+      || this.callLexerFunction('mixin')
+      || this.callLexerFunction('call')
+      || this.callLexerFunction('conditional')
+      || this.callLexerFunction('each')
+      || this.callLexerFunction('while')
+      || this.callLexerFunction('tag')
+      || this.callLexerFunction('filter')
+      || this.callLexerFunction('blockCode')
+      || this.callLexerFunction('code')
+      || this.callLexerFunction('id')
+      || this.callLexerFunction('dot')
+      || this.callLexerFunction('className')
+      || this.callLexerFunction('attrs')
+      || this.callLexerFunction('attributesBlock')
+      || this.callLexerFunction('indent')
+      || this.callLexerFunction('text')
+      || this.callLexerFunction('textHtml')
+      || this.callLexerFunction('comment')
+      || this.callLexerFunction('slash')
+      || this.callLexerFunction('colon')
       || this.fail();
   },
 
@@ -1313,7 +1329,7 @@ Lexer.prototype = {
    */
   getTokens: function () {
     while (!this.ended) {
-      this.advance();
+      this.callLexerFunction('advance');
     }
     return this.tokens;
   }
