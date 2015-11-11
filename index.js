@@ -1180,7 +1180,7 @@ Lexer.prototype = {
     }
   },
 
-  pipelessText: function(indents) {
+  pipelessText: function pipelessText(indents) {
     while (this.callLexerFunction('blank'));
 
     var captures = this.scanIndentation();
@@ -1209,7 +1209,7 @@ Lexer.prototype = {
           // line is indented less than the first line but is still indented
           // need to retry lexing the text block
           this.tokens.pop();
-          return this.pipelessText(lineCaptures[1].length);
+          return pipelessText.call(this, lineCaptures[1].length);
         }
       } while((this.input.length - stringPtr) && isMatch);
       this.consume(stringPtr);

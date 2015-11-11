@@ -9,6 +9,7 @@
     "jade-error": "^1.0.0"
   },
   "devDependencies": {
+    "acorn": "^2.6.2",
     "istanbul": "^0.3.2"
   },
   "scripts": {
