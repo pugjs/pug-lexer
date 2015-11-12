@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('assert');
-var acorn = require('acorn');
+var isExpression = require('is-expression');
 var characterParser = require('character-parser');
 var error = require('jade-error');
 
@@ -59,15 +59,8 @@ Lexer.prototype = {
   assertExpression: function (exp, noThrow) {
     //this verifies that a JavaScript expression is valid
     try {
-      var parser = new acorn.Parser({ecmaVersion: 6}, exp, 0);
-      parser.nextToken();
-      parser.parseExpression();
-      if (parser.type !== acorn.tokTypes.eof) {
-        parser.unexpected();
-      }
+      return isExpression(exp, {throw: !noThrow});
     } catch (ex) {
-      if (noThrow) return false;
-
       // not coming from acorn
       if (!ex.loc) throw ex;
 
@@ -76,7 +69,6 @@ Lexer.prototype = {
       var msg = 'Syntax Error: ' + ex.message.replace(/ \([0-9]+:[0-9]+\)$/, '');
       this.error('SYNTAX_ERROR', msg);
     }
-    if (noThrow) return true;
   },
 
   assertNestingCorrect: function (exp) {
