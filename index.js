@@ -1114,7 +1114,6 @@ Lexer.prototype = {
    * &attributes block
    */
   attributesBlock: function () {
-    var captures;
     if (/^&attributes\b/.test(this.input)) {
       var consumed = 11;
       this.consume(consumed);
@@ -1138,8 +1137,7 @@ Lexer.prototype = {
     var captures = this.scanIndentation();
 
     if (captures) {
-      var tok
-        , indents = captures[1].length;
+      var indents = captures[1].length;
 
       this.incrementLine(1);
       this.consume(indents + 1);
