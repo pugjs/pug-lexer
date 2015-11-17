@@ -7,8 +7,8 @@ var error = require('jade-error');
 
 module.exports = lex;
 module.exports.Lexer = Lexer;
-function lex(str, filename) {
-  var lexer = new Lexer(str, filename);
+function lex(str, filename, options) {
+  var lexer = new Lexer(str, filename, options);
   return JSON.parse(JSON.stringify(lexer.getTokens()));
 }
 
