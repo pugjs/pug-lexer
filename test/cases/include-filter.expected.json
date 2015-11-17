@@ -3,8 +3,8 @@
 {"type":"tag","line":2,"col":3,"val":"body"}
 {"type":"indent","line":3,"col":1,"val":4}
 {"type":"include","line":3,"col":5}
-{"type":"filter","line":3,"col":12,"val":"marked"}
-{"type":"path","line":3,"col":20,"val":"some.md"}
+{"type":"filter","line":3,"col":12,"val":"markdown-it"}
+{"type":"path","line":3,"col":25,"val":"some.md"}
 {"type":"newline","line":4,"col":1}
 {"type":"tag","line":4,"col":5,"val":"script"}
 {"type":"indent","line":5,"col":1,"val":6}

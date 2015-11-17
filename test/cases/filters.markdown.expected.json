@@ -2,8 +2,8 @@
 {"type":"indent","line":2,"col":1,"val":2}
 {"type":"tag","line":2,"col":3,"val":"body"}
 {"type":"indent","line":3,"col":1,"val":4}
-{"type":"filter","line":3,"col":5,"val":"marked"}
-{"type":"start-pipeless-text","line":3,"col":12}
+{"type":"filter","line":3,"col":5,"val":"markdown-it"}
+{"type":"start-pipeless-text","line":3,"col":17}
 {"type":"text","line":4,"col":7,"val":"This is _some_ awesome **markdown**"}
 {"type":"newline","line":5,"col":1}
 {"type":"text","line":5,"col":7,"val":"whoop."}

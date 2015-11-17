@@ -136,11 +136,26 @@
 {"type":"attribute","line":41,"col":56,"name":"data-creator-name","val":"'name'","mustEscape":true}
 {"type":"end-attributes","line":41,"col":82}
 {"type":"newline","line":43,"col":1}
-{"type":"call","line":43,"col":1,"val":"foo","args":null}
-{"type":"start-attributes","line":43,"col":5}
-{"type":"attribute","line":44,"col":3,"name":"attr3","val":"\"qux\"","mustEscape":true}
-{"type":"attribute","line":45,"col":3,"name":"class","val":"\"baz\"","mustEscape":true}
-{"type":"end-attributes","line":46,"col":1}
-{"type":"newline","line":48,"col":1}
-{"type":"call","line":48,"col":1,"val":"my-mixin","args":"\narg1,\n      arg2,\n  arg3,\n      arg4\n"}
-{"type":"eos","line":53,"col":2}
+{"type":"mixin","line":43,"col":1,"val":"my-mixin","args":"arg1, arg2, arg3, arg4"}
+{"type":"indent","line":44,"col":1,"val":2}
+{"type":"tag","line":44,"col":3,"val":"p"}
+{"type":"code","line":44,"col":4,"val":"arg1","mustEscape":true,"buffer":true}
+{"type":"newline","line":45,"col":1}
+{"type":"tag","line":45,"col":3,"val":"p"}
+{"type":"code","line":45,"col":4,"val":"arg2","mustEscape":true,"buffer":true}
+{"type":"newline","line":46,"col":1}
+{"type":"tag","line":46,"col":3,"val":"p"}
+{"type":"code","line":46,"col":4,"val":"arg3","mustEscape":true,"buffer":true}
+{"type":"newline","line":47,"col":1}
+{"type":"tag","line":47,"col":3,"val":"p"}
+{"type":"code","line":47,"col":4,"val":"arg4","mustEscape":true,"buffer":true}
+{"type":"outdent","line":49,"col":1}
+{"type":"call","line":49,"col":1,"val":"foo","args":null}
+{"type":"start-attributes","line":49,"col":5}
+{"type":"attribute","line":50,"col":3,"name":"attr3","val":"\"qux\"","mustEscape":true}
+{"type":"attribute","line":51,"col":3,"name":"class","val":"\"baz\"","mustEscape":true}
+{"type":"end-attributes","line":52,"col":1}
+{"type":"newline","line":54,"col":1}
+{"type":"call","line":54,"col":1,"val":"my-mixin","args":"\n'1',\n      '2',\n  '3',\n      '4'\n"}
+{"type":"newline","line":60,"col":1}
+{"type":"eos","line":60,"col":1}

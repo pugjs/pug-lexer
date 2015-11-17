@@ -55,5 +55,6 @@
 {"type":"text","line":16,"col":7,"val":"   "}
 {"type":"newline","line":17,"col":1}
 {"type":"interpolation","line":17,"col":3,"val":"\n    'foo'\n  "}
+{"type":"slash","line":19,"col":4}
 {"type":"outdent","line":20,"col":1}
 {"type":"eos","line":20,"col":1}
