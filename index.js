@@ -415,7 +415,7 @@ Lexer.prototype = {
       return true;
     }
   },
-  addText: function (value, prefix, escaped) {
+  addText: function (type, value, prefix, escaped) {
     if (value + prefix === '') return;
     prefix = prefix || '';
     var indexOfEnd = this.interpolated ? value.indexOf(']') : -1;
@@ -430,10 +430,10 @@ Lexer.prototype = {
 
     if (indexOfEscaped !== Infinity && indexOfEscaped < indexOfEnd && indexOfEscaped < indexOfStart && indexOfEscaped < indexOfStringInterp) {
       prefix = prefix + value.substring(0, indexOfEscaped) + '#[';
-      return this.addText(value.substring(indexOfEscaped + 3), prefix, true);
+      return this.addText(type, value.substring(indexOfEscaped + 3), prefix, true);
     }
     if (indexOfStart !== Infinity && indexOfStart < indexOfEnd && indexOfStart < indexOfEscaped && indexOfStart < indexOfStringInterp) {
-      this.tokens.push(this.tok('text', prefix + value.substring(0, indexOfStart)));
+      this.tokens.push(this.tok(type, prefix + value.substring(0, indexOfStart)));
       this.incrementColumn(prefix.length + indexOfStart);
       if (escaped) this.incrementColumn(1);
       this.tokens.push(this.tok('start-jade-interpolation'));
@@ -457,12 +457,12 @@ Lexer.prototype = {
       this.tokens = this.tokens.concat(interpolated);
       this.tokens.push(this.tok('end-jade-interpolation'));
       this.incrementColumn(1);
-      this.addText(child.input);
+      this.addText(type, child.input);
       return;
     }
     if (indexOfEnd !== Infinity && indexOfEnd < indexOfStart && indexOfEnd < indexOfEscaped && indexOfEnd < indexOfStringInterp) {
       if (prefix + value.substring(0, indexOfEnd)) {
-        this.addText(value.substring(0, indexOfEnd), prefix);
+        this.addText(type, value.substring(0, indexOfEnd), prefix);
       }
       this.ended = true;
       this.input = value.substr(value.indexOf(']') + 1) + this.input;
@@ -471,12 +471,12 @@ Lexer.prototype = {
     if (indexOfStringInterp !== Infinity) {
       if (matchOfStringInterp[1]) {
         prefix = prefix + value.substring(0, indexOfStringInterp) + '#{';
-        return this.addText(value.substring(indexOfStringInterp + 3), prefix);
+        return this.addText(type, value.substring(indexOfStringInterp + 3), prefix);
       }
       var before = value.substr(0, indexOfStringInterp);
       if (prefix || before) {
         before = prefix + before;
-        this.tokens.push(this.tok('text', before));
+        this.tokens.push(this.tok(type, before));
         this.incrementColumn(before.length);
       }
 
@@ -507,7 +507,7 @@ Lexer.prototype = {
       if (range.end + 1 < rest.length) {
         rest = rest.substr(range.end + 1);
         this.incrementColumn(range.end + 1);
-        this.addText(rest);
+        this.addText(type, rest);
       } else {
         this.incrementColumn(rest.length);
       }
@@ -515,7 +515,7 @@ Lexer.prototype = {
     }
 
     value = prefix + value;
-    this.tokens.push(this.tok('text', value));
+    this.tokens.push(this.tok(type, value));
     this.incrementColumn(value.length);
   },
 
@@ -523,7 +523,7 @@ Lexer.prototype = {
     var tok = this.scan(/^(?:\| ?| )([^\n]+)/, 'text') ||
       this.scan(/^\|?( )/, 'text');
     if (tok) {
-      this.addText(tok.val);
+      this.addText('text', tok.val);
       return true;
     }
   },
@@ -531,7 +531,7 @@ Lexer.prototype = {
   textHtml: function () {
     var tok = this.scan(/^(<[^\n]*)/, 'text-html');
     if (tok) {
-      this.tokens.push(tok);
+      this.addText('text-html', tok.val);
       return true;
     }
   },
@@ -1216,7 +1216,7 @@ Lexer.prototype = {
         this.incrementLine(1);
         if (i !== 0) this.tokens.push(this.tok('newline'));
         this.incrementColumn(indents);
-        this.addText(token);
+        this.addText('text', token);
       }.bind(this));
       this.tokens.push(this.tok('end-pipeless-text'));
       return true;
