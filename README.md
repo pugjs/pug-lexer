@@ -16,9 +16,15 @@ The jade lexer.  This module is responsible for taking a string and converting i
 var lex = require('jade-lexer');
 ```
 
-### `lex(str, filename)`
+### `lex(str, filename, options)`
 
-Convert Jade string to an array of tokens. `filename`, if provided, is used in error handling.
+Convert Jade string to an array of tokens.
+
+`filename`, if provided, is used in error handling.
+
+`options` can contain the following property:
+
+- `plugins` (array): An array of plugins, in the order they should be applied.
 
 ```js
 console.log(JSON.stringify(lex('div(data-foo="bar")', 'my-file.jade'), null, '  '))
@@ -58,6 +64,7 @@ Constructor for a Lexer class. This is not meant to be used directly unless you 
 
 - `interpolated` (boolean): if the Lexer is created as a child lexer for inline tag interpolation (e.g. `#[p Hello]`). Defaults to `false`.
 - `startingLine` (integer): the real line number of the first line in the input. It is also used for inline tag interpolation. Defaults to `1`.
+- `plugins` (array): An array of plugins, in the order they should be applied.
 
 ## License
 
