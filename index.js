@@ -635,18 +635,6 @@ Lexer.prototype = {
   },
 
   /**
-   * Yield.
-   */
-
-  'yield': function() {
-    var tok = this.scanEndOfLine(/^yield/, 'yield');
-    if (tok) {
-      this.tokens.push(tok);
-      return true;
-    }
-  },
-
-  /**
    * Include.
    */
 
@@ -1276,7 +1264,6 @@ Lexer.prototype = {
     return this.callLexerFunction('blank')
       || this.callLexerFunction('eos')
       || this.callLexerFunction('endInterpolation')
-      || this.callLexerFunction('yield')
       || this.callLexerFunction('doctype')
       || this.callLexerFunction('interpolation')
       || this.callLexerFunction('case')
