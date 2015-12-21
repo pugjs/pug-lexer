@@ -3,6 +3,9 @@
 var fs = require('fs');
 var assert = require('assert');
 var lex = require('../');
+var checkLexerFunctions = require('./check-lexer-functions');
+
+checkLexerFunctions();
 
 var dir = __dirname + '/cases/';
 fs.readdirSync(dir).forEach(function (testCase) {
