@@ -3,7 +3,7 @@
 {"type":"tag","line":2,"col":3,"val":"body"}
 {"type":"indent","line":3,"col":1,"val":4}
 {"type":"include","line":3,"col":5}
-{"type":"path","line":3,"col":13,"val":"yield-head.jade"}
+{"type":"path","line":3,"col":13,"val":"yield-head.pug"}
 {"type":"indent","line":4,"col":1,"val":6}
 {"type":"tag","line":4,"col":7,"val":"script"}
 {"type":"start-attributes","line":4,"col":13}

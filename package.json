@@ -1,14 +1,14 @@
 {
-  "name": "jade-lexer",
+  "name": "pug-lexer",
   "version": "0.0.9",
-  "description": "The jade lexer (takes a string and converts it to an array of tokens)",
+  "description": "The pug lexer (takes a string and converts it to an array of tokens)",
   "keywords": [
-    "jade"
+    "pug"
   ],
   "dependencies": {
     "character-parser": "^2.1.1",
     "is-expression": "^1.0.0",
-    "jade-error": "^1.0.0"
+    "pug-error": "^1.3.0"
   },
   "devDependencies": {
     "acorn": "^2.6.2",
@@ -21,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jadejs/jade-lexer.git"
+    "url": "https://github.com/pugjs/pug-lexer.git"
   },
   "author": "ForbesLindesay",
   "license": "MIT"

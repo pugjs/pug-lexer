@@ -1,6 +1,6 @@
 {"type":"newline","line":2,"col":1}
 {"type":"extends","line":2,"col":1}
-{"type":"path","line":2,"col":9,"val":"auxiliary/layout.jade"}
+{"type":"path","line":2,"col":9,"val":"auxiliary/layout.pug"}
 {"type":"newline","line":4,"col":1}
 {"type":"block","line":4,"col":1,"val":"head","mode":"replace"}
 {"type":"indent","line":5,"col":1,"val":2}

@@ -5,6 +5,6 @@
 {"type":"end-attributes","line":1,"col":43}
 {"type":"indent","line":2,"col":1,"val":2}
 {"type":"include","line":2,"col":3}
-{"type":"path","line":2,"col":11,"val":"auxiliary/pet.jade"}
+{"type":"path","line":2,"col":11,"val":"auxiliary/pet.pug"}
 {"type":"outdent","line":3,"col":1}
 {"type":"eos","line":3,"col":1}

@@ -1,7 +1,7 @@
 {"type":"tag","line":1,"col":1,"val":"html"}
 {"type":"indent","line":2,"col":1,"val":2}
 {"type":"include","line":2,"col":3}
-{"type":"path","line":2,"col":11,"val":"include-with-text-head.jade"}
+{"type":"path","line":2,"col":11,"val":"include-with-text-head.pug"}
 {"type":"indent","line":3,"col":1,"val":4}
 {"type":"tag","line":3,"col":5,"val":"script"}
 {"type":"start-attributes","line":3,"col":11}
