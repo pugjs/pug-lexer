@@ -12,4 +12,4 @@
 {"type":"call","line":4,"col":21,"val":"linkit","args":"'http://www.bing.com'"}
 {"type":"end-pug-interpolation","line":4,"col":51}
 {"type":"text","line":4,"col":52,"val":" so hurrah for Pug"}
-{"type":"eos","line":4,"col":71}
+{"type":"eos","line":4,"col":70}

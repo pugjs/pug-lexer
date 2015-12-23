@@ -5,5 +5,5 @@
 {"type":"indent","line":4,"col":1,"val":2}
 {"type":"include","line":4,"col":3}
 {"type":"path","line":4,"col":11,"val":"./auxiliary/1794-include.pug"}
-{"type":"outdent","line":4,"col":40}
-{"type":"eos","line":4,"col":40}
+{"type":"outdent","line":4,"col":39}
+{"type":"eos","line":4,"col":39}
