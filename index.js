@@ -3,7 +3,7 @@
 var assert = require('assert');
 var isExpression = require('is-expression');
 var characterParser = require('character-parser');
-var error = require('jade-error');
+var error = require('pug-error');
 
 module.exports = lex;
 module.exports.Lexer = Lexer;
@@ -436,7 +436,7 @@ Lexer.prototype = {
       this.tokens.push(this.tok(type, prefix + value.substring(0, indexOfStart)));
       this.incrementColumn(prefix.length + indexOfStart);
       if (escaped) this.incrementColumn(1);
-      this.tokens.push(this.tok('start-jade-interpolation'));
+      this.tokens.push(this.tok('start-pug-interpolation'));
       this.incrementColumn(2);
       var child = new this.constructor(value.substr(indexOfStart + 2), this.filename, {
         interpolated: true,
@@ -447,7 +447,7 @@ Lexer.prototype = {
       try {
         interpolated = child.getTokens();
       } catch (ex) {
-        if (ex.code && /^JADE:/.test(ex.code)) {
+        if (ex.code && /^PUG:/.test(ex.code)) {
           this.colno = ex.column;
           this.error(ex.code.substr(5), ex.msg);
         }
@@ -455,7 +455,7 @@ Lexer.prototype = {
       }
       this.colno = child.colno;
       this.tokens = this.tokens.concat(interpolated);
-      this.tokens.push(this.tok('end-jade-interpolation'));
+      this.tokens.push(this.tok('end-pug-interpolation'));
       this.incrementColumn(1);
       this.addText(type, child.input);
       return;

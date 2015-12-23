@@ -1,24 +1,24 @@
-# jade-lexer
+# pug-lexer
 
-The jade lexer.  This module is responsible for taking a string and converting it into an array of tokens.
+The pug lexer.  This module is responsible for taking a string and converting it into an array of tokens.
 
-[![Build Status](https://img.shields.io/travis/jadejs/jade-lexer/master.svg)](https://travis-ci.org/jadejs/jade-lexer)
-[![Dependency Status](https://img.shields.io/gemnasium/jadejs/jade-lexer.svg)](https://gemnasium.com/jadejs/jade-lexer)
-[![NPM version](https://img.shields.io/npm/v/jade-lexer.svg)](https://www.npmjs.org/package/jade-lexer)
+[![Build Status](https://img.shields.io/travis/pugjs/pug-lexer/master.svg)](https://travis-ci.org/pugjs/pug-lexer)
+[![Dependency Status](https://img.shields.io/gemnasium/pugjs/pug-lexer.svg)](https://gemnasium.com/pugjs/pug-lexer)
+[![NPM version](https://img.shields.io/npm/v/pug-lexer.svg)](https://www.npmjs.org/package/pug-lexer)
 
 ## Installation
 
-    npm install jade-lexer
+    npm install pug-lexer
 
 ## Usage
 
 ```js
-var lex = require('jade-lexer');
+var lex = require('pug-lexer');
 ```
 
 ### `lex(str, filename, options)`
 
-Convert Jade string to an array of tokens.
+Convert Pug string to an array of tokens.
 
 `filename`, if provided, is used in error handling.
 
@@ -27,7 +27,7 @@ Convert Jade string to an array of tokens.
 - `plugins` (array): An array of plugins, in the order they should be applied.
 
 ```js
-console.log(JSON.stringify(lex('div(data-foo="bar")', 'my-file.jade'), null, '  '))
+console.log(JSON.stringify(lex('div(data-foo="bar")', 'my-file.pug'), null, '  '))
 ```
 
 ```json

@@ -8,8 +8,8 @@
 {"type":"outdent","line":4,"col":1}
 {"type":"tag","line":4,"col":1,"val":"p"}
 {"type":"text","line":4,"col":3,"val":"This also works "}
-{"type":"start-jade-interpolation","line":4,"col":19}
+{"type":"start-pug-interpolation","line":4,"col":19}
 {"type":"call","line":4,"col":21,"val":"linkit","args":"'http://www.bing.com'"}
-{"type":"end-jade-interpolation","line":4,"col":51}
-{"type":"text","line":4,"col":52,"val":" so hurrah for Jade"}
+{"type":"end-pug-interpolation","line":4,"col":51}
+{"type":"text","line":4,"col":52,"val":" so hurrah for Pug"}
 {"type":"eos","line":4,"col":71}

@@ -1,6 +1,6 @@
 {"type":"newline","line":2,"col":1}
 {"type":"extends","line":2,"col":1}
-{"type":"path","line":2,"col":8,"val":"auxiliary/layout.jade"}
+{"type":"path","line":2,"col":8,"val":"auxiliary/layout.pug"}
 {"type":"newline","line":4,"col":1}
 {"type":"mixin","line":4,"col":1,"val":"article","args":"title"}
 {"type":"indent","line":5,"col":1,"val":2}

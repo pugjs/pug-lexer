@@ -1,6 +1,6 @@
 {
   "msg": "malformed include",
-  "code": "JADE:MALFORMED_INCLUDE",
+  "code": "PUG:MALFORMED_INCLUDE",
   "line": 1,
   "column": 8
 }

@@ -1,6 +1,6 @@
 {"type":"newline","line":2,"col":1}
 {"type":"include","line":2,"col":1}
-{"type":"path","line":2,"col":9,"val":"auxiliary/yield-nested.jade"}
+{"type":"path","line":2,"col":9,"val":"auxiliary/yield-nested.pug"}
 {"type":"indent","line":3,"col":1,"val":2}
 {"type":"tag","line":3,"col":3,"val":"p"}
 {"type":"text","line":3,"col":5,"val":"some content"}

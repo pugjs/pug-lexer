@@ -1,6 +1,6 @@
 {
   "msg": "unexpected text \"foo.£\"",
-  "code": "JADE:UNEXPECTED_TEXT",
+  "code": "PUG:UNEXPECTED_TEXT",
   "line": 1,
   "column": 14
 }

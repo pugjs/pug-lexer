@@ -1,6 +1,6 @@
 {
   "msg": "malformed each",
-  "code": "JADE:MALFORMED_EACH",
+  "code": "PUG:MALFORMED_EACH",
   "line": 1,
   "column": 5
 }

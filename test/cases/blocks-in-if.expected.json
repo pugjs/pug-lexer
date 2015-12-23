@@ -1,4 +1,4 @@
-{"type":"comment","line":1,"col":1,"val":" see https://github.com/jadejs/jade/issues/1589","buffer":false}
+{"type":"comment","line":1,"col":1,"val":" see https://github.com/pugjs/pug/issues/1589","buffer":false}
 {"type":"newline","line":3,"col":1}
 {"type":"code","line":3,"col":1,"val":"var ajax = true","mustEscape":false,"buffer":false}
 {"type":"newline","line":5,"col":1}

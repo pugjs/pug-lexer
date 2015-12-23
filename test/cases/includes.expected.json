@@ -1,6 +1,6 @@
 {"type":"newline","line":2,"col":1}
 {"type":"include","line":2,"col":1}
-{"type":"path","line":2,"col":9,"val":"auxiliary/mixins.jade"}
+{"type":"path","line":2,"col":9,"val":"auxiliary/mixins.pug"}
 {"type":"newline","line":4,"col":1}
 {"type":"call","line":4,"col":1,"val":"foo","args":null}
 {"type":"newline","line":6,"col":1}

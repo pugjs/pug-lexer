@@ -1,6 +1,6 @@
 {
   "msg": "Mismatched Bracket: ]",
-  "code": "JADE:BRACKET_MISMATCH",
+  "code": "PUG:BRACKET_MISMATCH",
   "line": 5,
   "column": 11
 }
