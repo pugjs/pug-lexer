@@ -1,0 +1,11 @@
+{"type":"tag","line":1,"col":1,"val":"div"}
+{"type":"start-attributes","line":1,"col":4}
+{"type":"attribute","line":1,"col":5,"name":"...attrs","val":true,"mustEscape":true}
+{"type":"end-attributes","line":1,"col":13}
+{"type":"newline","line":2,"col":1}
+{"type":"tag","line":2,"col":1,"val":"div"}
+{"type":"start-attributes","line":2,"col":4}
+{"type":"attribute","line":2,"col":5,"name":"...attrs","val":"foo","mustEscape":true}
+{"type":"end-attributes","line":2,"col":17}
+{"type":"newline","line":3,"col":1}
+{"type":"eos","line":3,"col":1}
