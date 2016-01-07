@@ -60,7 +60,10 @@ Lexer.prototype = {
   assertExpression: function (exp, noThrow) {
     //this verifies that a JavaScript expression is valid
     try {
-      return isExpression(exp, {throw: !noThrow});
+      return isExpression(exp, {
+        throw: !noThrow,
+        ecmaVersion: 6
+      });
     } catch (ex) {
       // not coming from acorn
       if (!ex.loc) throw ex;
