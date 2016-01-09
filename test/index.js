@@ -11,8 +11,7 @@ var dir = __dirname + '/cases/';
 fs.readdirSync(dir).forEach(function (testCase) {
   if (/\.pug$/.test(testCase)) {
     console.dir(testCase);
-    var expected = fs.readFileSync(dir + testCase.replace(/\.pug$/, '.expected.json'), 'utf8')
-                     .split(/\n/).map(JSON.parse);
+    var expected = require(dir + testCase.replace(/\.pug$/, '.expected.json'))
     var result = lex(fs.readFileSync(dir + testCase, 'utf8'), dir + testCase);
     fs.writeFileSync(dir + testCase.replace(/\.pug$/, '.actual.json'),
                      result.map(JSON.stringify).join('\n'));
@@ -25,7 +24,7 @@ var edir = __dirname + '/errors/';
 fs.readdirSync(edir).forEach(function (testCase) {
   if (/\.pug$/.test(testCase)) {
     console.dir(testCase);
-    var expected = JSON.parse(fs.readFileSync(edir + testCase.replace(/\.pug$/, '.json'), 'utf8'));
+    var expected = require(edir + testCase.replace(/\.pug$/, '.json'));
     var actual;
     try {
       lex(fs.readFileSync(edir + testCase, 'utf8'), edir + testCase);
