@@ -9,8 +9,7 @@ fs.readdirSync(dir).forEach(function (testCase) {
   if (/\.pug$/.test(testCase)) {
     var expected;
     try {
-      expected = fs.readFileSync(dir + testCase.replace(/\.pug$/, '.expected.json'), 'utf8')
-                     .split(/\n/).map(JSON.parse);
+      expected = require(dir + testCase.replace(/\.pug$/, '.expected.json'));
     } catch (ex) {
       if (ex.code !== 'ENOENT') throw ex;
       expected = null;
@@ -21,7 +20,7 @@ fs.readdirSync(dir).forEach(function (testCase) {
     } catch (ex) {
       console.log('Updating ' + testCase);
       fs.writeFileSync(dir + testCase.replace(/\.pug$/, '.expected.json'),
-                       result.map(JSON.stringify).join('\n'));
+          '[\n  '+result.map(JSON.stringify).join(',\n  ')+'\n]');
     }
   }
 });
@@ -31,7 +30,7 @@ fs.readdirSync(edir).forEach(function (testCase) {
   if (/\.pug$/.test(testCase)) {
     var expected;
     try {
-      expected = JSON.parse(fs.readFileSync(edir + testCase.replace(/\.pug$/, '.json'), 'utf8'));
+      expected = require(edir + testCase.replace(/\.pug$/, '.json'));
     } catch (ex) {
       if (ex.code !== 'ENOENT') throw ex;
       expected = null;
