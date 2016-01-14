@@ -983,16 +983,38 @@ Lexer.prototype = {
       var lineno = startingLine;
       var colno = this.colno;
       var loc = 'key';
+      var incrementColumn = function (i) {
+        if (str[i] === '\n') {
+          // Save the line number locally to keep this.lineno at the start of
+          // the attribute.
+          lineno++;
+          self.colno = 1;
+          // If the key has not been started, update this.lineno
+          // immediately.
+          if (!key) self.lineno = lineno;
+        } else if (str[i] !== undefined) {
+          self.incrementColumn(1);
+        }
+      };
+      var skipWhitespace = function (i) {
+        if (whitespaceRe.test(str[i])) {
+          for (; i < str.length; i++) {
+            if (!whitespaceRe.test(str[i])) break;
+            incrementColumn(i);
+          }
+        }
+        return i;
+      };
       var isEndOfAttribute = function (i) {
         // if the key is not started, then the attribute cannot be ended
-        if (key.trim() === '') {
-          colno = this.colno;
-          return false;
-        }
+        if (key === '') return false;
         // if there's nothing more then the attribute must be ended
         if (i === str.length) return true;
 
-        if (loc === 'key') {
+        // if the spread attribute has just started the attribute cannot be
+        // ended
+        if (loc === 'spread') return false;
+        else if (loc === 'key') {
           if (whitespaceRe.test(str[i])) {
             // find the first non-whitespace character
             for (var x = i; x < str.length; x++) {
@@ -1050,19 +1072,18 @@ Lexer.prototype = {
           key = key.replace(/^['"]|['"]$/g, '');
 
           var tok;
-          if (spreadRe.test(key) && !quotedKey) {
+          if (key === '...' && !quotedKey) {
             tok = this.tok('spread-attribute');
-            tok.val = key.slice(3);
-            tok.mustEscape = true;
-            if (val !== '') {
-              this.error('INVALID_SPREAD_ATTRIBUTE', 'a spread attribute cannot have a value');
+            tok.val = val;
+            if (!val) {
+              return this.error('EMPTY_SPREAD_ATTRIBUTE', 'A spread attribute must have a value.')
             }
           } else {
             tok = this.tok('attribute');
             tok.name = key;
             tok.val = '' == val ? true : val;
-            tok.mustEscape = escapedAttr;
           }
+          tok.mustEscape = escapedAttr;
           tok.col = colno;
           this.tokens.push(tok);
 
@@ -1083,6 +1104,10 @@ Lexer.prototype = {
               }
               break;
             case 'key':
+              if (key === '') {
+                i = skipWhitespace(i);
+                colno = this.colno;
+              }
               if (key === '' && quoteRe.test(str[i])) {
                 loc = 'key-char';
                 quote = str[i];
@@ -1099,23 +1124,21 @@ Lexer.prototype = {
               } else {
                 key += str[i]
               }
+              if (key === '...') loc = 'spread';
               break;
+            case 'spread':
+              if (!whitespaceRe.test(str[i])) {
+                loc = 'value';
+              }
+              // no cleaner ways to do so, so has to use a
+              // fallthrough
             case 'value':
               state = characterParser.parseChar(str[i], state);
               val += str[i];
               break;
           }
         }
-        if (str[i] === '\n') {
-          // Save the line number locally to keep this.lineno at the start of
-          // the attribute.
-          lineno++;
-          this.colno = 1;
-          // If the key has not been started, update this.lineno immediately.
-          if (!key.trim()) this.lineno = lineno;
-        } else if (str[i] !== undefined) {
-          this.incrementColumn(1);
-        }
+        incrementColumn(i);
       }
 
       // Reset the line numbers based on the line started on
