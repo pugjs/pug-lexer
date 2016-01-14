@@ -3,8 +3,8 @@
 {"type":"tag","line":2,"col":3,"val":"audio"}
 {"type":"start-attributes","line":2,"col":8}
 {"type":"attribute","line":2,"col":9,"name":"preload","val":"'auto'","mustEscape":true}
-{"type":"attribute","line":2,"col":25,"name":"autobuffer","val":true,"mustEscape":false}
-{"type":"attribute","line":2,"col":37,"name":"controls","val":true,"mustEscape":false}
+{"type":"attribute","line":2,"col":25,"name":"autobuffer","val":true,"mustEscape":true}
+{"type":"attribute","line":2,"col":37,"name":"controls","val":true,"mustEscape":true}
 {"type":"end-attributes","line":2,"col":45}
 {"type":"indent","line":3,"col":1,"val":4}
 {"type":"tag","line":3,"col":5,"val":"source"}

@@ -1068,7 +1068,7 @@ Lexer.prototype = {
 
           key = val = '';
           loc = 'key';
-          escapedAttr = false;
+          escapedAttr = true;
           quotedKey = false;
           this.lineno = lineno;
         } else {
