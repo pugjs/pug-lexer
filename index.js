@@ -968,7 +968,6 @@ Lexer.prototype = {
 
       var quote = '';
       var self = this;
-      var quotedKey = false;
 
       this.consume(index + 1);
 
@@ -1069,16 +1068,16 @@ Lexer.prototype = {
             this.error('COLON_ATTRIBUTE', '":" is not valid as the start or end of an un-quoted attribute.');
           }
           key = key.trim();
-          key = key.replace(/^['"]|['"]$/g, '');
 
           var tok;
-          if (key === '...' && !quotedKey) {
+          if (key === '...') {
             tok = this.tok('spread-attribute');
             tok.val = val;
             if (!val) {
               return this.error('EMPTY_SPREAD_ATTRIBUTE', 'A spread attribute must have a value.')
             }
           } else {
+            key = key.replace(/^['"]|['"]$/g, '');
             tok = this.tok('attribute');
             tok.name = key;
             tok.val = '' == val ? true : val;
@@ -1090,7 +1089,6 @@ Lexer.prototype = {
           key = val = '';
           loc = 'key';
           escapedAttr = true;
-          quotedKey = false;
           this.lineno = lineno;
         } else {
           switch (loc) {
@@ -1099,9 +1097,8 @@ Lexer.prototype = {
                 loc = 'key';
                 if (i + 1 < str.length && !/[ ,!=\n\t]/.test(str[i + 1]))
                   this.error('INVALID_KEY_CHARACTER', 'Unexpected character "' + str[i + 1] + '" expected ` `, `\\n`, `\t`, `,`, `!` or `=`');
-              } else {
-                key += str[i];
               }
+              key += str[i];
               break;
             case 'key':
               if (key === '') {
@@ -1111,7 +1108,7 @@ Lexer.prototype = {
               if (key === '' && quoteRe.test(str[i])) {
                 loc = 'key-char';
                 quote = str[i];
-                quotedKey = true;
+                key += str[i];
               } else if (str[i] === '!' || str[i] === '=') {
                 escapedAttr = str[i] !== '!';
                 if (str[i] === '!') {
