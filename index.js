@@ -968,11 +968,13 @@ Lexer.prototype = {
 
       var quote = '';
       var self = this;
+      var quotedKey = false;
 
       this.consume(index + 1);
 
       var whitespaceRe = /[ \n\t]/;
       var quoteRe = /['"]/;
+      var spreadRe = /^\.\.\./;
 
       var escapedAttr = true
       var key = '';
@@ -1020,7 +1022,7 @@ Lexer.prototype = {
                 // if it is a JavaScript punctuator, then assume that it is
                 // a part of the value
                 // also make exception for spread syntax
-                return /^\.\.\./.test(str.slice(x)) || !characterParser.isPunctuator(str[x]) || quoteRe.test(str[x]);
+                return spreadRe.test(str.slice(x)) || !characterParser.isPunctuator(str[x]) || quoteRe.test(str[x]);
               }
             }
           }
@@ -1047,16 +1049,27 @@ Lexer.prototype = {
           key = key.trim();
           key = key.replace(/^['"]|['"]$/g, '');
 
-          var tok = this.tok('attribute');
-          tok.name = key;
-          tok.val = '' == val ? true : val;
+          var tok;
+          if (spreadRe.test(key) && !quotedKey) {
+            tok = this.tok('spread-attribute');
+            tok.val = key.slice(3);
+            tok.mustEscape = true;
+            if (val !== '') {
+              this.error('INVALID_SPREAD_ATTRIBUTE', 'a spread attribute cannot have a value');
+            }
+          } else {
+            tok = this.tok('attribute');
+            tok.name = key;
+            tok.val = '' == val ? true : val;
+            tok.mustEscape = escapedAttr;
+          }
           tok.col = colno;
-          tok.mustEscape = escapedAttr;
           this.tokens.push(tok);
 
           key = val = '';
           loc = 'key';
           escapedAttr = false;
+          quotedKey = false;
           this.lineno = lineno;
         } else {
           switch (loc) {
@@ -1073,6 +1086,7 @@ Lexer.prototype = {
               if (key === '' && quoteRe.test(str[i])) {
                 loc = 'key-char';
                 quote = str[i];
+                quotedKey = true;
               } else if (str[i] === '!' || str[i] === '=') {
                 escapedAttr = str[i] !== '!';
                 if (str[i] === '!') {
