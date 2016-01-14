@@ -1127,7 +1127,11 @@ Lexer.prototype = {
               if (key === '...') loc = 'spread';
               break;
             case 'spread':
-              if (!whitespaceRe.test(str[i])) {
+              if (str[i] === '!') {
+                escapedAttr = false;
+                loc = 'value';
+                break;
+              } else if (!whitespaceRe.test(str[i])) {
                 loc = 'value';
               }
               // no cleaner ways to do so, so has to use a
