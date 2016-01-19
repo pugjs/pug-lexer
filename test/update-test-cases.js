@@ -10,7 +10,7 @@ fs.readdirSync(dir).forEach(function (testCase) {
     var expected;
     try {
       expected = fs.readFileSync(dir + testCase.replace(/\.pug$/, '.expected.json'), 'utf8')
-                     .split(/\n/).map(JSON.parse);
+                     .split(/\n/).filter(Boolean).map(JSON.parse);
     } catch (ex) {
       if (ex.code !== 'ENOENT') throw ex;
       expected = null;
