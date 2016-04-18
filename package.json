@@ -1,6 +1,6 @@
 {
   "name": "pug-lexer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The pug lexer (takes a string and converts it to an array of tokens)",
   "keywords": [
     "pug"
