@@ -12,7 +12,7 @@ fs.readdirSync(dir).forEach(function (testCase) {
   if (/\.pug$/.test(testCase)) {
     console.dir(testCase);
     var expected = fs.readFileSync(dir + testCase.replace(/\.pug$/, '.expected.json'), 'utf8')
-                     .split(/\n/).map(JSON.parse);
+                     .trim().split(/\n/).map(JSON.parse);
     var result = lex(fs.readFileSync(dir + testCase, 'utf8'), dir + testCase);
     fs.writeFileSync(dir + testCase.replace(/\.pug$/, '.actual.json'),
                      result.map(JSON.stringify).join('\n'));

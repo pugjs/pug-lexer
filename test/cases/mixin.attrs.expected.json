@@ -132,7 +132,7 @@
 {"type":"outdent","line":41,"col":1}
 {"type":"call","line":41,"col":1,"val":"work_filmstrip_item","args":"'work'"}
 {"type":"start-attributes","line":41,"col":29}
-{"type":"attribute","line":41,"col":31,"name":"data-profile","val":"'profile'","mustEscape":true}
+{"type":"attribute","line":41,"col":30,"name":"data-profile","val":"'profile'","mustEscape":true}
 {"type":"attribute","line":41,"col":56,"name":"data-creator-name","val":"'name'","mustEscape":true}
 {"type":"end-attributes","line":41,"col":82}
 {"type":"newline","line":43,"col":1}

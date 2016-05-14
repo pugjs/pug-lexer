@@ -980,6 +980,7 @@ Lexer.prototype = {
 
       var whitespaceRe = /[ \n\t]/;
       var quoteRe = /['"]/;
+      var spreadRe = /^\.\.\./;
 
       var escapedAttr = true
       var key = '';
@@ -988,16 +989,38 @@ Lexer.prototype = {
       var lineno = startingLine;
       var colno = this.colno;
       var loc = 'key';
+      var incrementColumn = function (i) {
+        if (str[i] === '\n') {
+          // Save the line number locally to keep this.lineno at the start of
+          // the attribute.
+          lineno++;
+          self.colno = 1;
+          // If the key has not been started, update this.lineno
+          // immediately.
+          if (!key) self.lineno = lineno;
+        } else if (str[i] !== undefined) {
+          self.incrementColumn(1);
+        }
+      };
+      var skipWhitespace = function (i) {
+        if (whitespaceRe.test(str[i])) {
+          for (; i < str.length; i++) {
+            if (!whitespaceRe.test(str[i])) break;
+            incrementColumn(i);
+          }
+        }
+        return i;
+      };
       var isEndOfAttribute = function (i) {
         // if the key is not started, then the attribute cannot be ended
-        if (key.trim() === '') {
-          colno = this.colno;
-          return false;
-        }
+        if (key === '') return false;
         // if there's nothing more then the attribute must be ended
         if (i === str.length) return true;
 
-        if (loc === 'key') {
+        // if the spread attribute has just started the attribute cannot be
+        // ended
+        if (loc === 'spread') return false;
+        else if (loc === 'key') {
           if (whitespaceRe.test(str[i])) {
             // find the first non-whitespace character
             for (var x = i; x < str.length; x++) {
@@ -1026,7 +1049,8 @@ Lexer.prototype = {
               if (!whitespaceRe.test(str[x])) {
                 // if it is a JavaScript punctuator, then assume that it is
                 // a part of the value
-                return !characterParser.isPunctuator(str[x]) || quoteRe.test(str[x]);
+                // also make exception for spread syntax
+                return spreadRe.test(str.slice(x)) || !characterParser.isPunctuator(str[x]) || quoteRe.test(str[x]);
               }
             }
           }
@@ -1051,18 +1075,27 @@ Lexer.prototype = {
             this.error('COLON_ATTRIBUTE', '":" is not valid as the start or end of an un-quoted attribute.');
           }
           key = key.trim();
-          key = key.replace(/^['"]|['"]$/g, '');
 
-          var tok = this.tok('attribute');
-          tok.name = key;
-          tok.val = '' == val ? true : val;
-          tok.col = colno;
+          var tok;
+          if (key === '...') {
+            tok = this.tok('spread-attribute');
+            tok.val = val;
+            if (!val) {
+              return this.error('EMPTY_SPREAD_ATTRIBUTE', 'A spread attribute must have a value.')
+            }
+          } else {
+            key = key.replace(/^['"]|['"]$/g, '');
+            tok = this.tok('attribute');
+            tok.name = key;
+            tok.val = '' == val ? true : val;
+          }
           tok.mustEscape = escapedAttr;
+          tok.col = colno;
           this.tokens.push(tok);
 
           key = val = '';
           loc = 'key';
-          escapedAttr = false;
+          escapedAttr = true;
           this.lineno = lineno;
         } else {
           switch (loc) {
@@ -1071,14 +1104,18 @@ Lexer.prototype = {
                 loc = 'key';
                 if (i + 1 < str.length && !/[ ,!=\n\t]/.test(str[i + 1]))
                   this.error('INVALID_KEY_CHARACTER', 'Unexpected character "' + str[i + 1] + '" expected ` `, `\\n`, `\t`, `,`, `!` or `=`');
-              } else {
-                key += str[i];
               }
+              key += str[i];
               break;
             case 'key':
+              if (key === '') {
+                i = skipWhitespace(i);
+                colno = this.colno;
+              }
               if (key === '' && quoteRe.test(str[i])) {
                 loc = 'key-char';
                 quote = str[i];
+                key += str[i];
               } else if (str[i] === '!' || str[i] === '=') {
                 escapedAttr = str[i] !== '!';
                 if (str[i] === '!') {
@@ -1091,23 +1128,25 @@ Lexer.prototype = {
               } else {
                 key += str[i]
               }
+              if (key === '...') loc = 'spread';
               break;
+            case 'spread':
+              if (str[i] === '!') {
+                escapedAttr = false;
+                loc = 'value';
+                break;
+              } else if (!whitespaceRe.test(str[i])) {
+                loc = 'value';
+              }
+              // no cleaner ways to do so, so has to use a
+              // fallthrough
             case 'value':
               state = characterParser.parseChar(str[i], state);
               val += str[i];
               break;
           }
         }
-        if (str[i] === '\n') {
-          // Save the line number locally to keep this.lineno at the start of
-          // the attribute.
-          lineno++;
-          this.colno = 1;
-          // If the key has not been started, update this.lineno immediately.
-          if (!key.trim()) this.lineno = lineno;
-        } else if (str[i] !== undefined) {
-          this.incrementColumn(1);
-        }
+        incrementColumn(i);
       }
 
       // Reset the line numbers based on the line started on
