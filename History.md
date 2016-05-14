@@ -1,3 +1,10 @@
+2.0.0 / 2016-05-14
+==================
+
+  * Take the `filename` as an option rather than special casing it.  This means that lex only takes 2 arguments rather than 3
+  * Add support for an inline comment after a block.  This means block names can no longer contain `//`
+  * Add type checking on arguments
+
 1.2.0 / 2016-05-14
 ==================
 
