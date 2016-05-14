@@ -7,8 +7,8 @@ var error = require('pug-error');
 
 module.exports = lex;
 module.exports.Lexer = Lexer;
-function lex(str, filename, options) {
-  var lexer = new Lexer(str, filename, options);
+function lex(str, options) {
+  var lexer = new Lexer(str, options);
   return JSON.parse(JSON.stringify(lexer.getTokens()));
 }
 
@@ -20,13 +20,13 @@ function lex(str, filename, options) {
  * @api private
  */
 
-function Lexer(str, filename, options) {
+function Lexer(str, options) {
   options = options || {};
   //Strip any UTF-8 BOM off of the start of `str`, if it exists.
   str = str.replace(/^\uFEFF/, '');
   this.input = str.replace(/\r\n|\r/g, '\n');
   this.originalInput = this.input;
-  this.filename = filename;
+  this.filename = options.filename;
   this.interpolated = options.interpolated || false;
   this.lineno = options.startingLine || 1;
   this.colno = options.startingColumn || 1;
@@ -441,7 +441,8 @@ Lexer.prototype = {
       if (escaped) this.incrementColumn(1);
       this.tokens.push(this.tok('start-pug-interpolation'));
       this.incrementColumn(2);
-      var child = new this.constructor(value.substr(indexOfStart + 2), this.filename, {
+      var child = new this.constructor(value.substr(indexOfStart + 2), {
+        filename: this.filename,
         interpolated: true,
         startingLine: this.lineno,
         startingColumn: this.colno
