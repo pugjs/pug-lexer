@@ -576,13 +576,17 @@ Lexer.prototype = {
 
   prepend: function() {
     var captures;
-    if (captures = /^prepend +([^\n]+)/.exec(this.input)) {
-      var mode = 'prepend'
-        , name = captures[1].trim()
-        , tok = this.tok('block', name);
+    if (captures = /^(?:block +)?prepend +([^\n]+)/.exec(this.input)) {
+      var name = captures[1].trim();
+      var comment = '';
+      if (name.indexOf('//') !== -1) {
+        comment = '//' + name.split('//').slice(1).join('//');
+        name = name.split('//')[0].trim();
+      }
       if (!name) return;
-      this.consume(captures[0].length);
-      tok.mode = mode;
+      this.consume(captures[0].length - comment.length);
+      var tok = this.tok('block', name);
+      tok.mode = 'prepend';
       this.tokens.push(tok);
       return true;
     }
@@ -594,13 +598,17 @@ Lexer.prototype = {
 
   append: function() {
     var captures;
-    if (captures = /^append +([^\n]+)/.exec(this.input)) {
-      var mode = 'append'
-        , name = captures[1].trim()
-        , tok = this.tok('block', name);
+    if (captures = /^(?:block +)?append +([^\n]+)/.exec(this.input)) {
+      var name = captures[1].trim();
+      var comment = '';
+      if (name.indexOf('//') !== -1) {
+        comment = '//' + name.split('//').slice(1).join('//');
+        name = name.split('//')[0].trim();
+      }
       if (!name) return;
-      this.consume(captures[0].length);
-      tok.mode = mode;
+      this.consume(captures[0].length - comment.length);
+      var tok = this.tok('block', name);
+      tok.mode = 'append';
       this.tokens.push(tok);
       return true;
     }
@@ -612,14 +620,17 @@ Lexer.prototype = {
 
   block: function() {
     var captures;
-    if (captures = /^block\b *(?:(prepend|append) +)?([^\n]+)/.exec(this.input)) {
-      var mode = captures[1] || 'replace'
-        , name = captures[2].trim()
-        , tok = this.tok('block', name);
+    if (captures = /^block +([^\n]+)/.exec(this.input)) {
+      var name = captures[1].trim();
+      var comment = '';
+      if (name.indexOf('//') !== -1) {
+        comment = '//' + name.split('//').slice(1).join('//');
+        name = name.split('//')[0].trim();
+      }
       if (!name) return;
-      this.consume(captures[0].length);
-
-      tok.mode = mode;
+      this.consume(captures[0].length - comment.length);
+      var tok = this.tok('block', name);
+      tok.mode = 'replace';
       this.tokens.push(tok);
       return true;
     }
