@@ -693,6 +693,7 @@ Lexer.prototype = {
   "case": function() {
     var tok = this.scanEndOfLine(/^case +([^\n]+)/, 'case');
     if (tok) {
+      this.assertExpression(tok.val);
       this.tokens.push(tok);
       return true;
     }
