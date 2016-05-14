@@ -870,6 +870,12 @@ Lexer.prototype = {
     if (this.scan(/^(?:each|for)\b/)) {
       this.error('MALFORMED_EACH', 'malformed each');
     }
+    if (captures = /^- *(?:each|for) +([a-zA-Z_$][\w$]*)(?: *, *([a-zA-Z_$][\w$]*))? +in +([^\n]+)/.exec(this.input)) {
+      this.error(
+        'MALFORMED_EACH',
+        'Pug each and for should no longer be prefixed with a dash ("-"). They are pug keywords and not part of JavaScript.'
+      );
+    }
   },
 
   /**
