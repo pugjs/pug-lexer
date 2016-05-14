@@ -22,6 +22,12 @@ function lex(str, options) {
 
 function Lexer(str, options) {
   options = options || {};
+  if (typeof str !== 'string') {
+    throw new Error('Expected source code to be a string but got "' + (typeof str) + '"')
+  }
+  if (typeof options !== 'object') {
+    throw new Error('Expected "options" to be an object but got "' + (typeof options) + '"')
+  }
   //Strip any UTF-8 BOM off of the start of `str`, if it exists.
   str = str.replace(/^\uFEFF/, '');
   this.input = str.replace(/\r\n|\r/g, '\n');
