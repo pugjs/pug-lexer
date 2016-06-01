@@ -20,8 +20,7 @@ var lex = require('pug-lexer');
 
 Convert Pug string to an array of tokens.
 
-
-`options` can contain the following property:
+`options` can contain the following properties:
 
 - `filename` (string): The name of the Pug file; it is used in error handling if provided.
 - `plugins` (array): An array of plugins, in the order they should be applied.
