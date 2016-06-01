@@ -16,18 +16,18 @@ The pug lexer.  This module is responsible for taking a string and converting it
 var lex = require('pug-lexer');
 ```
 
-### `lex(str, filename, options)`
+### `lex(str, options)`
 
 Convert Pug string to an array of tokens.
 
-`filename`, if provided, is used in error handling.
 
 `options` can contain the following property:
 
+- `filename` (string): The name of the Pug file; it is used in error handling if provided.
 - `plugins` (array): An array of plugins, in the order they should be applied.
 
 ```js
-console.log(JSON.stringify(lex('div(data-foo="bar")', 'my-file.pug'), null, '  '))
+console.log(JSON.stringify(lex('div(data-foo="bar")', {filename: 'my-file.pug'}), null, '  '))
 ```
 
 ```json
@@ -56,12 +56,13 @@ console.log(JSON.stringify(lex('div(data-foo="bar")', 'my-file.pug'), null, '  '
 ]
 ```
 
-### `new lex.Lexer(str, filename, options)`
+### `new lex.Lexer(str, options)`
 
 Constructor for a Lexer class. This is not meant to be used directly unless you know what you are doing.
 
 `options` may contain the following properties:
 
+- `filename` (string): The name of the Pug file; it is used in error handling if provided.
 - `interpolated` (boolean): if the Lexer is created as a child lexer for inline tag interpolation (e.g. `#[p Hello]`). Defaults to `false`.
 - `startingLine` (integer): the real line number of the first line in the input. It is also used for inline tag interpolation. Defaults to `1`.
 - `plugins` (array): An array of plugins, in the order they should be applied.
