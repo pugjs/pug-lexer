@@ -15,7 +15,7 @@ fs.readdirSync(dir).forEach(function (testCase) {
       if (ex.code !== 'ENOENT') throw ex;
       expected = null;
     }
-    var result = lex(fs.readFileSync(dir + testCase, 'utf8'), __dirname + '/cases/' + testCase);
+    var result = lex(fs.readFileSync(dir + testCase, 'utf8'), {filename: __dirname + '/cases/' + testCase});
     try {
       assert.deepEqual(expected, result);
     } catch (ex) {
@@ -38,7 +38,7 @@ fs.readdirSync(edir).forEach(function (testCase) {
     }
     var actual;
     try {
-      lex(fs.readFileSync(edir + testCase, 'utf8'), edir + testCase);
+      lex(fs.readFileSync(edir + testCase, 'utf8'), {filename: edir + testCase});
       throw new Error('Expected ' + testCase + ' to throw an exception.');
     } catch (ex) {
       if (!ex || !ex.code || !ex.code.indexOf('PUG:') === 0) throw ex;
