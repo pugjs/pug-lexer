@@ -1004,12 +1004,13 @@ Lexer.prototype = {
       var val = '';
       var state = characterParser.defaultState();
       var lineno = startingLine;
-      var colno = this.colno;
+      var colnoBeginAttr = this.colno;
+      var colnoBeginVal;
       var loc = 'key';
       var isEndOfAttribute = function (i) {
         // if the key is not started, then the attribute cannot be ended
         if (key.trim() === '') {
-          colno = this.colno;
+          colnoBeginAttr = this.colno;
           return false;
         }
         // if there's nothing more then the attribute must be ended
@@ -1056,12 +1057,14 @@ Lexer.prototype = {
 
       for (var i = 0; i <= str.length; i++) {
         if (isEndOfAttribute.call(this, i)) {
-          val = val.trim();
-          if (val) {
-            this.incrementColumn(-val.length);
-            this.assertExpression(val)
-            this.incrementColumn(val.length);
+          if (val.trim()) {
+            var saved = this.colno;
+            this.colno = colnoBeginVal;
+            this.assertExpression(val);
+            this.colno = saved;
           }
+
+          val = val.trim();
 
           if (key[0] === ':') this.incrementColumn(-key.length);
           else if (key[key.length - 1] === ':') this.incrementColumn(-1);
@@ -1074,7 +1077,7 @@ Lexer.prototype = {
           var tok = this.tok('attribute');
           tok.name = key;
           tok.val = '' == val ? true : val;
-          tok.col = colno;
+          tok.col = colnoBeginAttr;
           tok.mustEscape = escapedAttr;
           this.tokens.push(tok);
 
@@ -1105,6 +1108,7 @@ Lexer.prototype = {
                 }
                 if (str[i] !== '=') this.error('INVALID_KEY_CHARACTER', 'Unexpected character ' + str[i] + ' expected `=`');
                 loc = 'value';
+                colnoBeginVal = this.colno + 1;
                 state = characterParser.defaultState();
               } else {
                 key += str[i]
