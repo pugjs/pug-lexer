@@ -5,6 +5,7 @@ The pug lexer.  This module is responsible for taking a string and converting it
 [![Build Status](https://img.shields.io/travis/pugjs/pug-lexer/master.svg)](https://travis-ci.org/pugjs/pug-lexer)
 [![Dependency Status](https://img.shields.io/david/pugjs/pug-lexer.svg)](https://david-dm.org/pugjs/pug-lexer)
 [![NPM version](https://img.shields.io/npm/v/pug-lexer.svg)](https://www.npmjs.org/package/pug-lexer)
+[![Coverage Status](https://img.shields.io/codecov/c/github/pugjs/pug-lexer.svg)](https://codecov.io/gh/pugjs/pug-lexer)
 
 ## Installation
 
