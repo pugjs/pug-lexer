@@ -711,7 +711,9 @@ Lexer.prototype = {
   "case": function() {
     var tok = this.scanEndOfLine(/^case +([^\n]+)/, 'case');
     if (tok) {
+      this.incrementColumn(-tok.val.length);
       this.assertExpression(tok.val);
+      this.incrementColumn(tok.val.length);
       this.tokens.push(tok);
       return true;
     }
