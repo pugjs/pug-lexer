@@ -729,6 +729,20 @@ Lexer.prototype = {
   when: function() {
     var tok = this.scanEndOfLine(/^when +([^:\n]+)/, 'when');
     if (tok) {
+      var parser = characterParser(tok.val);
+      while (parser.isNesting() || parser.isString()) {
+        var rest = /:([^:\n]+)/.exec(this.input);
+        if (!rest) break;
+
+        tok.val += rest[0];
+        this.consume(rest[0].length);
+        this.incrementColumn(rest[0].length);
+        parser = characterParser(tok.val);
+      }
+
+      this.incrementColumn(-tok.val.length);
+      this.assertExpression(tok.val);
+      this.incrementColumn(tok.val.length);
       this.tokens.push(tok);
       return true;
     }
