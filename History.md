@@ -1,3 +1,9 @@
+2.0.3 / 2016-08-07
+==================
+
+  * Allow `when` expressions with colons
+  * Fix incorrect location of some errors
+
 2.0.2 / 2016-06-02
 ==================
 
