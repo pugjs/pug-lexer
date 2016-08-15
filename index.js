@@ -1014,6 +1014,7 @@ Lexer.prototype = {
 
       var whitespaceRe = /[ \n\t]/;
       var quoteRe = /['"]/;
+      var ng2Re = /[([]/;
 
       var escapedAttr = true
       var key = '';
@@ -1060,8 +1061,9 @@ Lexer.prototype = {
             for (var x = i; x < str.length; x++) {
               if (!whitespaceRe.test(str[x])) {
                 // if it is a JavaScript punctuator, then assume that it is
-                // a part of the value
-                return !characterParser.isPunctuator(str[x]) || quoteRe.test(str[x]);
+                // a part of the value, unless it's an Angular2 opening bracket
+                return !characterParser.isPunctuator(str[x]) ||
+                    quoteRe.test(str[x]) || ng2Re.test(str[x]);
               }
             }
           }
