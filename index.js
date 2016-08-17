@@ -1082,11 +1082,6 @@ Lexer.prototype = {
 
           val = val.trim();
 
-          if (key[0] === ':') this.incrementColumn(-key.length);
-          else if (key[key.length - 1] === ':') this.incrementColumn(-1);
-          if (key[0] === ':' || key[key.length - 1] === ':') {
-            this.error('COLON_ATTRIBUTE', '":" is not valid as the start or end of an un-quoted attribute.');
-          }
           key = key.trim();
           key = key.replace(/^['"]|['"]$/g, '');
 
