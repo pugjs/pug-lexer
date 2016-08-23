@@ -63,13 +63,17 @@ Lexer.prototype = {
     if (!value) this.error('ASSERT_FAILED', message);
   },
 
+  isExpression: function (exp, noThrow) {
+    return isExpression(exp, {
+      throw: !noThrow,
+      ecmaVersion: 6
+    });
+  },
+
   assertExpression: function (exp, noThrow) {
     //this verifies that a JavaScript expression is valid
     try {
-      return isExpression(exp, {
-        throw: !noThrow,
-        ecmaVersion: 6
-      });
+      return this.callLexerFunction('isExpression', exp, noThrow);
     } catch (ex) {
       // not coming from acorn
       if (!ex.loc) throw ex;
