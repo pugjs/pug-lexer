@@ -65,8 +65,7 @@ Lexer.prototype = {
 
   isExpression: function (exp, noThrow) {
     return isExpression(exp, {
-      throw: !noThrow,
-      ecmaVersion: 6
+      throw: !noThrow
     });
   },
 
