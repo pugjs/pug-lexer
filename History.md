@@ -1,3 +1,9 @@
+2.2.2 / 2016-09-07
+==================
+
+  * Support non-standard class names that start with two hyphens in class
+    literals, most notably used in Bemto
+
 2.2.1 / 2016-08-29
 ==================
 
