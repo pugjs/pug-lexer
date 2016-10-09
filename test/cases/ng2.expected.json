@@ -1,0 +1,8 @@
+{"type":"tag","line":1,"col":1,"val":"div"}
+{"type":"start-attributes","line":1,"col":4}
+{"type":"attribute","line":2,"col":3,"name":"*star","val":"\"*\"","mustEscape":true}
+{"type":"attribute","line":3,"col":3,"name":"(baz)","val":"\"cow\"","mustEscape":true}
+{"type":"attribute","line":4,"col":3,"name":"[box]","val":"\"box\"","mustEscape":true}
+{"type":"end-attributes","line":5,"col":1}
+{"type":"newline","line":6,"col":1}
+{"type":"eos","line":6,"col":1}
