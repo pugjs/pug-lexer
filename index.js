@@ -308,7 +308,7 @@ Lexer.prototype = {
       this.interpolationAllowed = tok.buffer;
       this.tokens.push(tok);
       this.incrementColumn(captures[0].length);
-      this.callLexerFunction('pipelessText');
+      this.callLexerFunction1('pipelessText');
       return true;
     }
   },
@@ -361,10 +361,10 @@ Lexer.prototype = {
     if (tok) {
       this.tokens.push(tok);
       this.incrementColumn(tok.val.length);
-      this.callLexerFunction('attrs');
+      this.callLexerFunction1('attrs');
       if (!inInclude) {
         this.interpolationAllowed = false;
-        this.callLexerFunction('pipelessText');
+        this.callLexerFunction1('pipelessText');
       }
       return true;
     }
@@ -560,7 +560,7 @@ Lexer.prototype = {
     var tok;
     if (tok = this.scanEndOfLine(/^\./, 'dot')) {
       this.tokens.push(tok);
-      this.callLexerFunction('pipelessText');
+      this.callLexerFunction1('pipelessText');
       return true;
     }
   },
@@ -573,7 +573,7 @@ Lexer.prototype = {
     var tok = this.scan(/^extends?(?= |$|\n)/, 'extends');
     if (tok) {
       this.tokens.push(tok);
-      if (!this.callLexerFunction('path')) {
+      if (!this.callLexerFunction1('path')) {
         this.error('NO_EXTENDS_PATH', 'missing path for extends');
       }
       return true;
@@ -681,8 +681,8 @@ Lexer.prototype = {
     var tok = this.scan(/^include(?=:| |$|\n)/, 'include');
     if (tok) {
       this.tokens.push(tok);
-      while (this.callLexerFunction('filter', { inInclude: true }));
-      if (!this.callLexerFunction('path')) {
+      while (this.callLexerFunction1('filter', { inInclude: true }));
+      if (!this.callLexerFunction1('path')) {
         if (/^[^ \n]+/.test(this.input)) {
           // if there is more text
           this.fail();
@@ -994,7 +994,7 @@ Lexer.prototype = {
     if (tok = this.scanEndOfLine(/^-/, 'blockcode')) {
       this.tokens.push(tok);
       this.interpolationAllowed = false;
-      this.callLexerFunction('pipelessText');
+      this.callLexerFunction1('pipelessText');
       return true;
     }
   },
@@ -1228,7 +1228,7 @@ Lexer.prototype = {
   },
 
   pipelessText: function pipelessText(indents) {
-    while (this.callLexerFunction('blank'));
+    while (this.callLexerFunction1('blank'));
 
     var captures = this.scanIndentation();
 
@@ -1315,6 +1315,16 @@ Lexer.prototype = {
     return this[func].apply(this, rest);
   },
 
+  callLexerFunction1: function (func) {
+    for (var i = 0; i < this.plugins.length; i++) {
+      var plugin = this.plugins[i];
+      if (plugin[func] && plugin[func].call(plugin, this)) {
+        return true;
+      }
+    }
+    return this[func]();
+  },
+
   /**
    * Move to the next token
    *
@@ -1322,41 +1332,41 @@ Lexer.prototype = {
    */
 
   advance: function() {
-    return this.callLexerFunction('blank')
-      || this.callLexerFunction('eos')
-      || this.callLexerFunction('endInterpolation')
-      || this.callLexerFunction('yield')
-      || this.callLexerFunction('doctype')
-      || this.callLexerFunction('interpolation')
-      || this.callLexerFunction('case')
-      || this.callLexerFunction('when')
-      || this.callLexerFunction('default')
-      || this.callLexerFunction('extends')
-      || this.callLexerFunction('append')
-      || this.callLexerFunction('prepend')
-      || this.callLexerFunction('block')
-      || this.callLexerFunction('mixinBlock')
-      || this.callLexerFunction('include')
-      || this.callLexerFunction('mixin')
-      || this.callLexerFunction('call')
-      || this.callLexerFunction('conditional')
-      || this.callLexerFunction('each')
-      || this.callLexerFunction('while')
-      || this.callLexerFunction('tag')
-      || this.callLexerFunction('filter')
-      || this.callLexerFunction('blockCode')
-      || this.callLexerFunction('code')
-      || this.callLexerFunction('id')
-      || this.callLexerFunction('dot')
-      || this.callLexerFunction('className')
-      || this.callLexerFunction('attrs')
-      || this.callLexerFunction('attributesBlock')
-      || this.callLexerFunction('indent')
-      || this.callLexerFunction('text')
-      || this.callLexerFunction('textHtml')
-      || this.callLexerFunction('comment')
-      || this.callLexerFunction('slash')
-      || this.callLexerFunction('colon')
+    return this.callLexerFunction1('blank')
+      || this.callLexerFunction1('eos')
+      || this.callLexerFunction1('endInterpolation')
+      || this.callLexerFunction1('yield')
+      || this.callLexerFunction1('doctype')
+      || this.callLexerFunction1('interpolation')
+      || this.callLexerFunction1('case')
+      || this.callLexerFunction1('when')
+      || this.callLexerFunction1('default')
+      || this.callLexerFunction1('extends')
+      || this.callLexerFunction1('append')
+      || this.callLexerFunction1('prepend')
+      || this.callLexerFunction1('block')
+      || this.callLexerFunction1('mixinBlock')
+      || this.callLexerFunction1('include')
+      || this.callLexerFunction1('mixin')
+      || this.callLexerFunction1('call')
+      || this.callLexerFunction1('conditional')
+      || this.callLexerFunction1('each')
+      || this.callLexerFunction1('while')
+      || this.callLexerFunction1('tag')
+      || this.callLexerFunction1('filter')
+      || this.callLexerFunction1('blockCode')
+      || this.callLexerFunction1('code')
+      || this.callLexerFunction1('id')
+      || this.callLexerFunction1('dot')
+      || this.callLexerFunction1('className')
+      || this.callLexerFunction1('attrs')
+      || this.callLexerFunction1('attributesBlock')
+      || this.callLexerFunction1('indent')
+      || this.callLexerFunction1('text')
+      || this.callLexerFunction1('textHtml')
+      || this.callLexerFunction1('comment')
+      || this.callLexerFunction1('slash')
+      || this.callLexerFunction1('colon')
       || this.fail();
   },
 
@@ -1368,7 +1378,7 @@ Lexer.prototype = {
    */
   getTokens: function () {
     while (!this.ended) {
-      this.callLexerFunction('advance');
+      this.callLexerFunction1('advance');
     }
     return this.tokens;
   }
