@@ -17,7 +17,7 @@
 {"type":"newline","line":10,"col":1}
 {"type":"text","line":10,"col":4,"val":""}
 {"type":"newline","line":11,"col":1}
-{"type":"text","line":11,"col":5,"val":"  "}
+{"type":"text","line":11,"col":4,"val":" "}
 {"type":"newline","line":12,"col":1}
 {"type":"text","line":12,"col":5,"val":"baz"}
 {"type":"outdent","line":14,"col":1}
